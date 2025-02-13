@@ -33,6 +33,7 @@ The Braze and Radar integration allows you to access sophisticated location-base
 #### Properties
 
 - [Documentation](https://www.braze.com/docs)
+- [OpenAPI](openapi/braze-openapi.yml)
 
 ## Common Properties
 

@@ -13,7 +13,7 @@ apis:
       - url: https://www.braze.com/docs
         type: Documentation
       - type: OpenAPI
-        url: properties/braze-openapi.yml
+        url: openapi/braze-openapi.yml
     description: >-
       The Braze and Radar integration allows you to access sophisticated
       location-based campaign triggers and user profile enrichment with rich,

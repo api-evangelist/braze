@@ -5,9 +5,9 @@ apis:
   - aid: braze:braze
     name: Braze
     tags:
+      - Geofencing
       - Locations
       - Marketing
-      - Geofencing
     humanURL: https://www.braze.com/docs
     properties:
       - url: https://www.braze.com/docs
@@ -21,9 +21,9 @@ apis:
       and user attributes are sent to Braze in real-time.
 name: Braze
 tags:
+  - Geofencing
   - Locations
   - Marketing
-  - Geofencing
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party

@@ -1,86 +1,77 @@
 aid: braze
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/braze/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/braze/refs/heads/main/apis.yml
+name: Braze
+tags:
+  - Customer Engagement
+  - Marketing Automation
+  - Messaging
+  - Push Notifications
+  - Email
+  - SMS
+  - Mobile
+type: Index
+x-type: company
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+created: '2025-02-06'
+modified: '2026-04-21'
+position: Consumer
+description: >-
+  Braze is a leading customer engagement platform providing REST APIs for managing
+  user profiles, orchestrating multi-channel messaging campaigns, and exporting
+  analytics. The platform supports email, SMS, push notifications, in-app messages,
+  and content cards across mobile and web channels. Braze uses Bearer token
+  authentication with region-specific REST endpoints and offers extensive webhook
+  and Canvas automation capabilities for lifecycle marketing.
 apis:
   - aid: braze:braze
-    name: Braze
+    name: Braze REST API
     tags:
-      - Geofencing
-      - Locations
-      - Marketing
-    humanURL: https://www.braze.com/docs
+      - Customer Engagement
+      - User Management
+      - Messaging
+      - Campaigns
+      - Analytics
+    humanURL: https://www.braze.com/docs/api/basics/
     properties:
-      - url: https://www.braze.com/docs
+      - url: https://www.braze.com/docs/api/basics/
         type: Documentation
       - type: OpenAPI
         url: openapi/braze-openapi.yml
     description: >-
-      The Braze and Radar integration allows you to access sophisticated location-based
-      campaign triggers and user profile enrichment with rich, first-party location
-      data. When Radar geofence or trip tracking events are generated, custom events
-      and user attributes are sent to Braze in real-time.
-name: Braze
-tags:
-  - Geofencing
-  - Locations
-  - Marketing
-type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-access: 3rd-Party
-created: '2025-02-06'
-modified: '2025-02-12'
-position: Consumer
-description: >-
-  The Braze and Radar integration allows you to access sophisticated location-based
-  campaign triggers and user profile enrichment with rich, first-party location data.
-  When Radar geofence or trip tracking events are generated, custom events and user
-  attributes are sent to Braze in real-time.
+      The Braze REST API enables server-side operations including creating and
+      updating user profiles, triggering campaigns and Canvases, sending
+      transactional messages, managing product catalogs, controlling subscription
+      groups, and exporting campaign analytics and user data. Region-specific
+      base URLs serve US, EU, AU, ID, and JP instances with Bearer token auth.
+common:
+  - type: Website
+    url: https://www.braze.com
+  - type: Documentation
+    url: https://www.braze.com/docs
+  - type: Partners
+    url: https://www.braze.com/docs/partners/home
+  - type: Support
+    url: https://www.braze.com/docs/help/home
+  - type: ChangeLog
+    url: https://www.braze.com/docs/help/release_notes
+  - type: FAQ
+    url: https://www.braze.com/docs/help/faqs
+  - type: RateLimits
+    url: https://www.braze.com/docs/api/api_limits
+  - type: UseCases
+    url: https://www.braze.com/docs/api/use_cases
+  - type: PrivacyPolicy
+    url: https://www.braze.com/docs/user_guide/privacy_portal
+  - type: Blog
+    url: https://www.braze.com/resources/articles
+  - type: Videos
+    url: https://www.braze.com/resources/videos
+  - type: CaseStudies
+    url: https://www.braze.com/customers
+  - type: Webinars
+    url: https://www.braze.com/resources/webinars-and-events
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
-common:
-  - name: Technology Partners
-    description: 'null'
-    url: https://www.braze.com/docs/partners/home
-    type: Partners
-  - name: Braze Help
-    description: 'null'
-    url: https://www.braze.com/docs/help/home
-    type: Support
-  - name: Release Notes
-    description: 'null'
-    url: https://www.braze.com/docs/help/release_notes
-    type: ChangeLog
-  - name: Frequently Asked Questions
-    description: 'null'
-    url: https://www.braze.com/docs/help/faqs
-    type: FAQ
-  - name: API Rate Limits
-    description: 'null'
-    url: https://www.braze.com/docs/api/api_limits
-    type: RateLimits
-  - name: API Use Cases
-    description: 'null'
-    url: https://www.braze.com/docs/api/use_cases
-    type: UseCases
-  - name: Privacy Portal
-    description: 'null'
-    url: https://www.braze.com/docs/user_guide/privacy_portal
-    type: PrivacyPolicy
-  - name: Welcome to the Blog
-    description: 'null'
-    url: https://www.braze.com/resources/articles
-    type: Blog
-  - name: Welcome to the Braze Videos
-    description: 'null'
-    url: https://www.braze.com/resources/videos
-    type: Videos
-  - name: Customer Stories
-    description: 'null'
-    url: https://www.braze.com/customers
-    type: CaseStudies
-  - name: Events and Webinars
-    description: 'null'
-    url: https://www.braze.com/resources/webinars-and-events
-    type: Webinars

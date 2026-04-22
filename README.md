@@ -1,57 +1,38 @@
-# Braze (braze)
-The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. 
+# Braze
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/braze/refs/heads/main/apis.yml)
+Braze is a leading customer engagement platform providing REST APIs for managing user profiles, orchestrating multi-channel messaging campaigns, and exporting analytics. The platform supports email, SMS, push notifications, in-app messages, and content cards across mobile and web channels.
 
-## Scope
+## API Overview
 
-- **Type:** Index 
-- **Position:** Consumer 
-- **Access:** 3rd-Party 
+The Braze REST API uses Bearer token authentication with region-specific base URLs:
+- US: `https://rest.iad-01.braze.com`
+- EU, AU, ID, JP instances also available
 
-## Tags:
+## Key API Categories
 
- - Locations, Marketing, Geofencing
+| Category | Purpose |
+|----------|---------|
+| User Data | Create, identify, update, and delete user profiles |
+| Messaging | Schedule and send campaigns, Canvases, and transactional messages |
+| Catalogs | Manage product catalogs and dynamic content |
+| Export | Analytics for campaigns, segments, KPIs, and user data |
+| Templates | Email templates and content blocks |
+| Subscription Groups | SMS and email subscription preferences |
 
-## Timestamps
+## Use Cases
 
-- **Created:** 2025-02-06 
-- **Modified:** 2025-02-12 
+- Trigger API-driven campaigns based on user behavior
+- Export analytics and user profile data for analysis
+- Manage user attributes and subscription preferences
+- Integrate CDPs with Braze messaging
+- Automate transactional email delivery
+- Location-based campaign triggers via Radar geofence integration
 
-## APIs
+## Links
 
-### Braze
-The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. 
-
-**Human URL:** [https://www.braze.com/docs](https://www.braze.com/docs)
-
-
-#### Tags:
-
- - Locations, Marketing, Geofencing
-
-#### Properties
-
-- [Documentation](https://www.braze.com/docs)
-- [OpenAPI](openapi/braze-openapi.yml)
-
-## Common Properties
-
-- [Partners](https://www.braze.com/docs/partners/home)
-- [Support](https://www.braze.com/docs/help/home)
-- [ChangeLog](https://www.braze.com/docs/help/release_notes)
-- [FAQ](https://www.braze.com/docs/help/faqs)
-- [RateLimits](https://www.braze.com/docs/api/api_limits)
-- [UseCases](https://www.braze.com/docs/api/use_cases)
-- [PrivacyPolicy](https://www.braze.com/docs/user_guide/privacy_portal)
-- [Blog](https://www.braze.com/resources/articles)
-- [Videos](https://www.braze.com/resources/videos)
-- [CaseStudies](https://www.braze.com/customers)
-- [Webinars](https://www.braze.com/resources/webinars-and-events)
-
-## Maintainers
-
-**FN:** Kin Lane
-
-**Email:** info@apievangelist.com
-
+- [Website](https://www.braze.com)
+- [API Documentation](https://www.braze.com/docs/api/basics/)
+- [Rate Limits](https://www.braze.com/docs/api/api_limits)
+- [Use Cases](https://www.braze.com/docs/api/use_cases)
+- [Release Notes](https://www.braze.com/docs/help/release_notes)
+- [Technology Partners](https://www.braze.com/docs/partners/home)

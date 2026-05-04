@@ -1,0 +1,45 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Braze
+providerId: braze
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - Rate Limiting
+  - Marketing
+description: Braze REST API rate limits per workspace.
+sources:
+  - https://www.braze.com/pricing
+  - https://www.braze.com/docs/api/api_limits/
+headers:
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+limits:
+  - name: /users/track
+    scope: workspace
+    metric: requests_per_minute
+    limit: 50000
+    timeFrame: minute
+  - name: /messages/send
+    scope: workspace
+    metric: requests_per_minute
+    limit: 250
+    timeFrame: minute
+  - name: /users/export
+    scope: workspace
+    metric: requests_per_minute
+    limit: 100
+    timeFrame: minute
+  - name: /transactional/send
+    scope: workspace
+    metric: requests_per_second
+    limit: 250
+    timeFrame: second
+  - name: Default endpoints
+    scope: workspace
+    metric: requests_per_minute
+    limit: 250000
+    timeFrame: minute

@@ -1,0 +1,81 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Braze
+providerId: braze
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - Customer Engagement
+  - CDP
+  - Marketing Automation
+description: Braze pricing is custom (non-public), based on MAU + channels + AI usage.
+sources:
+  - https://www.braze.com/pricing
+plans:
+  - id: braze-core
+    name: Core (Platform Edition)
+    type: enterprise
+    description: Mid-market deployments typically $60K-$200K/year.
+    entries:
+      - label: Annual base
+        name: annual
+        type: subscription
+        metric: year
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: 60000.00-200000.00
+        userMultiplied: false
+    elements:
+      - name: Email channel
+      - name: Push notifications
+      - name: In-app messages
+      - name: Content Cards
+      - name: Baseline MAU threshold
+      - name: Audience Sync
+  - id: braze-pro
+    name: Pro (Platform Edition)
+    type: enterprise
+    description: Custom; adds advanced orchestration and AI.
+    entries:
+      - label: Annual (custom)
+        name: annual
+        type: subscription
+        metric: year
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: custom
+        userMultiplied: false
+    elements:
+      - name: All Core channels
+      - name: SMS, WhatsApp, Webhooks
+      - name: Advanced orchestration (Canvas Flow)
+      - name: Predictive AI
+      - name: Sage AI Copilot
+  - id: braze-enterprise
+    name: Enterprise (Platform Edition)
+    type: enterprise
+    description: Custom; $1M+/year for large deployments.
+    entries:
+      - label: Annual (custom)
+        name: annual
+        type: subscription
+        metric: year
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: 1000000.00+
+        userMultiplied: false
+    elements:
+      - name: All Pro features
+      - name: Dedicated CSM
+      - name: Custom data residency
+      - name: Enterprise SLAs
+      - name: Audit logs
+      - name: SCIM/SSO

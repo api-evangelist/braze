@@ -88,6 +88,10 @@ common:
     sources:
       - https://www.braze.com/pricing
     updated: '2026-05-04'
+  - type: Integrations
+    url: https://www.braze.com/partners
+integrations:
+  - name: Become a Partner
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com

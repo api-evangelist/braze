@@ -94,6 +94,8 @@ common:
     updated: '2026-05-04'
   - type: Integrations
     url: https://www.braze.com/partners
+  - type: LLMsTxt
+    url: https://braze.com/llms.txt
 integrations:
   - name: Become a Partner
 maintainers:

@@ -1,0 +1,1086 @@
+"""
+Braze GraphQL Schema
+Conceptual schema derived from the Braze REST API.
+Source: https://www.braze.com/docs/api/
+"""
+
+# ─── Scalars ─────────────────────────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+scalar URL
+
+# ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum Platform {
+  IOS
+  ANDROID
+  WEB
+  KINDLE
+  TVOS
+  ROKU
+}
+
+enum SubscriptionState {
+  SUBSCRIBED
+  UNSUBSCRIBED
+  OPTED_IN
+}
+
+enum MessageType {
+  EMAIL
+  PUSH
+  IN_APP
+  CONTENT_CARD
+  SMS
+  WHATSAPP
+  WEBHOOK
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+  STOPPED
+}
+
+enum CanvasStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+  STOPPED
+}
+
+enum ExportStatus {
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum AttributeType {
+  STRING
+  NUMBER
+  BOOLEAN
+  DATE
+  ARRAY
+}
+
+enum InAppMessageType {
+  SLIDEUP
+  MODAL
+  FULL
+  HTML_FULL
+}
+
+enum ContentCardType {
+  CLASSIC
+  BANNER
+  CAPTIONED_IMAGE
+}
+
+# ─── User & Identity Types ────────────────────────────────────────────────────
+
+"""
+An alias identifier for a user, comprising a label and a name.
+"""
+type UserAlias {
+  aliasLabel: String!
+  aliasName: String!
+}
+
+"""
+Maps an external identifier to a Braze user (supports rename and merge).
+"""
+type UserExternalId {
+  externalId: String!
+  brazeId: String
+  createdAt: DateTime
+}
+
+"""
+Identification payload used for merging anonymous and identified users.
+"""
+type UserIdentification {
+  externalId: String
+  userAlias: UserAlias
+  brazeId: String
+}
+
+"""
+A key/value custom attribute on a user profile.
+"""
+type UserAttribute {
+  key: String!
+  value: JSON
+  type: AttributeType!
+  updatedAt: DateTime
+}
+
+"""
+A custom event logged against a user profile.
+"""
+type UserEvent {
+  name: String!
+  time: DateTime!
+  properties: JSON
+  sessionId: String
+  appId: String
+}
+
+"""
+Core Braze user profile.
+"""
+type User {
+  brazeId: String!
+  externalId: String
+  aliases: [UserAlias!]
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+  dateOfBirth: String
+  country: String
+  language: String
+  timezone: String
+  gender: String
+  homeCity: String
+  emailSubscribe: SubscriptionState
+  pushSubscribe: SubscriptionState
+  customAttributes: [UserAttribute!]
+  customEvents: [UserEvent!]
+  purchases: [Purchase!]
+  sessions: [Session!]
+  apps: [App!]
+  createdAt: DateTime
+  updatedAt: DateTime
+  lastAppUsedAt: DateTime
+}
+
+"""
+Full expanded user profile including subscriptions and engagement history.
+"""
+type UserProfile {
+  user: User!
+  subscriptionGroups: [SubscriptionGroup!]
+  totalRevenue: Float
+  sessionCount: Int
+  purchaseCount: Int
+  lastPurchaseAt: DateTime
+  deviceIds: [String!]
+  pushTokens: [String!]
+}
+
+# ─── Commerce & Sessions ──────────────────────────────────────────────────────
+
+"""
+A product purchase logged against a user.
+"""
+type Purchase {
+  productId: String!
+  currency: String!
+  price: Float!
+  quantity: Int
+  time: DateTime!
+  properties: JSON
+  appId: String
+}
+
+"""
+An app session record.
+"""
+type Session {
+  sessionId: String!
+  appId: String!
+  platform: Platform
+  startedAt: DateTime!
+  durationSeconds: Int
+  deviceModel: String
+  osVersion: String
+}
+
+# ─── Subscriptions ────────────────────────────────────────────────────────────
+
+"""
+Email or push subscription state for a user.
+"""
+type Subscription {
+  userId: String!
+  channel: MessageType!
+  state: SubscriptionState!
+  updatedAt: DateTime
+}
+
+"""
+An SMS or email subscription group and a user's membership status.
+"""
+type SubscriptionGroup {
+  groupId: ID!
+  name: String!
+  channel: MessageType!
+  status: SubscriptionState
+  description: String
+  createdAt: DateTime
+}
+
+# ─── Campaigns ────────────────────────────────────────────────────────────────
+
+"""
+Delivery and engagement metrics for a campaign.
+"""
+type CampaignStats {
+  campaignId: ID!
+  sends: Int
+  deliveries: Int
+  bounces: Int
+  opens: Int
+  uniqueOpens: Int
+  clicks: Int
+  uniqueClicks: Int
+  unsubscribes: Int
+  conversions: Int
+  revenue: Float
+  updatedAt: DateTime
+}
+
+"""
+A Braze marketing campaign.
+"""
+type Campaign {
+  campaignId: ID!
+  name: String!
+  status: CampaignStatus!
+  tags: [String!]
+  type: MessageType
+  variants: [MessageVariant!]
+  segments: [Segment!]
+  schedule: MessageSchedule
+  stats: CampaignStats
+  createdAt: DateTime
+  updatedAt: DateTime
+  archivedAt: DateTime
+  apiTriggerable: Boolean!
+}
+
+# ─── Canvas ───────────────────────────────────────────────────────────────────
+
+"""
+An A/B variant within a Canvas.
+"""
+type CanvasVariant {
+  variantId: ID!
+  name: String!
+  weight: Float
+  steps: [CanvasStep!]
+}
+
+"""
+An individual step in a Canvas (message, delay, or decision split).
+"""
+type CanvasStep {
+  stepId: ID!
+  name: String!
+  type: String!
+  messages: [Message!]
+  nextSteps: [CanvasStep!]
+  delaySeconds: Int
+  filters: [SegmentFilter!]
+}
+
+"""
+A Braze Canvas multi-step customer journey.
+"""
+type Canvas {
+  canvasId: ID!
+  name: String!
+  status: CanvasStatus!
+  tags: [String!]
+  variants: [CanvasVariant!]
+  segments: [Segment!]
+  schedule: MessageSchedule
+  createdAt: DateTime
+  updatedAt: DateTime
+  archivedAt: DateTime
+  apiTriggerable: Boolean!
+}
+
+# ─── Messaging ────────────────────────────────────────────────────────────────
+
+"""
+An outbound push notification payload.
+"""
+type PushNotification {
+  title: String
+  body: String!
+  badge: Int
+  sound: String
+  deepLink: URL
+  imageUrl: URL
+  extraData: JSON
+  platform: Platform
+  collapseId: String
+  ttlSeconds: Int
+}
+
+"""
+An email message.
+"""
+type Email {
+  subject: String!
+  fromName: String
+  fromEmail: String!
+  replyTo: String
+  htmlBody: String
+  plaintextBody: String
+  preheader: String
+  attachments: [JSON!]
+  headers: JSON
+}
+
+"""
+An in-app message displayed inside the app.
+"""
+type InAppMessage {
+  messageType: InAppMessageType!
+  header: String
+  message: String!
+  imageUrl: URL
+  buttons: [JSON!]
+  extras: JSON
+  durationSeconds: Int
+  clickAction: String
+  dismissType: String
+}
+
+"""
+A persistent content card shown in the card feed.
+"""
+type ContentCard {
+  cardType: ContentCardType!
+  title: String
+  description: String
+  imageUrl: URL
+  url: URL
+  extras: JSON
+  expiresAt: DateTime
+  pinned: Boolean
+}
+
+"""
+An SMS message (with optional MMS media).
+"""
+type SMSMessage {
+  body: String!
+  mediaUrls: [URL!]
+  subscriptionGroupId: ID
+  messageVariationId: String
+}
+
+"""
+A WhatsApp template-based message.
+"""
+type WhatsAppMessage {
+  subscriptionGroupId: ID!
+  messageVariationId: String
+  templateName: String!
+  templateLanguageCode: String!
+  headerVariables: [String!]
+  bodyVariables: [String!]
+  buttonVariables: [String!]
+}
+
+"""
+A generic outbound webhook call.
+"""
+type Webhook {
+  url: URL!
+  method: String!
+  headers: JSON
+  body: String
+  responseUrl: URL
+}
+
+"""
+A Braze-native webhook configuration.
+"""
+type BrazeWebhook {
+  webhookId: ID!
+  name: String!
+  url: URL!
+  method: String!
+  headers: JSON
+  bodyTemplate: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""
+A generic message envelope referencing one of the channel-specific types.
+"""
+type Message {
+  messageId: ID!
+  type: MessageType!
+  pushNotification: PushNotification
+  email: Email
+  inAppMessage: InAppMessage
+  contentCard: ContentCard
+  smsMessage: SMSMessage
+  whatsAppMessage: WhatsAppMessage
+  webhook: Webhook
+}
+
+"""
+A versioned message variant used in A/B testing.
+"""
+type MessageVariant {
+  variantId: ID!
+  name: String!
+  weight: Float
+  message: Message!
+}
+
+"""
+A record of a message send action.
+"""
+type MessageSend {
+  sendId: ID!
+  campaignId: ID
+  canvasId: ID
+  messageType: MessageType!
+  recipientCount: Int
+  sentAt: DateTime!
+  scheduledAt: DateTime
+}
+
+"""
+Scheduled message delivery configuration.
+"""
+type MessageSchedule {
+  scheduleId: ID!
+  time: DateTime
+  inLocalTime: Boolean
+  atOptimalTime: Boolean
+  endTime: DateTime
+}
+
+# ─── Segmentation ─────────────────────────────────────────────────────────────
+
+"""
+A single filter clause within a segment definition.
+"""
+type SegmentFilter {
+  filterId: ID
+  filterType: String!
+  operator: String!
+  value: JSON
+}
+
+"""
+Analytics rollup for a segment.
+"""
+type SegmentData {
+  segmentId: ID!
+  size: Int
+  trend: Float
+  updatedAt: DateTime
+}
+
+"""
+A saved audience segment.
+"""
+type Segment {
+  segmentId: ID!
+  name: String!
+  description: String
+  filters: [SegmentFilter!]
+  tags: [String!]
+  data: SegmentData
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+# ─── News Feed ────────────────────────────────────────────────────────────────
+
+"""
+An individual News Feed card.
+"""
+type FeedCard {
+  cardId: ID!
+  title: String
+  description: String
+  imageUrl: URL
+  url: URL
+  publishedAt: DateTime
+  expiresAt: DateTime
+  pinned: Boolean
+  extras: JSON
+}
+
+"""
+A News Feed container (deprecated in favor of Content Cards).
+"""
+type Feed {
+  feedId: ID!
+  name: String!
+  cards: [FeedCard!]
+  createdAt: DateTime
+}
+
+# ─── Templates ────────────────────────────────────────────────────────────────
+
+"""
+A reusable content block for the drag-and-drop email editor.
+"""
+type ContentBlock {
+  blockId: ID!
+  name: String!
+  description: String
+  htmlContent: String
+  tags: [String!]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""
+A full email template with HTML, plaintext, and subject.
+"""
+type EmailTemplate {
+  templateId: ID!
+  name: String!
+  subject: String!
+  htmlBody: String
+  plaintextBody: String
+  preheader: String
+  tags: [String!]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""
+A push notification template.
+"""
+type PushTemplate {
+  templateId: ID!
+  name: String!
+  platform: Platform
+  title: String
+  body: String!
+  imageUrl: URL
+  extraData: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""
+A generic reusable content template.
+"""
+type Template {
+  templateId: ID!
+  name: String!
+  type: String!
+  content: JSON
+  tags: [String!]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+# ─── Catalogs ─────────────────────────────────────────────────────────────────
+
+"""
+A field definition for a catalog schema.
+"""
+type CatalogField {
+  fieldName: String!
+  fieldType: AttributeType!
+  required: Boolean
+}
+
+"""
+An individual item in a Braze catalog.
+"""
+type CatalogItem {
+  itemId: ID!
+  catalogId: ID!
+  fields: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""
+A product or content catalog used for personalization.
+"""
+type Catalog {
+  catalogId: ID!
+  name: String!
+  description: String
+  fields: [CatalogField!]
+  itemCount: Int
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+# ─── News & Promotions ────────────────────────────────────────────────────────
+
+"""
+An in-app news item.
+"""
+type NewsItem {
+  itemId: ID!
+  title: String!
+  description: String
+  imageUrl: URL
+  url: URL
+  publishedAt: DateTime
+}
+
+"""
+A single-use or multi-use promotion code.
+"""
+type PromotionCode {
+  codeId: ID!
+  promotionId: ID!
+  code: String!
+  usedAt: DateTime
+  userId: String
+  expiresAt: DateTime
+}
+
+"""
+A promotional campaign entity.
+"""
+type Promotion {
+  promotionId: ID!
+  name: String!
+  description: String
+  codes: [PromotionCode!]
+  codeCount: Int
+  remainingCodes: Int
+  createdAt: DateTime
+  expiresAt: DateTime
+}
+
+# ─── Data Management ─────────────────────────────────────────────────────────
+
+"""
+An export job request and status for user or campaign data.
+"""
+type DataExport {
+  exportId: ID!
+  type: String!
+  status: ExportStatus!
+  filters: JSON
+  fileUrl: URL
+  requestedAt: DateTime
+  completedAt: DateTime
+}
+
+"""
+A bulk import job for user profile data.
+"""
+type DataImport {
+  importId: ID!
+  status: ExportStatus!
+  fileName: String
+  recordCount: Int
+  errorCount: Int
+  startedAt: DateTime
+  completedAt: DateTime
+  errors: [JSON!]
+}
+
+# ─── Analytics & Dashboard ───────────────────────────────────────────────────
+
+"""
+An analytics dashboard reference.
+"""
+type Dashboard {
+  dashboardId: ID!
+  name: String!
+  url: URL
+  type: String
+  createdAt: DateTime
+}
+
+# ─── Custom Data Definitions ─────────────────────────────────────────────────
+
+"""
+A typed property definition for a custom event schema.
+"""
+type EventProperty {
+  name: String!
+  type: AttributeType!
+  description: String
+  required: Boolean
+}
+
+"""
+A registered custom event type in the Braze dashboard.
+"""
+type CustomEvent {
+  name: String!
+  description: String
+  properties: [EventProperty!]
+  firstSeenAt: DateTime
+  lastSeenAt: DateTime
+  count: Int
+}
+
+"""
+A registered custom attribute schema definition.
+"""
+type CustomAttribute {
+  name: String!
+  type: AttributeType!
+  description: String
+  isArray: Boolean
+  firstSeenAt: DateTime
+  lastSeenAt: DateTime
+}
+
+# ─── Platform & Auth ─────────────────────────────────────────────────────────
+
+"""
+A third-party integration configuration.
+"""
+type Integration {
+  integrationId: ID!
+  name: String!
+  provider: String!
+  enabled: Boolean!
+  config: JSON
+  createdAt: DateTime
+}
+
+"""
+An API key with scoped permissions for a workspace.
+"""
+type APIKey {
+  keyId: ID!
+  name: String!
+  key: String!
+  appGroupId: ID!
+  permissions: [String!]
+  allowedIPs: [String!]
+  createdAt: DateTime
+  lastUsedAt: DateTime
+}
+
+"""
+An individual app (iOS, Android, Web) within a workspace.
+"""
+type App {
+  appId: ID!
+  name: String!
+  platform: Platform!
+  appGroupId: ID!
+  bundleId: String
+  iconUrl: URL
+  sdkVersion: String
+  createdAt: DateTime
+}
+
+"""
+A Braze workspace (formerly called App Group) that groups apps and settings.
+"""
+type AppGroup {
+  appGroupId: ID!
+  name: String!
+  apps: [App!]
+  apiKeys: [APIKey!]
+  timezone: String
+  createdAt: DateTime
+}
+
+# ─── Input Types ─────────────────────────────────────────────────────────────
+
+input UserAttributeInput {
+  key: String!
+  value: JSON!
+}
+
+input UserEventInput {
+  name: String!
+  time: DateTime
+  properties: JSON
+  appId: String
+}
+
+input PurchaseInput {
+  productId: String!
+  currency: String!
+  price: Float!
+  quantity: Int
+  time: DateTime
+  properties: JSON
+}
+
+input TrackUsersInput {
+  externalId: String
+  userAlias: UserAliasInput
+  brazeId: String
+  attributes: [UserAttributeInput!]
+  events: [UserEventInput!]
+  purchases: [PurchaseInput!]
+}
+
+input UserAliasInput {
+  aliasLabel: String!
+  aliasName: String!
+}
+
+input MergeUsersInput {
+  mergeUpdatesExternalId: String
+  mergeIntoExternalId: String!
+}
+
+input RecipientInput {
+  externalId: String
+  userAlias: UserAliasInput
+  brazeId: String
+  attributes: [UserAttributeInput!]
+}
+
+input SendMessageInput {
+  campaignId: ID
+  canvasId: ID
+  broadcast: Boolean
+  recipients: [RecipientInput!]
+  segmentId: ID
+  audienceFilter: JSON
+  messageType: MessageType!
+}
+
+input ScheduleMessageInput {
+  campaignId: ID
+  canvasId: ID
+  schedule: ScheduleInput!
+  recipients: [RecipientInput!]
+  broadcast: Boolean
+}
+
+input ScheduleInput {
+  time: DateTime!
+  inLocalTime: Boolean
+  atOptimalTime: Boolean
+}
+
+input TriggerCampaignInput {
+  campaignId: ID!
+  recipients: [RecipientInput!]
+  broadcast: Boolean
+  audienceFilter: JSON
+  triggerProperties: JSON
+  schedule: ScheduleInput
+}
+
+input TriggerCanvasInput {
+  canvasId: ID!
+  recipients: [RecipientInput!]
+  broadcast: Boolean
+  audienceFilter: JSON
+  canvasEntryProperties: JSON
+  schedule: ScheduleInput
+}
+
+input SegmentFilterInput {
+  filterType: String!
+  operator: String!
+  value: JSON
+}
+
+input CreateSegmentInput {
+  name: String!
+  description: String
+  filters: [SegmentFilterInput!]!
+  tags: [String!]
+}
+
+input UpdateSubscriptionInput {
+  externalId: String
+  email: String
+  phone: String
+  subscriptionState: SubscriptionState!
+  subscriptionGroupId: ID
+}
+
+input CreateCatalogItemInput {
+  catalogId: ID!
+  itemId: ID!
+  fields: JSON!
+}
+
+input UpdateCatalogItemInput {
+  catalogId: ID!
+  itemId: ID!
+  fields: JSON!
+}
+
+input CreateEmailTemplateInput {
+  name: String!
+  subject: String!
+  htmlBody: String!
+  plaintextBody: String
+  preheader: String
+  tags: [String!]
+}
+
+input CreateContentBlockInput {
+  name: String!
+  description: String
+  htmlContent: String!
+  tags: [String!]
+}
+
+input DataExportInput {
+  type: String!
+  filters: JSON
+  outputFormat: String
+  callbackEndpoint: URL
+}
+
+# ─── Root Types ──────────────────────────────────────────────────────────────
+
+type Query {
+  """Fetch a user profile by external ID."""
+  user(externalId: String!): User
+
+  """Fetch a user's full profile including subscriptions and history."""
+  userProfile(externalId: String!): UserProfile
+
+  """Fetch a campaign by ID."""
+  campaign(campaignId: ID!): Campaign
+
+  """Fetch delivery and engagement metrics for a campaign."""
+  campaignStats(campaignId: ID!): CampaignStats
+
+  """List all campaigns."""
+  campaigns(status: CampaignStatus, tags: [String!], limit: Int, offset: Int): [Campaign!]!
+
+  """Fetch a Canvas by ID."""
+  canvas(canvasId: ID!): Canvas
+
+  """List all Canvases."""
+  canvases(status: CanvasStatus, tags: [String!], limit: Int, offset: Int): [Canvas!]!
+
+  """Fetch a segment by ID."""
+  segment(segmentId: ID!): Segment
+
+  """List all segments."""
+  segments(limit: Int, offset: Int): [Segment!]!
+
+  """Fetch segment analytics data."""
+  segmentData(segmentId: ID!): SegmentData
+
+  """Fetch a catalog by ID."""
+  catalog(catalogId: ID!): Catalog
+
+  """List all catalogs."""
+  catalogs: [Catalog!]!
+
+  """List items in a catalog."""
+  catalogItems(catalogId: ID!, limit: Int, offset: Int): [CatalogItem!]!
+
+  """Fetch an email template by ID."""
+  emailTemplate(templateId: ID!): EmailTemplate
+
+  """List all email templates."""
+  emailTemplates(limit: Int, offset: Int): [EmailTemplate!]!
+
+  """Fetch a content block by ID."""
+  contentBlock(blockId: ID!): ContentBlock
+
+  """List all content blocks."""
+  contentBlocks(limit: Int, offset: Int): [ContentBlock!]!
+
+  """Fetch a subscription group by ID."""
+  subscriptionGroup(groupId: ID!): SubscriptionGroup
+
+  """List all subscription groups."""
+  subscriptionGroups(channel: MessageType): [SubscriptionGroup!]!
+
+  """List API keys for the workspace."""
+  apiKeys: [APIKey!]!
+
+  """Fetch a workspace (app group) by ID."""
+  appGroup(appGroupId: ID!): AppGroup
+
+  """Fetch a data export job by ID."""
+  dataExport(exportId: ID!): DataExport
+
+  """List registered custom event types."""
+  customEvents(limit: Int, offset: Int): [CustomEvent!]!
+
+  """List registered custom attribute schemas."""
+  customAttributes(limit: Int, offset: Int): [CustomAttribute!]!
+
+  """Fetch a promotion by ID."""
+  promotion(promotionId: ID!): Promotion
+
+  """Fetch a push template by ID."""
+  pushTemplate(templateId: ID!): PushTemplate
+
+  """List all push templates."""
+  pushTemplates(platform: Platform, limit: Int, offset: Int): [PushTemplate!]!
+
+  """Fetch a Braze webhook configuration by ID."""
+  brazeWebhook(webhookId: ID!): BrazeWebhook
+
+  """List all configured Braze webhooks."""
+  brazeWebhooks: [BrazeWebhook!]!
+
+  """List all integrations."""
+  integrations: [Integration!]!
+
+  """Fetch an analytics dashboard by ID."""
+  dashboard(dashboardId: ID!): Dashboard
+
+  """List all dashboards."""
+  dashboards: [Dashboard!]!
+}
+
+type Mutation {
+  """Track user attributes, events, and purchases (mirrors /users/track)."""
+  trackUsers(input: TrackUsersInput!): Boolean
+
+  """Delete a user's data (GDPR erasure)."""
+  deleteUser(externalId: String!): Boolean
+
+  """Merge two user profiles."""
+  mergeUsers(input: MergeUsersInput!): Boolean
+
+  """Send a message immediately."""
+  sendMessage(input: SendMessageInput!): MessageSend
+
+  """Schedule a message for future delivery."""
+  scheduleMessage(input: ScheduleMessageInput!): MessageSchedule
+
+  """API-trigger a campaign."""
+  triggerCampaign(input: TriggerCampaignInput!): MessageSend
+
+  """API-trigger a Canvas."""
+  triggerCanvas(input: TriggerCanvasInput!): MessageSend
+
+  """Create a new audience segment."""
+  createSegment(input: CreateSegmentInput!): Segment
+
+  """Update a user's subscription status."""
+  updateSubscriptionStatus(input: UpdateSubscriptionInput!): Boolean
+
+  """Add an item to a catalog."""
+  createCatalogItem(input: CreateCatalogItemInput!): CatalogItem
+
+  """Update an existing catalog item."""
+  updateCatalogItem(input: UpdateCatalogItemInput!): CatalogItem
+
+  """Remove an item from a catalog."""
+  deleteCatalogItem(catalogId: ID!, itemId: ID!): Boolean
+
+  """Create a new email template."""
+  createEmailTemplate(input: CreateEmailTemplateInput!): EmailTemplate
+
+  """Create a new content block."""
+  createContentBlock(input: CreateContentBlockInput!): ContentBlock
+
+  """Start a data export job."""
+  requestDataExport(input: DataExportInput!): DataExport
+}

@@ -3,19 +3,12 @@
   "feeds": [
     {
       "source": "https://www.braze.com/resources/articles",
-      "feed_url": "https://www.braze.com/resources/articles",
-      "title": "",
-      "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://www.braze.com/docs/user_guide/privacy_portal",
-      "feed_url": "https://www.braze.com/docs/user_guide/privacy_portal",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "feed_url": "",
+      "saved": 3,
+      "method": "agent-scrape"
     }
   ],
-  "post_count": 3,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 9,
+  "fetched": "2026-06-27T12:29:18Z",
+  "agent_pulled": "2026-06-27"
 }

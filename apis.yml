@@ -45,6 +45,10 @@ apis:
     campaign analytics and user data. Region-specific base URLs serve US, EU, AU,
     ID, and JP instances with Bearer token auth.
 common:
+- type: VulnerabilityDisclosure
+  url: security/braze-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/braze-domain-security.yml
 - type: GitHubOrganization
   url: https://github.com/braze-inc
 - type: LinkedIn

@@ -2,13 +2,14 @@
   "repo": "braze",
   "feeds": [
     {
-      "source": "https://www.braze.com/resources/articles",
-      "feed_url": "",
-      "saved": 3,
-      "method": "agent-scrape"
+      "source": "https://www.braze.com/docs/user_guide/privacy_portal",
+      "feed_url": "https://www.braze.com/docs/user_guide/privacy_portal",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "post_count": 9,
-  "fetched": "2026-06-27T12:29:18Z",
-  "agent_pulled": "2026-06-27"
+  "post_count": 12,
+  "fetched": "2026-07-11T11:50:51Z",
+  "agent_pulled": "2026-07-04"
 }

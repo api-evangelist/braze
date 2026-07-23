@@ -1,0 +1,209 @@
+openapi: 3.0.0
+info:
+  title: Braze SMS API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: SMS
+  description: Use the Braze SMS Endpoints to manage your users phone numbers in your subscription groups.
+paths:
+  /sms/invalid_phone_numbers:
+    get:
+      tags:
+      - SMS
+      summary: Query Invalid Phone Numbers
+      description: "> Use this endpoint to pull a list of phone numbers that have been deemed invalid within a certain time frame. \n  \n\nTo use this endpoint, youll need to generate an API key with the `sms.invalid_phone_numbers` permission.\n\n- If you provide a `start_date`, an `end_date`, and `phone_numbers`, we prioritize the given phone numbers and disregard the date range.\n- If your date range has more than the `limit` number of invalid phone numbers, you will need to make multiple API calls with increasing the `offset` each time until a call returns either fewer than `limit` or zero results.\n    \n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\nEntries are listed in descending order.\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"sms\": [\n    {\n      \"phone\": \"12345678900\",\n      \"invalid_detected_at\": \"2016-08-25 15:24:32 +0000\"\n    },\n    {\n      \"phone\": \"12345678901\",\n      \"invalid_detected_at\": \"2016-08-24 17:41:58 +0000\"\n    },\n    {\n      \"phone\": \"12345678902\",\n      \"invalid_detected_at\": \"2016-08-24 12:01:13 +0000\"\n    }\n  ],\n  \"message\": \"success\"\n}\n\n```"
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: start_date
+        in: query
+        schema:
+          type: string
+        description: "(Optional*) String in YYYY-MM-DD format \nStart date of the range to retrieve invalid phone numbers, must be earlier than `end_date`. This is treated as midnight in UTC time by the API.\n"
+        example: '2018-09-01'
+      - name: end_date
+        in: query
+        schema:
+          type: string
+        description: "(Optional*) String in YYYY-MM-DD format \nEnd date of the range to retrieve invalid phone numbers. This is treated as midnight in UTC time by the API.\n"
+        example: '2018-09-01'
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        description: '(Optional) Integer
+
+          Optional field to limit the number of results returned. Defaults to 100, maximum is 500.'
+        example: 100
+      - name: offset
+        in: query
+        schema:
+          type: integer
+        description: '(Optional) Integer
+
+          Optional beginning point in the list to retrieve from.'
+        example: 1
+      - name: phone_numbers
+        in: query
+        schema:
+          type: integer
+        description: '(Optional*) Array of Strings in e.164 format
+
+          If provided, we will return the phone number if it has been found to be invalid.
+
+          '
+        example: 12345678901
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /sms/invalid_phone_numbers/remove:
+    post:
+      tags:
+      - SMS
+      summary: Remove Invalid Phone Numbers
+      description: "> Use this endpoint to remove invalid phone numbers from Brazes invalid list. \n  \n\nTo use this endpoint, youll need to generate an API key with the `sms.invalid_phone_numbers.remove` permission.\n\nThis can be used to re-validate phone numbers after they have been marked as invalid.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `phone_number` | Required | Array of strings in e.164 format | An array of up to 50 phone numbers to modify. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                phone_numbers:
+                - '12183095514'
+                - '14255551212'
+              properties:
+                phone_numbers:
+                  type: array
+                  items:
+                    type: string
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

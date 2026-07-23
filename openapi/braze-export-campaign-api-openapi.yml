@@ -1,0 +1,324 @@
+openapi: 3.0.0
+info:
+  title: Braze Export > Campaign API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: Export > Campaign
+paths:
+  /campaigns/data_series:
+    get:
+      tags:
+      - Export > Campaign
+      summary: Export Campaign Analytics
+      description: "> Use this endpoint to retrieve a daily series of various stats for a campaign over time. \n  \n\nData returned includes how many messages were sent, opened, clicked, or converted by messaging channel.\n\nTo use this endpoint, youll need to generate an API key with the `campaigns.data_series` permission.\n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `campaign_id` can be found at **Developer Console > API Settings**.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Responses\n\n### Multichannel response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"data\" : [\n        {\n            \"time\" : (string) date as ISO 8601 date,\n            \"messages\" : {\n                \"ios_push\" : [\n                    {\n                      \"variation_name\": \"iOS_Push\",\n                      \"sent\" : (int),\n                      \"direct_opens\" : (int),\n                      \"total_opens\" : (int),\n                      \"bounces\" : (int),\n                      \"body_clicks\" : (int)\n                      \"revenue\": 0,\n                      \"unique_recipients\": 1,\n                      \"conversions\": 0,\n                      \"conversions_by_send_time\": 0,\n                      \"conversions1\": 0,\n                      \"conversions1_by_send_time\": 0,\n                      \"conversions2\": 0,\n                      \"conversions2_by_send_time\": 0,\n                      \"conversions3\": 0,\n                      \"conversions3_by_send_time\": 0,\n                      \"carousel_slide_[NUM]_[TITLE]_click\": (optional, int),\n                      \"notif_button_[NUM]_[TITLE]_click\": (optional, int)\n                    }\n                ],\n                \"android_push\" : [\n                    {\n                      \"sent\" : (int),\n                      \"direct_opens\" : (int),\n                      \"total_opens\" : (int),\n                      \"bounces\" : (int),\n                      \"body_clicks\" : (int)\n                    }\n                ],\n                \"webhook\": [\n                    {\n                      \"sent\": (int),\n                      \"errors\": (int)\n                    }\n                ],\n                \"email\" : [\n                    {\n                      \"sent\": (int),\n                      \"opens\": (int),\n                      \"unique_opens\": (int),\n                      \"clicks\": (int),\n                      \"unique_clicks\": (int),\n                      \"unsubscribes\": (int),\n                      \"bounces\": (int),\n                      \"delivered\": (int),\n                      \"reported_spam\": (int)\n                    }\n                ],\n                \"sms\" : [\n                  {\n                    \"sent\": (int),\n                    \"delivered\": (int),\n                    \"undelivered\": (int),\n                    \"delivery_failed\": (int)\n                  }\n                ]\n              },\n           \"conversions_by_send_time\": (optional, int),\n           \"conversions1_by_send_time\": (optional, int),\n           \"conversions2_by_send_time\": (optional, int),\n           \"conversions3_by_send_time\": (optional, int),\n           \"conversions\": (int),\n           \"conversions1\": (optional, int),\n           \"conversions2\": (optional, int),\n           \"conversions3\": (optional, int),\n           \"unique_recipients\": (int),\n           \"revenue\": (optional, float)\n        },\n        ...\n    ],\n    ...\n}\n\n```\n\n### Multivariate response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"data\" : [\n        {\n            \"time\" : (string) date as ISO 8601 date,\n            \"conversions\" : (int),\n            \"revenue\": (float),\n            \"conversions_by_send_time\": (int),\n            \"messages\" : {\n               \"trigger_in_app_message\": [{\n                      \"variation_name\": (optional, string),\n                      \"impressions\": (int),\n                      \"clicks\": (int),\n                      \"first_button_clicks\": (int),\n                      \"second_button_clicks\": (int),\n                      \"revenue\": (optional, float),,\n                      \"unique_recipients\": (int),\n                      \"conversions\": (optional, int),\n                      \"conversions_by_send_time\": (optional, int),\n                      \"conversions1\": (optional, int),\n                      \"conversions1_by_send_time\": (optional, int),\n                      \"conversions2\": (optional, int),\n                      \"conversions2_by_send_time\": (optional, int),\n                      \"conversions3\": (optional, int),\n                      \"conversions3_by_send_time\": (optional, int)\n                  }, {\n                      \"variation_name\": (optional, string),\n                      \"impressions\": (int),\n                      \"clicks\": (int),\n                      \"first_button_clicks\": (int),\n                      \"second_button_clicks\": (int),\n                      \"revenue\": (optional, float),,\n                      \"unique_recipients\": (int),\n                      \"conversions\": (optional, int),\n                      \"conversions_by_send_time\": (optional, int),\n                      \"conversions1\": (optional, int),\n                      \"conversions1_by_send_time\": (optional, int),\n                      \"conversions2\": (optional, int),\n                      \"conversions2_by_send_time\": (optional, int),\n                      \"conversions3\": (optional, int).\n                      \"conversions3_by_send_time\": (optional, int)\n                  }, {\n                      \"variation_name\": (optional, string),\n                      \"revenue\": (optional, float),,\n                      \"unique_recipients\": (int),\n                      \"conversions\": (optional, int),\n                      \"conversions_by_send_time\": (optional, int),\n                      \"conversions1\": (optional, int),\n                      \"conversions1_by_send_time\": (optional, int),\n                      \"conversions2\": (optional, int),\n                      \"conversions2_by_send_time\": (optional, int),\n                      \"conversions3\": (optional, int),\n                      \"conversions3_by_send_time\": (optional, int),\n                      \"enrolled\": (optional, int)\n                  }]\n              },\n              \"conversions_by_send_time\": (optional, int),\n              \"conversions1_by_send_time\": (optional, int),\n              \"conversions2_by_send_time\": (optional, int),\n              \"conversions3_by_send_time\": (optional, int),\n              \"conversions\": (optional, int,\n              \"conversions1\": (optional, int),\n              \"conversions2\": (optional, int),\n              \"conversions3\": (optional, int),\n              \"unique_recipients\": (int),\n              \"revenue\": (optional, float)\n         }],\n         ...\n}\n\n```\n\nPossible message types are `email`, `in_app_message`, `webhook`, `android_push`, ios_push, `kindle_push`, `web_push`. All push message types will have the same statistics shown for `android_push`.\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: campaign_id
+        in: query
+        schema:
+          type: string
+        description: '(Required) String
+
+
+          See [campaign API identifier](https://www.braze.com/docs/api/identifier_types/).
+
+
+          The `campaign_id` for API campaigns can be found at **Settings > Setup and Testing > API Keys** and the **Campaign Details** page within your dashboard, or you can use the [List campaigns endpoint](https://www.braze.com/docs/api/endpoints/export/campaigns/get_campaigns/).'
+        example: '{{campaign_identifier}}'
+      - name: length
+        in: query
+        schema:
+          type: integer
+        description: '(Required) Integer
+
+
+          Max number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive).'
+        example: 7
+      - name: ending_at
+        in: query
+        schema:
+          type: string
+        description: '(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+
+          Date on which the data series should end. Defaults to time of the request.'
+        example: '2020-06-28T23:59:59-5:00'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /campaigns/details:
+    get:
+      tags:
+      - Export > Campaign
+      summary: Export Campaign Details
+      description: "> Use this endpoint to retrieve relevant information on a specified campaign, which can be identified by the `campaign_id`. \n  \n\nTo use this endpoint, youll need to generate an API key with the `campaign.details` permission.\n\nIf you want to retrieve Canvas data, refer to the [Canvas Details](https://www.braze.com/docs/api/endpoints/export/canvas/get_canvas_details/) endpoint.\n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `campaign_id` can be found at **Developer Console** > **API Settings**\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Responses\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"created_at\" : (string) the date created as ISO 8601 date,\n    \"updated_at\" : (string) the date last updated as ISO 8601 date,\n    \"archived\": (boolean) whether this campaign is archived,\n    \"draft\": (boolean) whether this campaign is a draft,\n    \"name\" : (string) the campaign name,\n    \"description\" : (string) the campaign description,\n    \"schedule_type\" : (string) the type of scheduling action,\n    \"channels\" : (array) the list of channels to send via,\n    \"first_sent\" : (string) the date and hour of first sent as ISO 8601 date,\n    \"last_sent\" : (string) the date and hour of last sent as ISO 8601 date,\n    \"tags\" : (array) the tag names associated with the campaign,\n    \"messages\": {\n        \"message_variation_id\": (string) { // <=This is the actual id\n            \"channel\": (string) the channel type of the message, must be either email, ios_push, webhook, content_card, in-app_message, or sms,\n            \"name\": (string) the name of the message in the dashboard (eg., \"Variation 1\")\n            ... channel-specific fields for this message, see the following messages section ...\n        }\n    },\n    \"conversion_behaviors\": (array) the conversion event behaviors assigned to the campaign, see the following conversions behavior section.\n}\n\n```\n\n### Messages\n\nThe `messages` response will contain information about each message. The following includes example message responses for each channel:\n\n#### Push channels\n\n``` json\n{\n    \"channel\": (string) description of the channel, such as \"ios_push\" or \"android_push\"\n    \"alert\": (string) alert body text,\n    \"extras\": (hash) any key value pairs provided\n}\n\n```\n\n#### Email channel\n\n``` json\n{\n    \"channel\": \"email\",\n    \"subject\": (string) subject,\n    \"body\": (string) HTML body,\n    \"from\": (string) from address and display name,\n    \"reply_to\": (string) reply-to for message, if different than \"from\" address,\n    \"title\": (string) name of the email,\n    \"extras\": (hash) any key value pairs provided\n}\n\n```\n\n#### In-app message channel\n\n``` json\n{\n    \"type\": (string) description of in-app message type, such as \"survey\",\n    \"data\": {\n        \"pages\": [\n            {\n                \"header\": \n                    {\n                         \"text\":(string) display text for the header of the survey,\n                    }\n                \"choices\": [\n                    {\n                       \"choice_id\": (string) choice identifier,\n                       \"text\": (string) display text, \n                       \"custom_attribute_key\": (string) custom attribute key, \n                       \"custom_attribute_value\": (sting) custom attribute value,\n                       \"deleted\": (boolean) deleted from live campaign, \n                    },\n                    ...\n                ]\n            }\n        ]\n    }\n}\n\n```\n\n#### Content Card channel\n\n``` json\n{\n    \"channel\": \"content_cards\",\n    \"name\": (string) name of variant,\n    \"extras\": (hash) any key value pairs provided; only present if at least one key-value pair has been set\n}\n\n```\n\n#### Webhook channel\n\n``` json\n{\n    \"channel\": \"webhook\",\n    \"url\": (string) url for webhook,\n    \"body\": (string) payload body,\n    \"type\": (string) body content type,\n    \"headers\": (hash) specified request headers,\n    \"method\": (string) HTTP method (e.g., \"POST\" or \"GET\"),\n}\n\n```\n\n#### SMS channel\n\n``` json\n{\n  \"channel\": \"sms\",\n  \"body\": (string) payload body,\n  \"from\": (string) list of numbers associated with the subscription group,\n  \"subscription_group_id\": (string) API id of the subscription group targeted in the SMS message\n}\n\n```\n\n#### Control Messages\n\n``` json\n{\n    \"channel\": (string) description of the channel that the control is for,\n    \"type\": \"control\"\n}\n\n```\n\n### Conversion Behaviors\n\nThe `conversion_behaviors` array will contain information about each conversion event behavior set for the campaign. These behaviors are in order as set by the campaign. For example, Conversion Event A will be the first item in the array, Conversion Event B will be second, etc. The following lists example conversion event behavior responses:\n\n#### Clicks email\n\n``` json\n{\n    \"type\": \"Clicks Email\",\n    \"window\": (integer) number of seconds during which the user can convert on this event, i.e. - 86400, which is 24 hours\n}\n\n```\n\n#### Opens email\n\n``` json\n{\n    \"type\": \"Opens Email\",\n    \"window\": (integer) number of seconds during which the user can convert on this event, i.e. - 86400, which is 24 hours\n}\n\n```\n\n#### Makes purchase (any purchase)\n\n``` json\n{\n    \"type\": \"Makes Any Purchase\",\n    \"window\": (integer) number of seconds during which the user can convert on this event, i.e. - 86400, which is 24 hours\n}\n\n```\n\n#### Makes purchase (specific product)\n\n``` json\n{\n    \"type\": \"Makes Specific Purchase\",\n    \"window\": (integer) number of seconds during which the user can convert on this event, i.e. - 86400, which is 24 hours,\n    \"product\": (string) name of the product, i.e. - \"Feline Body Armor\"\n}\n\n```\n\n#### Performs custom event\n\n``` json\n{\n    \"type\": \"Performs Custom Event\",\n    \"window\": (integer) number of seconds during which the user can convert on this event, i.e. - 86400, which is 24 hours,\n    \"custom_event_name\": (string) name of the event, i.e. - \"Used Feline Body Armor\"\n}\n\n```\n\n#### Upgrades app\n\n``` json\n{\n    \"type\": \"Upgrades App\",\n    \"window\": (integer) number of seconds during which the user can convert on this event, i.e. - 86400, which is 24 hours,\n    \"app_ids\": (array|null) array of app ids, i.e. - [\"12345\", \"67890\"], or `null` if \"Track sessions for any app\" is selected in the UI\n}\n\n```\n\n#### Uses app\n\n``` json\n{\n    \"type\": \"Starts Session\",\n    \"window\": (integer) number of seconds during which the user can convert on this event, i.e. - 86400, which is 24 hours,\n    \"app_ids\": (array|null) array of app ids, i.e. - [\"12345\", \"67890\"], or `null` if \"Track sessions for any app\" is selected in the UI\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: campaign_id
+        in: query
+        schema:
+          type: string
+        description: '(Required) String
+
+
+          See [campaign API identifier](https://www.braze.com/docs/api/identifier_types/).
+
+
+          The `campaign_id` for API campaigns can be found on the **Settings > Setup and Testing > API Keys** and the campaign details page within your dashboard, or you can use the [Campaign List Endpoint](https://www.braze.com/docs/api/endpoints/export/campaigns/get_campaign_analytics/#campaign-list-endpoint).'
+        example: '{{campaign_identifier}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /campaigns/list:
+    get:
+      tags:
+      - Export > Campaign
+      summary: Export Campaign List
+      description: "> Use this endpoint to export a list of campaigns, each of which will include its name, campaign API identifier, whether it is an API campaign, and tags associated with the campaign. \n  \n\nThe campaigns are returned in groups of 100 sorted by time of creation (oldest to newest by default).\n\nTo use this endpoint, youll need to generate an API key with the `campaigns.list` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Campaign list endpoint API response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"campaigns\" : [\n        {\n            \"id\" : (string) Campaign API Identifier,\n            \"last_edited\": (ISO 8601 string) the last edited time for the message \n            \"name\" : (string) campaign name,\n            \"is_api_campaign\" : (boolean) whether the campaign is an API Campaign,\n            \"tags\" : (array) tag names associated with the campaign\n        },\n        ...\n    ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: '(Optional) Integer
+
+
+          The page of campaigns to return, defaults to 0 (returns the first set of up to 100).'
+      - name: include_archived
+        in: query
+        schema:
+          type: boolean
+        description: '(Optional) Boolean
+
+
+          Whether or not to include archived campaigns, defaults to false.'
+      - name: sort_direction
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String
+
+
+          - Sort creation time from newest to oldest: pass in the value `desc`.
+
+          - Sort creation time from oldest to newest: pass in the value `asc`.
+
+
+          If `sort_direction` is not included, the default order is oldest to newest.'
+        example: desc
+      - name: last_edit.time[gt]
+        in: query
+        schema:
+          type: string
+        description: '(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+
+          Filters the results and only returns campaigns that were edited greater than the time provided till now. Format is `yyyy-MM-DDTHH:mm:ss`.'
+        example: '2020-06-28T23:59:59-5:00'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /sends/data_series:
+    get:
+      tags:
+      - Export > Campaign
+      summary: Export Send Analytics
+      description: "> Use this endpoint to retrieve a daily series of various stats for a tracked `send_id`. \n  \n\nBraze stores send analytics for 14 days after the send.\n\nCampaign conversions will be attributed towards the most recent send id that a given user has received from the campaign.\n\nTo use this endpoint, youll need to generate an API key with the `sends.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n### Send analytics endpoint API response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n            \"variation_name\": (string) variation name,\n            \"sent\": (int) the number of sends,\n            \"delivered\": (int) the number of messages successfully delivered,\n            \"undelivered\": (int) the number of undelivered,\n            \"delivery_failed\": (int) the number of rejected,\n            \"direct_opens\": (int) the number of direct opens,\n            \"total_opens\": (int) the number of total opens,\n            \"bounces\": (int) the number of bounces,\n            \"body_clicks\": (int) the number of body clicks,\n            \"revenue\": (float) the number of dollars of revenue (USD),\n            \"unique_recipients\": (int) the number of unique recipients,\n            \"conversions\": (int) the number of conversions,\n            \"conversions_by_send_time\": (int) the number of conversions,\n            \"conversions1\": (int, optional) the number of conversions for the second conversion event,\n            \"conversions1_by_send_time\": (int, optional) the number of conversions for the second conversion event by send time,\n            \"conversions2\": (int, optional) the number of conversions for the third conversion event,\n            \"conversions2_by_send_time\": (int, optional) the number of conversions for the third conversion event by send time,\n            \"conversions3\": (int, optional) the number of conversions for the fourth conversion event,\n            \"conversions3_by_send_time\": (int, optional) the number of conversions for the fourth conversion event by send time\n          }\n        ]\n      },\n      \"conversions_by_send_time\": 0,\n      \"conversions1_by_send_time\": 0,\n      \"conversions2_by_send_time\": 0,\n      \"conversions3_by_send_time\": 0,\n      \"conversions\": 0,\n      \"conversions1\": 0,\n      \"conversions2\": 0,\n      \"conversions3\": 0,\n      \"unique_recipients\": 1,\n      \"revenue\": 0\n    }\n  ],\n  \"message\": \"success\"\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: campaign_id
+        in: query
+        schema:
+          type: string
+        description: '(Required) String
+
+
+          See [Campaign API identifier](https://www.braze.com/docs/api/identifier_types/).'
+        example: '{{campaign_identifier}}'
+      - name: send_id
+        in: query
+        schema:
+          type: string
+        description: '(Required) String
+
+
+          See [Send API identifier](https://www.braze.com/docs/api/identifier_types/).'
+        example: '{{send_identifier}}'
+      - name: length
+        in: query
+        schema:
+          type: integer
+        description: '(Required) Integer
+
+
+          Max number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive).'
+        example: 30
+      - name: ending_at
+        in: query
+        schema:
+          type: string
+        description: '(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+
+          Date on which the data series should end. Defaults to time of the request.'
+        example: '2014-12-10T23:59:59-05:00'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

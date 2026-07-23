@@ -1,0 +1,407 @@
+openapi: 3.0.0
+info:
+  title: Braze Catalogs > Catalog Items > Synchronous API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: Catalogs > Catalog Items > Synchronous
+paths:
+  /catalogs/{catalog_name}/items:
+    get:
+      tags:
+      - Catalogs > Catalog Items > Synchronous
+      summary: List Multiple Catalog Item Details
+      description: "> Use this endpoint to return multiple catalog items and their content. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.get_items` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n\n## Query parameters\n\nNote that each call to this endpoint will return 50 items. For a catalog with more than 50 items, use the `Link` header to retrieve the data on the next page as shown in the following example response.\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `cursor` | Optional | String | Determines the pagination of the catalog items. |\n\n## Example requests\n\n### Without cursor\n\n```\ncurl --location --request GET 'https://rest.iad-03.braze.com/catalogs/restaurants/items' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n### With cursor\n\n```\ncurl --location --request GET 'https://rest.iad-03.braze.com/catalogs/restaurants/items?cursor=c2tpcDow' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\nThere are three status code responses for this endpoint: `200`, `400`, and `404`.\n\n### Example success response\n\nThe status code `200` could return the following response header and body.\n\n{% alert note %}  \nThe `Link` header won't exist if the catalog has less than or equal to 50 items. For calls without a cursor, `prev` will not show. When looking at the last page of items, `next` will not show.  \n{% endalert %}\n\n```\nLink: ; rel=\"prev\",; rel=\"next\"\n\n```\n\n``` json\n{\n  \"items\": [\n    {\n      \"id\": \"restaurant1\",\n      \"Name\": \"Restaurant1\",\n      \"City\": \"New York\",\n      \"Cuisine\": \"American\",\n      \"Rating\": 5,\n      \"Loyalty_Program\": true,\n      \"Open_Time\": \"2022-11-02T09:03:19.967Z\"\n    },\n    {\n      \"id\": \"restaurant2\",\n      \"Name\": \"Restaurant2\",\n      \"City\": \"New York\",\n      \"Cuisine\": \"American\",\n      \"Rating\": 10,\n      \"Loyalty_Program\": true,\n      \"Open_Time\": \"2022-11-02T09:03:19.967Z\"\n    },\n    {\n      \"id\": \"restaurant3\",\n      \"Name\": \"Restaurant3\",\n      \"City\": \"New York\",\n      \"Cuisine\": \"American\",\n      \"Rating\": 5,\n      \"Loyalty_Program\": false,\n      \"Open_Time\": \"2022-11-02T09:03:19.967Z\"\n    }\n  ],\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"invalid-cursor\",\n      \"message\": \"'cursor' is not valid\",\n      \"parameters\": [\n        \"cursor\"\n      ],\n      \"parameter_values\": [\n        \"bad-cursor\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `catalog-not-found` | Check that the catalog name is valid. |\n| `invalid-cursor` | Check that your `cursor` is valid. |"
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: catalog_name
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /catalogs/{catalog_name}/items/{item_id}:
+    delete:
+      tags:
+      - Catalogs > Catalog Items > Synchronous
+      summary: Delete a Catalog Item
+      description: "> Use this endpoint to delete an item in your catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.delete_item` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n| `item_id` | Required | String | The ID of the catalog item. |\n\n## Request parameters\n\nThere is no request body for this endpoint.\n\n## Example request\n\n```\ncurl --location --request DELETE 'https://rest.iad-03.braze.com/catalogs/restaurants/items/restaurant1' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\nThere are three status code responses for this endpoint: `202`, `400`, and `404`.\n\n### Example success response\n\nThe status code `202` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"item-not-found\",\n      \"message\": \"Could not find item\",\n      \"parameters\": [\n        \"item_id\"\n      ],\n      \"parameter_values\": [\n        \"restaurant34\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `arbitrary-error` | An arbitrary error occurred. Please try again or contact [Support](https://www.braze.com/docs/support_contact/). |\n| `catalog-not-found` | Check that the catalog name is valid. |\n| `item-not-found` | Check that the item to be deleted exists in your catalog. |"
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: catalog_name
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: item_id
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+      - Catalogs > Catalog Items > Synchronous
+      summary: List Catalog Item Details
+      description: "> Use this endpoint to return a catalog item and its content. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.get_item` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n| `item_id` | Required | String | The ID of the catalog item. |\n\n## Request parameters\n\nThere is no request body for this endpoint.\n\n## Example request\n\n```\ncurl --location --request GET 'https://rest.iad-03.braze.com/catalogs/restaurants/items/restaurant1' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\nThere are two status code responses for this endpoint: `200` and `404`.\n\n### Example success response\n\nThe status code `200` could return the following response body.\n\n``` json\n{\n  \"items\": [\n    {\n      \"id\": \"restaurant3\",\n      \"Name\": \"Restaurant1\",\n      \"City\": \"New York\",\n      \"Cuisine\": \"American\",\n      \"Rating\": 5,\n      \"Loyalty_Program\": true,\n      \"Open_Time\": \"2022-11-01T09:03:19.967Z\"\n    }\n  ],\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `404` could return the following response. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"item-not-found\",\n      \"message\": \"Could not find item\",\n      \"parameters\": [\n        \"item_id\"\n      ],\n      \"parameter_values\": [\n        \"restaurant34\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps, if applicable.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `catalog-not-found` | Check that the catalog name is valid. |\n| `item-not-found` | Check that the item is in the catalog. |"
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: catalog_name
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: item_id
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      tags:
+      - Catalogs > Catalog Items > Synchronous
+      summary: Edit Catalog Items
+      description: "> Use this endpoint to edit an item in your catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.update_item` permission.\n\n## Rate Limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n| `item_id` | Required | String | The ID of the catalog item. |\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `items` | Required | Array | An array that contains item objects. The item objects should contain fields that exist in the catalog except for the `id` field. Only one item object is allowed per request. |\n\n## Example request\n\n```\ncurl --location --request PATCH 'https://rest.iad-03.braze.com/catalogs/restaurants/items/restaurant1' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY' \\\n--data-raw '{\n  \"items\": [\n    {\n      \"Name\": \"Restaurant\",\n      \"Loyalty_Program\": false,\n      \"Open_Time\": \"2021-09-03T09:03:19.967+00:00\"\n    }\n  ]\n}'\n\n```\n\n## Response\n\nThere are three status code responses for this endpoint: `200`, `400`, and `404`.\n\n### Example success response\n\nThe status code `200` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"invalid-fields\",\n      \"message\": \"Some of the fields given do not exist in the catalog\",\n      \"parameters\": [\n        \"id\"\n      ],\n      \"parameter_values\": [\n        \"restaurant1\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `arbitrary-error` | An arbitrary error occurred. Please try again or contact [Support](https://www.braze.com/docs/support_contact/). |\n| `catalog-not-found` | Check that the catalog name is valid. |\n| `filtered-set-field-too-long` | The field value is being used in a filtered set that exceeds the character limit for an item. |\n| `id-in-body` | An item ID already exists in the catalog. |\n| `ids-too-large` | Character limit for each item ID is 250 characters. |\n| `invalid-ids` | Supported characters for item ID names are letters, numbers, hyphens, and underscores. |\n| `invalid-fields` | Confirm that the fields in the request exist in the catalog. |\n| `invalid-keys-in-value-object` | Item object keys can't include `.` or `$`. |\n| `item-not-found` | Check that the item is in the catalog. |\n| `item-array-invalid` | `items` must be an array of objects. |\n| `items-too-large` | Character limit for each item is 5,000 characters. |\n| `request-includes-too-many-items` | You can only edit one catalog item per request. |\n| `too-deep-nesting-in-value-object` | Item objects can't have more than 50 levels of nesting. |\n| `unable-to-coerce-value` | Item types can't be converted. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                items:
+                - Name: Restaurant
+                  Loyalty_Program: false
+                  Open_Time: '2021-09-03T09:03:19.967+00:00'
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: catalog_name
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: item_id
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+      - Catalogs > Catalog Items > Synchronous
+      summary: Create Catalog Item
+      description: "> Use this endpoint to create an item in your catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.create_item` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n| `item_id` | Required | String | The ID of the catalog item. |\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `items` | Required | Array | An array that contains item objects. The item objects should contain all of the fields in the catalog except for the `id` field. Only one item object is allowed per request. |\n\n## Example Request\n\n```\ncurl --location --request POST 'https://rest.iad-03.braze.com/catalogs/restaurants/items/restaurant1' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY' \\\n--data-raw '{\n  \"items\": [\n    {\n      \"Name\": \"Restaurant1\",\n      \"City\": \"New York\",\n      \"Cuisine\": \"American\",\n      \"Rating\": 5,\n      \"Loyalty_Program\": true,\n      \"Created_At\": \"2022-11-01T09:03:19.967+00:00\"\n    }\n  ]\n}'\n\n```\n\n## Response\n\nThere are three status code responses for this endpoint: `201`, `400`, and `404`.\n\n### Example success response\n\nThe status code `201` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"fields-do-not-match\",\n      \"message\": \"Fields do not match with fields on the catalog\",\n      \"parameters\": [\n        \"id\"\n      ],\n      \"parameter_values\": [\n        \"restaurant2\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `already-reached-catalog-item-limit` | Maximum number of catalogs reached. Contact your Braze account manager for more information. |\n| `already-reached-company-item-limit` | Maximum number of catalog items reached. Contact your Braze account manager for more information. |\n| `arbitrary-error` | An arbitrary error occurred. Please try again or contact [Support](https://www.braze.com/docs/support_contact/). |\n| `catalog-not-found` | Check that the catalog name is valid. |\n| `filtered-set-field-too-long` | The field value is being used in a filtered set that exceeds the character limit for an item. |\n| `id-in-body` | Remove any item IDs in the request body. |\n| `ids-too-large` | Character limit for each item ID is 250 characters. |\n| `invalid-ids` | Supported characters for item ID names are letters, numbers, hyphens, and underscores. |\n| `invalid-fields` | Confirm that the fields in the request exist in the catalog. |\n| `invalid-keys-in-value-object` | Item object keys can't include `.` or `$`. |\n| `item-already-exists` | The item already exists in the catalog. |\n| `item-array-invalid` | `items` must be an array of objects. |\n| `items-too-large` | Character limit for each item is 5,000 characters. |\n| `request-includes-too-many-items` | You can only create one catalog item per request. |\n| `too-deep-nesting-in-value-object` | Item objects can't have more than 50 levels of nesting. |\n| `unable-to-coerce-value` | Item types can't be converted. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                items:
+                - Name: Restaurant1
+                  City: New York
+                  Cuisine: American
+                  Rating: 5
+                  Loyalty_Program: true
+                  Created_At: '2022-11-01T09:03:19.967+00:00'
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: catalog_name
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: item_id
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+      - Catalogs > Catalog Items > Synchronous
+      summary: Update Catalog Item
+      description: "> Use this endpoint to update an item in your catalog. \n  \n\nTo use this endpoint, you'll need to generate an API key with the `catalogs.replace_item` permission.\n\nIf the `item_id` isn't found, this endpoint will create the item. This endpoint is synchronous.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n| `item_id` | Required | String | The ID of the catalog item. |\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `items` | Required | Array | An array that contains item objects. The item objects should contain fields that exist in the catalog except for the `id` field. Only one item object is allowed per request. |\n\n## Example request\n\n```\ncurl --location --request PUT 'https://rest.iad-03.braze.com/catalogs/restaurants/items/restaurant1' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY' \\\n--data-raw '{\n  \"items\": [\n    {\n      \"Name\": \"Restaurant\",\n      \"Loyalty_Program\": false,\n      \"Location\": {\n        \"Latitude\": 33.6112,\n        \"Longitude\": -117.8711\n      },\n      \"Open_Time\": \"2021-09-03T09:03:19.967+00:00\"\n    }\n  ]\n}'\n\n```\n\n## Response\n\nThere are three status code responses for this endpoint: `200`, `400`, and `404`.\n\n### Example success response\n\nThe status code `200` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"invalid-fields\",\n      \"message\": \"Some of the fields given do not exist in the catalog\",\n      \"parameters\": [\n        \"id\"\n      ],\n      \"parameter_values\": [\n        \"restaurant1\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `already_reached_catalog_item_limit` | Maximum number of catalogs reached. Contact your Braze account manager for more information. |\n| `already_reached_company_item_limit` | Maximum number of items reached. Contact your Braze account manager for more information. |\n| `arbitrary_error` | An arbitrary error occurred. Please try again or contact [Support](https://www.braze.com/docs/support_contact/). |\n| `catalog_not_found` | Check that the catalog name is valid. |\n| `filtered-set-field-too-long` | The field value is being used in a filtered set that exceeds the character limit for an item. |\n| `id_in_body` | Remove any item IDs in the request body. |\n| `ids_too_large` | Character limit for each item ID is 250 characters. |\n| `invalid_ids` | Supported characters for item ID names are letters, numbers, hyphens, and underscores. |\n| `invalid_fields` | Confirm that the fields in the request exist in the catalog. |\n| `invalid_keys_in_value_object` | Item object keys can't include `.` or `$`. |\n| `item_already_exists` | The item already exists in the catalog. |\n| `item_array_invalid` | `items` must be an array of objects. |\n| `items_too_large` | Item values can't exceed 5,000 characters. |\n| `request_includes_too_many_items` | Your request has too many items. The item limit per request is 50. |\n| `too_deep_nesting_in_value_object` | Item objects can't have more than 50 levels of nesting. |\n| `unable_to_coerce_value` | Item types can't be converted. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                items:
+                - Name: Restaurant
+                  Loyalty_Program: false
+                  Location:
+                    Latitude: 33.6112
+                    Longitude: -117.8711
+                  Open_Time: '2021-09-03T09:03:19.967+00:00'
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: catalog_name
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: item_id
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

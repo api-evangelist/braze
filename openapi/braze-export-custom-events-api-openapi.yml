@@ -1,0 +1,208 @@
+openapi: 3.0.0
+info:
+  title: Braze Export > Custom Events API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: Export > Custom Events
+paths:
+  /events/list:
+    get:
+      tags:
+      - Export > Custom Events
+      summary: Export Custom Events List
+      description: "> Use this endpoint to export a list of custom events that have been recorded for your app. The event names are returned in groups of 250, sorted alphabetically. \n  \n\nTo use this endpoint, youll need to generate an API key with the `events.list` permission.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/purchases/product_list` endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"events\" : [\n        \"Event A\", (string) the event name,\n        \"Event B\", (string) the event name,\n        \"Event C\", (string) the event name,\n        ...\n    ]\n}\n\n```\n\n### Fatal error response codes\n\nFor status codes and associated error messages that will be returned if your request encounters a fatal error, reference [Fatal errors & responses](https://www.braze.com/docs/api/errors/#fatal-errors).\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: '(Optional) Integer
+
+
+          The page of event names to return, defaults to 0 (returns the first set of up to 250).'
+        example: 3
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /events/data_series:
+    get:
+      tags:
+      - Export > Custom Events
+      summary: Export Custom Events Analytics
+      description: "> Use this endpoint to retrieve a series of the number of occurrences of a custom event in your app over a designated time period. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `app_id` can be found at**Developer Console** > **API Settings**\n\nTo use this endpoint, youll need to generate an API key with the `events.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"data\" : [\n        {\n            \"time\" : (string) point in time - as ISO 8601 extended when unit is \"hour\" and as ISO 8601 date when unit is \"day\",\n            \"count\" : (int)\n        },\n        ...\n    ]\n}\n\n```\n\n### Fatal error response codes\n\nFor status codes and associated error messages that will be returned if your request encounters a fatal error, reference [Fatal errors & responses](https://www.braze.com/docs/api/errors/#fatal-errors).\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: event
+        in: query
+        schema:
+          type: string
+        description: '(Required) String
+
+
+          The name of the custom event for which to return analytics. '
+        example: event_name
+      - name: length
+        in: query
+        schema:
+          type: integer
+        description: '(Required) Integer
+
+
+          Maximum number of units (days or hours) before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive).'
+        example: 24
+      - name: unit
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String
+
+
+          Unit of time between data points - can be `day` or `hour`, defaults to `day`.'
+        example: hour
+      - name: ending_at
+        in: query
+        schema:
+          type: string
+        description: '(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+
+          Date on which the data series should end. Defaults to time of the request.'
+        example: '2014-12-10T23:59:59-05:00'
+      - name: app_id
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String
+
+
+          App API identifier retrieved from **Settings > Setup and Testing > API Keys** to limit analytics to a specific app.'
+        example: '{{app_identifier}}'
+      - name: segment_id
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String
+
+
+          See [Segment API identifier](https://www.braze.com/docs/api/identifier_types/). Segment ID indicating the analytics-enabled segment for which event analytics should be returned.'
+        example: '{{segment_identifier}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

@@ -1,0 +1,334 @@
+openapi: 3.0.0
+info:
+  title: Braze Templates > Email Templates API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: Templates > Email Templates
+paths:
+  /templates/email/update:
+    post:
+      tags:
+      - Templates > Email Templates
+      summary: Update Email Template
+      description: "> Use this endpoint to update email templates on the Braze dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `templates.email.update` permission.\n\nYou can access an email templates `email_template_id` by navigating to it on the **Templates & Media** page. The [Create email template endpoint](https://www.braze.com/docs/api/endpoints/templates/email_templates/post_create_email_template/) will also return an `email_template_id` reference.\n\nAll fields other than the `email_template_id` are optional, but you must specify at least one field to update.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `email_template_id` | Required | String | Your [email template's API identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `template_name` | Optional | String | Name of your email template. |\n| `subject` | Optional | String | Email template subject line. |\n| `body` | Optional | String | Email template body that may include HTML. |\n| `plaintext_body` | Optional | String | A plaintext version of the email template body. |\n| `preheader` | Optional | String | Email preheader used to generate previews in some clients. |\n| `tags` | Optional | String | [Tags](https://www.braze.com/docs/user_guide/administrative/app_settings/manage_app_group/tags/) must already exist. |\n| `should_inline_css` | Optional | Boolean | Enables or disables the `inline_css` feature per template. If not provided, Braze will use the default setting for the AppGroup. One of `true` or `false` is expected. |\n\n### Possible errors\n\nThe following table lists possible returned errors and their associated troubleshooting steps, if applicable.\n\n| Error | Troubleshooting |\n| --- | --- |\n| Template name is required |  |\n| Tags must be an array | Tags must be formatted as an array of strings, for example `[\"marketing\", \"promotional\", \"transactional\"]`. |\n| All tags must be strings | Make sure your tags are encapsulated in quotes (`\"\"`). |\n| Some tags could not be found | To add a tag when creating an email template, the tag must already exist in Braze. |\n| Invalid value for `should_inline_css`. One of `true` or `false` was expected | This parameter only accepts boolean values (true or false). Make sure the value for `should_inline_css` is not encapsulated in quotes (`\"\"`), which causes the value to be sent as a string instead. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email_template_id: email_template_id
+                template_name: Weekly Newsletter
+                subject: This Week's Styles
+                body: Check out this week's digital lookbook to inspire your outfits. Take a look at https://www.braze.com/
+                plaintext_body: This is the updated text within my email body and here is a link to https://www.braze.com/.
+                preheader: We want you to have the best looks this Summer
+                tags:
+                - Tag1
+                - Tag2
+              properties:
+                email_template_id:
+                  type: string
+                template_name:
+                  type: string
+                subject:
+                  type: string
+                body:
+                  type: string
+                plaintext_body:
+                  type: string
+                preheader:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /templates/email/list:
+    get:
+      tags:
+      - Templates > Email Templates
+      summary: List Available Email Templates
+      description: "> Use this endpoint to get a list of available templates in your Braze account. \n  \n\nTo use this endpoint, youll need to generate an API key with the `templates.email.list` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Response\n\n> **Important:** Templates built using the Drag & Drop Editor for email are not provided in this response. \n  \n\n``` json\n{\n  \"count\": number of templates returned\n  \"templates\": [template with the following properties]:\n    \"email_template_id\": (string) your email template's API Identifier,\n    \"template_name\": (string) the name of your email template,\n    \"created_at\": (string, in ISO 8601),\n    \"updated_at\": (string, in ISO 8601),\n    \"tags\": (array of strings) tags appended to the template\n}\n\n```"
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: modified_after
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+
+
+          Retrieve only templates updated at or after the given time.'
+        example: '2020-01-01T01:01:01.000000'
+      - name: modified_before
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+
+
+          Retrieve only templates updated at or before the given time.'
+        example: '2020-02-01T01:01:01.000000'
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        description: '(Optional) Positive Number
+
+
+          Maximum number of templates to retrieve. Default to 100 if not provided, with a maximum acceptable value of 1000.'
+        example: 1
+      - name: offset
+        in: query
+        schema:
+          type: integer
+        description: '(Optional) Positive Number
+
+
+          Number of templates to skip before returning rest of the templates that fit the search criteria.'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /templates/email/info:
+    get:
+      tags:
+      - Templates > Email Templates
+      summary: See Email Template Information
+      description: "> Use this endpoint to get information on your email templates. \n  \n\nTo use this endpoint, youll need to generate an API key with the `templates.email.info` permission.\n\n> **Important:** Templates built using the drag-and-drop editor for email are not accepted. \n  \n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"email_template_id\": (string) your email template's API Identifier,\n  \"template_name\": (string) the name of your email template,\n  \"description\": (string) email template description,\n  \"subject\": (string) the email template subject line,\n  \"preheader\": (optional, string) the email preheader used to generate previews in some clients),\n  \"body\": (optional, string) the email template body that may include HTML,\n  \"plaintext_body\": (optional, string) a plaintext version of the email template body,\n  \"should_inline_css\": (optional, boolean) whether there is inline CSS in the body of the template - defaults to the css inlining value for the App Group,\n  \"tags\": (string) tag names,\n  \"created_at\": (string, in ISO 8601),\n  \"updated_at\": (string, in ISO 8601)\n}\n\n```\n\nImages in this response will show in the `body` variable as HTML."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: email_template_id
+        in: query
+        schema:
+          type: string
+        description: '(Required) String
+
+
+          See [email template''s API identifier](https://www.braze.com/docs/api/identifier_types/).'
+        example: '{{email_template_id}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /templates/email/create:
+    post:
+      tags:
+      - Templates > Email Templates
+      summary: Create Email Template
+      description: "> Use this endpoint to create email templates on the Braze dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `templates.email.create` permission.\n\nThese templates will be available on the **Templates & Media** page. The response from this endpoint will include a field for `email_template_id`, which can be used to update the template in subsequent API calls.\n\nUsers email subscription status can be updated and retrieved via Braze using a RESTful API. You can use the API to set up bi-directional sync between Braze and other email systems or your own database. All API requests are made over HTTPS.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `template_name` | Required | String | Name of your email template. |\n| `subject` | Required | String | Email template subject line. |\n| `body` | Required | String | Email template body that may include HTML. |\n| `plaintext_body` | Optional | String | A plaintext version of the email template body. |\n| `preheader` | Optional | String | Email preheader used to generate previews in some clients. |\n| `tags` | Optional | String | [Tags](https://www.braze.com/docs/user_guide/administrative/app_settings/manage_app_group/tags/) must already exist. |\n| `should_inline_css` | Optional | Boolean | Enables or disables the `inline_css` feature per template. If not provided, Braze will use the default setting for the app group. One of `true` or `false` is expected. |\n\n### Possible errors\n\nThe following table lists possible returned errors and their associated troubleshooting steps, if applicable.\n\n| Error | Troubleshooting |\n| --- | --- |\n| Template name is required | Enter a template name. |\n| Tags must be an array | Tags must be formatted as an array of strings, for example `[\"marketing\", \"promotional\", \"transactional\"]`. |\n| All tags must be strings | Make sure your tags are encapsulated in quotes (`\"\"`). |\n| Some tags could not be found | To add a tag when creating an email template, the tag must already exist in Braze. |\n| Email must have valid Content Block names | The email contains Content Blocks that don't exist in this environment. |\n| Invalid value for `should_inline_css`. One of `true` or `false` was expected | This parameter only accepts boolean values (true or false). Make sure the value for `should_inline_css` is not encapsulated in quotes (`\"\"`), which causes the value to be sent as a string instead. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                template_name: email_template_name
+                subject: Welcome to my email template!
+                body: This is the text within my email body and https://www.braze.com/ here is a link to Braze.com.
+                plaintext_body: This is the text within my email body and here is a link to https://www.braze.com/.
+                preheader: My preheader is pretty cool.
+                tags:
+                - Tag1
+                - Tag2
+              properties:
+                template_name:
+                  type: string
+                subject:
+                  type: string
+                body:
+                  type: string
+                plaintext_body:
+                  type: string
+                preheader:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

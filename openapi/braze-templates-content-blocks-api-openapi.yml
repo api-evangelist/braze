@@ -1,0 +1,333 @@
+openapi: 3.0.0
+info:
+  title: Braze Templates > Content Blocks API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: Templates > Content Blocks
+  description: "Content Blocks are an Email Templating feature that allow you to: \n- Create a consistent look and feel to your Email campaigns using Content Blocks as Headers and Footers.\n- Distribute the same offer codes through different channels.\n- Create pre-defined assets that can be used to build messages with consistent information and assets.\n- Copy entire message bodies to other messages.\n\nYou can edit Content Blocks in the Templates & Media section of the Braze UI, or here, via API."
+paths:
+  /content_blocks/list:
+    get:
+      tags:
+      - Templates > Content Blocks
+      summary: List Available Content Blocks
+      description: "> Use this endpoint to list your existing [Content Blocks](https://www.braze.com/docs/user_guide/engagement_tools/templates_and_media/content_blocks/) information. \n  \n\nTo use this endpoint, youll need to generate an API key with the `content_blocks.list` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR_REST_API_KEY\n{\n  \"count\": \"integer\",\n  \"content_blocks\": [\n    {\n      \"content_block_id\": \"string\",\n      \"name\": \"string\",\n      \"content_type\": \"html or text\",\n      \"liquid_tag\": \"string\",\n      \"inclusion_count\" : \"integer\",\n      \"created_at\": \"time-in-iso\",\n      \"last_edited\": \"time-in-iso\",\n      \"tags\" : \"array of strings\"\n    }\n  ]\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `Modified after time is invalid` | The provided date is not a valid or parsable date. Reformat this value as a string in ISO 8601 format (`yyyy-mm-ddThh:mm:ss.ffffff`). |\n| `Modified before time is invalid` | The provided date is not a valid or parsable date. Reformat this value as a string in ISO 8601 format (`yyyy-mm-ddThh:mm:ss.ffffff`). |\n| `Modified after time must be earlier than or the same as modified before time.` | Change the `modified_after` value to a time that is earlier than the `modified_before` time. |\n| `Content Block number limit is invalid` | The `limit` parameter must be an integer (positive number) greater than 0. |\n| `Content Block number limit must be greater than 0` | Change the `limit` parameter to an integer greater than 0. |\n| `Content Block number limit exceeds maximum of 1000` | Change the `limit` parameter to an integer less than 1000. |\n| `Offset is invalid` | The `offset` parameter must be an integer greater than 0. |\n| Offset must be greater than 0 | Change the `offset` parameter to an integer greater than 0. |"
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: modified_after
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+
+
+          Retrieve only content blocks updated at or after the given time.'
+        example: '2020-01-01T01:01:01.000000'
+      - name: modified_before
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+
+
+          Retrieve only content blocks updated at or before the given time.'
+        example: '2020-02-01T01:01:01.000000'
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        description: '(Optional) Positive Number
+
+
+          Maximum number of content blocks to retrieve. Default to 100 if not provided, with a maximum acceptable value of 1000.'
+        example: 100
+      - name: offset
+        in: query
+        schema:
+          type: integer
+        description: '(Optional) Positive Number
+
+
+          Number of content blocks to skip before returning rest of the templates that fit the search criteria.'
+        example: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /content_blocks/info:
+    get:
+      tags:
+      - Templates > Content Blocks
+      summary: See Content Block Information
+      description: "> Use this endpoint to call information for your existing [Content Blocks](https://www.braze.com/docs/user_guide/engagement_tools/templates_and_media/content_blocks/). \n  \n\nTo use this endpoint, youll need to generate an API key with the `content_blocks.info` permission.\n\n**Note:** If you are using our [older navigation](https://www.braze.com/docs/navigation), `content_block_id`can be found at ****Developer Console** > **API Settings****.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR_REST_API_KEY\n{\n  \"content_block_id\": \"string\",\n  \"name\": \"string\",\n  \"content\": \"string\",\n  \"description\": \"string\",\n  \"content_type\": \"html or text\",\n  \"tags\":  \"array of strings\",\n  \"created_at\": \"time-in-iso\",\n  \"last_edited\": \"time-in-iso\",\n  \"inclusion_count\" : \"integer\",\n  \"message\": \"success\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `Content Block ID cannot be blank` | Make sure that a Content Block is listed in your request and is encapsulated in quotes (`\"\"`). |\n| `Content Block ID is invalid for this App Group` | This Content Block doesn't exist or is in a different company account or app group. |\n| `Content Block has been deletedcontent not available` | This Content Block, though it may have existed earlier, has been deleted. |\n| `Include Inclusion Dataerror` | This parameter only accepts boolean values (true or false). Make sure the value for `include_inclusion_data` is not encapsulated in quotes (`\"\"`), which causes the value to be sent as a string instead. See [request parameters](#request-parameters) for details. |"
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: content_block_id
+        in: query
+        schema:
+          type: string
+        description: "(Required) String\n\nThe content block identifier. \n\nYou can find this by either listing content block information through an API call or going to **Settings > Setup and Testing > API Keys**, then scrolling to the bottom and searching for your content block API identifier."
+        example: '{{content_block_id}}'
+      - name: include_inclusion_data
+        in: query
+        schema:
+          type: boolean
+        description: '(Optional) Boolean
+
+
+          When set to `true`, the API returns back the Message Variation API identifier of campaigns and Canvases where this content block is included, to be used in subsequent calls. The results exclude archived or deleted Campaigns or Canvases.'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /content_blocks/create:
+    post:
+      tags:
+      - Templates > Content Blocks
+      summary: Create Content Block
+      description: "> Use this endpoint to create a [Content Block](https://www.braze.com/docs/user_guide/engagement_tools/templates_and_media/content_blocks/). \n  \n\nTo use this endpoint, youll need to generate an API key with the `content_blocks.create` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `name` | Required | String | Name of the content block. Must be less than 100 characters. |\n| `description` | Optional | String | Description of the content block. Must be less than 250 characters. |\n| `content` | Required | String | HTML or text content within the Content Block. |\n| `state` | Optional | String | Choose `active` or `draft`. Defaults to `active` if not specified. |\n| `tags` | Optional | Array of strings | [Tags](https://www.braze.com/docs/user_guide/administrative/app_settings/manage_app_group/tags/) must already exist. |\n\n### Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"content_block_id\": (string) Your newly generated block id,\n  \"liquid_tag\": (string) The generated block tag from the Content Block name,\n  \"created_at\": (string) The time the Content Block was created in ISO 8601,\n  \"message\": \"success\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `Content cannot be blank` |  |\n| `Content must be a string` | Make sure your content is encapsulated in quotes (`\"\"`). |\n| `Content must be smaller than 50kb` | The content in your Content Block must be less than 50kb total. |\n| `Content contains malformed liquid` | The Liquid provided is not valid or parsable. Try again with valid Liquid or reach out to support. |\n| `Content Block cannot be referenced within itself` |  |\n| `Content Block description cannot be blank` |  |\n| `Content Block description must be a string` | Make sure your Content Block description is encapsulated in quotes (`\"\"`). |\n| `Content Block description must be shorter than 250 characters` |  |\n| `Content Block name cannot be blank` |  |\n| `Content Block name must be shorter than 100 characters` |  |\n| `Content Block name can only contain alphanumeric characters` | Content Block names can include any of the following characters: the letters (capitalized or lowercase) `A` through `Z`, the numbers `0` through `9`, dashes `-`, and underscores `_`. It cannot contain non-alphanumeric characters like emojis, `!`, `@`, `~`, `&`, and other \"special\" characters. |\n| `Content Block with this name already exists` | Try a different name. |\n| `Content Block state must be either active or draft` |  |\n| `Tags must be an array` | Tags must be formatted as an array of strings, for example `[\"marketing\", \"promotional\", \"transactional\"]`. |\n| `All tags must be strings` | Make sure your tags are encapsulated in quotes (`\"\"`). |\n| `Some tags could not be found` | To add a tag when creating a Content Block, the tag must already exist in Braze. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: content_block
+                description: This is my content block
+                content: HTML content within block
+                state: draft
+                tags:
+                - marketing
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                content:
+                  type: string
+                state:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /content_blocks/update:
+    post:
+      tags:
+      - Templates > Content Blocks
+      summary: Update Content Block
+      description: "> Use this endpoint to update a [Content Block](https://www.braze.com/docs/user_guide/engagement_tools/templates_and_media/content_blocks/). \n  \n\nTo use this endpoint, youll need to generate an API key with the `content_blocks.update` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/)\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `content_block_id` | Required | String | Your content block's API identifier. |\n| `name` | Required | String | Name of the content block. Must be less than 100 characters. |\n| `description` | Optional | String | Description of the content block. Must be less than 250 characters. |\n| `content` | Required | String | HTML or text content within content blocks. |\n| `state` | Optional | String | Choose `active` or `draft`. Defaults to `active` if not specified. |\n| `tags` | Optional | Array of strings | [Tags](https://www.braze.com/docs/user_guide/administrative/app_settings/manage_app_group/tags/) must already exist. |\n\n### Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"content_block_id\": (string) Your newly generated block id,\n  \"liquid_tag\": (string) The generated block tag from the Content Block name,\n  \"created_at\": (string) The time the Content Block was created in ISO 8601,\n  \"message\": \"success\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `Content cannot be blank` |  |\n| `Content must be a string` | Make sure your content is encapsulated in quotes (`\"\"`). |\n| `Content must be smaller than 50kb` | The content in your Content Block must be less than 50kb total. |\n| `Content contains malformed liquid` | The Liquid provided is not valid or parsable. Try again with valid Liquid or reach out to support. |\n| `Content Block cannot be referenced within itself` |  |\n| `Content Block description cannot be blank` |  |\n| `Content Block description must be a string` | Make sure your Content Block description is encapsulated in quotes (`\"\"`). |\n| `Content Block description must be shorter than 250 characters` |  |\n| `Content Block name cannot be blank` |  |\n| `Content Block name must be shorter than 100 characters` |  |\n| `Content Block name can only contain alphanumeric characters` | Content Block names can include any of the following characters: the letters (capitalized or lowercase) `A` through `Z`, the numbers `0` through `9`, dashes `-`, and underscores `_`. It cannot contain non-alphanumeric characters like emojis, `!`, `@`, `~`, `&`, and other \"special\" characters. |\n| `Content Block with this name already exists` | Try a different name. |\n| `Content Block name cannot be updated for active Content Blocks` |  |\n| `Content Block state must be either active or draft` |  |\n| `Active Content Block can not be updated to Draft. Create a new Content Block.` |  |\n| `Tags must be an array` | Tags must be formatted as an array of strings, for example `[\"marketing\", \"promotional\", \"transactional\"]`. |\n| `All tags must be strings` | Make sure your tags are encapsulated in quotes (`\"\"`). |\n| `Some tags could not be found` | To add a tag when creating a Content Block, the tag must already exist in Braze. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                content_block_id: content_block_id
+                name: content_block
+                description: This is my content block
+                content: HTML or text content within block
+                state: draft
+                tags:
+                - marketing
+              properties:
+                content_block_id:
+                  type: string
+                name:
+                  type: string
+                description:
+                  type: string
+                content:
+                  type: string
+                state:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

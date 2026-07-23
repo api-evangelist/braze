@@ -1,0 +1,200 @@
+openapi: 3.0.0
+info:
+  title: Braze User Data > External ID Migration API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: User Data > External ID Migration
+  description: The External ID Migration API allows you to rename existing external IDs (creating a new primary ID and deprecating the existing ID) and remove deprecated IDs post-migration. <br><br> We've architected this solution to allow multiple External IDs in order to support a migration period whereby older versions of your apps still in the wild that use the previous External ID naming schema dont break. We highly recommend removing deprecated External IDs once your old naming schema is no longer in use.
+paths:
+  /users/external_ids/rename:
+    post:
+      tags:
+      - User Data > External ID Migration
+      summary: Rename External ID
+      description: "> Use this endpoint to rename your users external IDs. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.external_ids.rename` permission.\n\nYou can send up to 50 rename objects per request. You will need to create a new [API key](https://www.braze.com/docs/api/api_key/) with permissions for this endpoint.\n\nThis endpoint sets a new (primary) `external_id` for the user and deprecates their existing `external_id`. This means that the user can be identified by either `external_id` until the deprecated one is removed. Having multiple external IDs allows for a migration period so that older versions of your apps that use the previous external ID naming schema don't break.\n\nAfter your old naming schema is no longer in use, we highly recommend removing deprecated external IDs using the [`/users/external_ids/remove` endpoint](https://www.braze.com/docs/api/endpoints/user_data/external_id_migration/post_external_ids_remove).\n\n> **Warning:** Make sure to remove deprecated external IDs with the \n  \n\n## Rate limit\n\nWe apply a rate limit of 1,000 requests per minute to this endpoint, as documented in [API rate limits](http://braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `external_id_renames` | Required | Array of external ID rename objects | View request example and the following limitations for structure of external ID rename object |\n\n- The `current_external_id` must be the users primary ID, and cannot be a deprecated ID\n- The `new_external_id` must not already be in use as either a primary ID or a deprecated ID\n- The `current_external_id` and `new_external_id` cannot be the same\n    \n\n## Response\n\nThe response will confirm all successful renames, as well as unsuccessful renames with any associated errors. Error messages in the `rename_errors` field will reference the index of the object in the array of the original request.\n\n``` json\n{\n  \"message\" : (string) status message,\n  \"external_ids\" : (array of successful Rename Operations),\n  \"rename_errors\": (array of any )\n}\n\n```\n\nThe `message` field will return `success` for any valid request. More specific errors are captured in the `rename_errors` array. The `message` field returns an error in the case of:\n\n- Invalid API key\n- Empty `external_id_renames` array\n- `external_id_renames` array with more than 50 objects\n- Rate limit hit (>1,000 requests/minute)\n    \n\n## Frequently Asked Questions\n\n**Does this impact MAU?**  \nNo, since the number of users will stay the same, theyll just have a new `external_id`.\n\n**Does user behavior change historically?**  \nNo, since the user is still the same user, and all their historical behavior is still connected to them.\n\n**Can it be run on dev/staging app groups?**  \nYes. In fact, we highly recommend running a test migration on a staging or development app group, and ensuring everything has gone smoothly before executing on production data.\n\n**Does this consume data points?**  \nThis feature does not cost data points.\n\n**What is the recommended deprecation period?**  \nWe have no hard limit on how long you can keep deprecated external IDs around, but we highly recommend removing them once there is no longer a need to reference users by the deprecated ID."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                external_id_renames:
+                - current_external_id: existing_external_id
+                  new_external_id: new_external_id
+              properties:
+                external_id_renames:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      current_external_id:
+                        type: string
+                      new_external_id:
+                        type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /users/external_ids/remove:
+    post:
+      tags:
+      - User Data > External ID Migration
+      summary: Remove External ID
+      description: "> Use this endpoint to remove your users' old deprecated external IDs. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.external_ids.remove` permission.\n\nYou can send up to 50 external IDs per request. You will need to create a new [API key](https://www.braze.com/docs/api/api_key/) with permissions for this endpoint.\n\n> **Warning:** This endpoint completely removes the deprecated ID and cannot be undone. Using this endpoint to remove deprecated \\`external_ids\\` that are still associated with users in your system can permanently prevent you from finding those users' data. \n  \n\n## Rate limit\n\nWe apply a rate limit of 1,000 requests per minute to this endpoint, as documented in [API rate limits](http://braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `external_ids` | Required | Array of strings | External identifiers for the users to remove |\n\n> Important: Only deprecated IDs can be removed; attempting to remove a primary external ID will result in an error. \n  \n\n## Response\n\nThe response will confirm all successful removals, as well as unsuccessful removals with the associated errors. Error messages in the `removal_errors` field will reference the index in the array of the original request.\n\n``` json\n{\n  \"message\" : (string) status message,\n  \"removed_ids\" : (array of successful Remove Operations),\n  \"removal_errors\": (array of any )\n}\n\n```\n\nThe `message` field will return `success` for any valid request. More specific errors are captured in the `removal_errors` array. The `message` field returns an error in the case of:\n\n- Invalid API key\n- Empty `external_ids` array\n- `external_ids` array with more than 50 items\n- Rate limit hit (>1,000 requests/minute)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                external_ids:
+                - existing_deprecated_external_id_string
+              properties:
+                external_ids:
+                  type: array
+                  items:
+                    type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

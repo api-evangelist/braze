@@ -1,0 +1,314 @@
+openapi: 3.0.0
+info:
+  title: Braze Export > KPI API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: Export > KPI
+paths:
+  /kpi/new_users/data_series:
+    get:
+      tags:
+      - Export > KPI
+      summary: Export Daily New Users by Date
+      description: "> Use this endpoint to retrieve a daily series of the total number of new users on each date. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `app_id` can be found at **Developer Console** > **API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `kpi.new_users.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"data\" : [\n        {\n            \"time\" : (string) the date as ISO 8601 date,\n            \"new_users\" : (int) the number of daily new users\n        },\n        ...\n    ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: length
+        in: query
+        schema:
+          type: integer
+        description: '(Required) Integer
+
+
+          Maximum number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive).'
+        example: 14
+      - name: ending_at
+        in: query
+        schema:
+          type: string
+        description: '(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+
+          Date on which the data series should end. Defaults to time of the request.'
+        example: '2018-06-28T23:59:59-5:00'
+      - name: app_id
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String
+
+
+          App API identifier retrieved from **Settings > Setup and Testing > API Keys**. If excluded, results for all apps in workspace will be returned.'
+        example: '{{app_identifier}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /kpi/dau/data_series:
+    get:
+      tags:
+      - Export > KPI
+      summary: Export Daily Active Users by Date
+      description: "> Use this endpoint to retrieve a daily series of the total number of unique active users on each date. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), API Keys can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `kpi.dau.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"data\" : [\n        {\n            \"time\" : (string) the date as ISO 8601 date,\n            \"dau\" : (int) the number of daily active users\n        },\n        ...\n    ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: length
+        in: query
+        schema:
+          type: integer
+        description: '(Required) Integer
+
+
+          Maximum number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive).'
+        example: 10
+      - name: ending_at
+        in: query
+        schema:
+          type: string
+        description: '(Optional)  Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+          Date on which the data series should end. Defaults to time of the request.'
+        example: '2018-06-28T23:59:59-5:00'
+      - name: app_id
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String
+
+
+          App API identifier retrieved from **Settings > Setup and Testing > API Keys**. If excluded, results for all apps in workspace will be returned.'
+        example: '{{app_identifier}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /kpi/mau/data_series:
+    get:
+      tags:
+      - Export > KPI
+      summary: Export Monthly Active Users for Last 30 Days
+      description: "> Use this endpoint to retrieve a daily series of the total number of unique active users over a 30-day rolling window. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), API Keys can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `kpi.mau.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"data\" : [\n        {\n            \"time\" : (string) the date as ISO 8601 date,\n            \"mau\" : (int) the number of monthly active users\n        },\n        ...\n    ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: length
+        in: query
+        schema:
+          type: integer
+        description: '(Required) Integer
+
+
+          Maximum number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive).'
+        example: 7
+      - name: ending_at
+        in: query
+        schema:
+          type: string
+        description: '(Optional)  Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+
+          Date on which the data series should end. Defaults to time of the request.'
+        example: '2018-06-28T23:59:59-05:00'
+      - name: app_id
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String
+
+
+          App API identifier retrieved from **Settings > Setup and Testing > API Keys**. If excluded, results for all apps in workspace will be returned.'
+        example: '{{app_identifier}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /kpi/uninstalls/data_series:
+    get:
+      tags:
+      - Export > KPI
+      summary: Export KPIs for Daily App Uninstalls by Date
+      description: "> Use this endpoint to retrieve a daily series of the total number of uninstalls on each date. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), API Keys can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `kpi.uninstalls.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"data\" : [\n        {\n            \"time\" : (string) the date as ISO 8601 date,\n            \"uninstalls\" : (int) the number of uninstalls\n        },\n        ...\n    ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: length
+        in: query
+        schema:
+          type: integer
+        description: '(Required) Integer
+
+
+          Maximum number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive).'
+        example: 14
+      - name: ending_at
+        in: query
+        schema:
+          type: string
+        description: '(Optional)  Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+
+          Date on which the data series should end. Defaults to time of the request.'
+        example: '2018-06-28T23:59:59-5:00'
+      - name: app_id
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String
+
+
+          App API identifier retrieved from **Settings > Setup and Testing > API Keys**. If excluded, results for all apps in workspace will be returned.'
+        example: '{{app_identifier}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

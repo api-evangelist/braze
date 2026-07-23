@@ -1,0 +1,901 @@
+openapi: 3.0.0
+info:
+  title: Braze Messaging > Schedule Mesages API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: Messaging > Schedule Mesages
+paths:
+  /messages/scheduled_broadcasts:
+    get:
+      tags:
+      - Messaging > Schedule Mesages
+      summary: List Upcoming Scheduled Campaigns and Canvases
+      description: "> Use this endpoint to return a JSON list of information about scheduled campaigns and entry Canvases between now and a designated `end_time` specified in the request. \n  \n\nTo use this endpoint, youll need to generate an API key with the `messages.schedule_broadcasts` permission.\n\nDaily, recurring messages will only appear once with their next occurrence. Results returned in this endpoint are only for campaigns and Canvases created and scheduled in Braze.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"scheduled_broadcasts\": [\n    {\n      \"name\" (string) the name of the scheduled boradcast,\n      \"id\" (stings) the Canvas or campaign identifier,\n      \"type\" (string) the broadcast type either Canvas or Campaign,\n      \"tags\" (array) an array of tag names formatted as strings,\n      \"next_send_time\" (string) The next send time formatted in ISO 8601, may also include time zone if not local/intelligent delivery,\n      \"schedule_type\" (string) The schedule type, either local_time_zones, intelligent_delivery or the name of your company's time zone,\n    },\n  ]\n}\n\n```"
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: end_time
+        in: query
+        schema:
+          type: string
+        description: '(Required) String in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format
+
+
+          End date of the range to retrieve upcoming scheduled Campaigns and Canvases. This is treated as midnight in UTC time by the API.'
+        example: '2018-09-01T00:00:00-04:00'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /messages/schedule/delete:
+    post:
+      tags:
+      - Messaging > Schedule Mesages
+      summary: Delete Scheduled Messages
+      description: "> Use this endpoint to cancel a message that you previously scheduled before it has been sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `messages.schedule.delete` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `schedule_id` | Required | String | The schedule_id to delete (obtained from the response to create schedule). |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                schedule_id: schedule_identifier
+              properties:
+                schedule_id:
+                  type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /canvas/trigger/schedule/delete:
+    post:
+      tags:
+      - Messaging > Schedule Mesages
+      summary: Delete Scheduled API-Triggered Canvases
+      description: "> Use this endpoint to cancel a Canvas message that you previously scheduled via API-triggered before it has been sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.trigger.schedule.delete` permission.\n\nScheduled messages or triggers that are deleted very close to or during the time they were supposed to be sent will be updated with best efforts, so last-second deletions could be applied to all, some, or none of your targeted users.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `canvas_id` | Required | String | See [Canvas identifier](https://braze.com/docs/api/identifier_types/). |\n| `schedule_id` | Required | String | The `schedule_id` to delete (obtained from the response to create schedule). |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                canvas_id: canvas_identifier
+                schedule_id: schedule_identifier
+              properties:
+                canvas_id:
+                  type: string
+                schedule_id:
+                  type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /campaigns/trigger/schedule/delete:
+    post:
+      tags:
+      - Messaging > Schedule Mesages
+      summary: Delete Scheduled API Triggered Campaigns
+      description: "> The delete schedule endpoint allows you to cancel a message that you previously scheduled API-triggered Canvases before it has been sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `campaigns.trigger.schedule.delete` permission.\n\nScheduled messages or triggers that are deleted very close to or during the time they were supposed to be sent will be updated with best efforts, so last-second deletions could be applied to all, some, or none of your targeted users.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `campaign_id` | Required | String | See [campaign identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `schedule_id` | Required | String | The `schedule_id` to delete (obtained from the response to create schedule). |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                campaign_id: campaign_identifier
+                schedule_id: schedule_identifier
+              properties:
+                campaign_id:
+                  type: string
+                schedule_id:
+                  type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /messages/schedule/create:
+    post:
+      tags:
+      - Messaging > Schedule Mesages
+      summary: Create Scheduled Messages
+      description: "> Use this endpoint to schedule a campaign, Canvas, or other message to be sent at a designated time (up to 90 days in the future) and provides you with an identifier to reference that message for updates. \n  \n\nTo use this endpoint, youll need to generate an API key with the `messages.schedule.create` permission.\n\nIf you are targeting a segment, a record of your request will be stored in the [Developer Console](https://dashboard.braze.com/app_settings/developer_console/activitylog/) after all scheduled messages have been sent.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\nBraze endpoints support [batching API requests](https://www.braze.com/docs/api/api_limits/#batching-api-requests). A single request to the messaging endpoints can reach any of the following:\n\n- Up to 50 specific external_ids, each with individual message parameters\n- A segment of any size created in the Braze dashboard, specified by its `segment_id`\n- An ad-hoc audience segment of any size, defined in the request as a [Connected Audience](https://www.braze.com/docs/api/objects_filters/connected_audience/) object\n    \n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `broadcast` | Optional | Boolean | See [broadcast](https://www.braze.com/docs/api/parameters/#broadcast). This parameter defaults to false (as of August 31, 2017).  <br>  <br>If `recipients` is omitted, `broadcast` must be set to true. However, use caution when setting `broadcast: true`, as unintentionally setting this flag may cause you to send your message to a larger than expected audience. |\n| `external_user_ids` | Optional | Array of strings | See [external user identifier](https://www.braze.com/docs/api/parameters/#external-user-id). |\n| `user_aliases` | Optional | Array of user alias objects | See [user alias object](https://www.braze.com/docs/api/objects_filters/user_alias_object/). |\n| `audience` | Optional | Connected audience object | See [connected audience](https://www.braze.com/docs/api/objects_filters/connected_audience/). |\n| `segment_id` | Optional | String | See [segment identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `campaign_id` | Required | String | See [campaign identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `recipients` | Optional | Array of recipients objects | See [recipients object](https://www.braze.com/docs/api/objects_filters/recipient_object/). |\n| `send_id` | Optional | String | See [send identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `override_messaging_limits` | Optional | Boolean | Ignore global rate limits for campaigns, defaults to false |\n| `recipient_subscription_state` | Optional | String | Use this to send messages to only users who have opted in (`opted_in`), only users who have subscribed or are opted in (`subscribed`) or to all users, including unsubscribed users (`all`).  <br>  <br>Using `all` users is useful for transactional email messaging. Defaults to `subscribed`. |\n| `schedule` | Required | Schedule object | See [schedule object](https://www.braze.com/docs/api/objects_filters/schedule_object/) |\n| `messages` | Optional | Messaging object | See available [messaging objects](https://www.braze.com/docs/api/objects_filters/#messaging-objects). |\n\n## Response\n\n### Example success response\n\n``` json\n{\n    \"dispatch_id\": (string) the dispatch identifier,\n    \"schedule_id\": (string) the schedule identifier,\n    \"message\": \"success\"\n}\n\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                broadcast: false
+                external_user_ids: external_user_identifiers
+                user_aliases:
+                  alias_name: example_name
+                  alias_label: example_label
+                segment_id: segment_identifiers
+                audience:
+                  AND:
+                  - custom_attribute:
+                      custom_attribute_name: eye_color
+                      comparison: equals
+                      value: blue
+                  - custom_attribute:
+                      custom_attribute_name: favorite_foods
+                      comparison: includes_value
+                      value: pizza
+                  - OR:
+                    - custom_attribute:
+                        custom_attribute_name: last_purchase_time
+                        comparison: less_than_x_days_ago
+                        value: 2
+                    - push_subscription_status:
+                        comparison: is
+                        value: opted_in
+                  - email_subscription_status:
+                      comparison: is_not
+                      value: subscribed
+                  - last_used_app:
+                      comparison: after
+                      value: 2019-07-22T13:17:55+0000
+                campaign_id: campaign_identifier
+                send_id: send_identifier
+                override_messaging_limits: false
+                recipient_subscription_state: subscribed
+                schedule:
+                  time: ''
+                  in_local_time: true
+                  at_optimal_time: true
+                messages:
+                  apple_push: {}
+                  android_push: {}
+                  windows_push: {}
+                  windows8_push: {}
+                  kindle_push: {}
+                  web_push: {}
+                  email: {}
+                  webhook: {}
+                  content_card: {}
+              properties:
+                broadcast:
+                  type: boolean
+                external_user_ids:
+                  type: string
+                user_aliases:
+                  type: object
+                  properties:
+                    alias_name:
+                      type: string
+                    alias_label:
+                      type: string
+                segment_id:
+                  type: string
+                audience:
+                  type: object
+                  properties:
+                    AND:
+                      type: array
+                      items:
+                        type: object
+                campaign_id:
+                  type: string
+                send_id:
+                  type: string
+                override_messaging_limits:
+                  type: boolean
+                recipient_subscription_state:
+                  type: string
+                schedule:
+                  type: object
+                  properties:
+                    time:
+                      type: string
+                    in_local_time:
+                      type: boolean
+                    at_optimal_time:
+                      type: boolean
+                messages:
+                  type: object
+                  properties:
+                    apple_push:
+                      type: object
+                    android_push:
+                      type: object
+                    windows_push:
+                      type: object
+                    windows8_push:
+                      type: object
+                    kindle_push:
+                      type: object
+                    web_push:
+                      type: object
+                    email:
+                      type: object
+                    webhook:
+                      type: object
+                    content_card:
+                      type: object
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /campaigns/trigger/schedule/create:
+    post:
+      tags:
+      - Messaging > Schedule Mesages
+      summary: Schedule API Triggered Campaigns
+      description: "> Use this endpoint to send dashboard created campaign messages (up to 90 days in advance) via API-triggered delivery, allowing you to decide what action should trigger the message to be sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `campaigns.trigger.schedule.create` permission.\n\nYou can pass in `trigger_properties` that will be templated into the message itself.\n\nNote that to send messages with this endpoint, you must have a [Campaign ID](https://www.braze.com/docs/api/identifier_types/), created when you build an [API-Triggered Campaign](https://www.braze.com/docs/api/api_campaigns/).\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\nBraze endpoints support [batching API requests](https://www.braze.com/docs/api/api_limits/#batching-api-requests). A single request to the messaging endpoints can reach any of the following:\n\n- Up to 50 specific external_ids, each with individual message parameters\n- A segment of any size created in the Braze dashboard, specified by its `segment_id`\n- An ad-hoc audience segment of any size, defined in the request as a [Connected Audience](https://www.braze.com/docs/api/objects_filters/connected_audience/) object\n    \n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `campaign_id` | Required | String | See [campaign identifier](https://www.braze.com/docs/api/identifier_types/) |\n| `send_id` | Optional | String | See [send identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `recipients` | Optional | Array of recipient objects | See [recipients object](https://www.braze.com/docs/api/objects_filters/recipient_object/). |\n| `audience` | Optional | Connected audience object | See [connected audience](https://www.braze.com/docs/api/objects_filters/connected_audience/). |\n| `broadcast` | Optional | Boolean | See [broadcast](https://www.braze.com/docs/api/parameters/#broadcast). This parameter defaults to false (as of August 31, 2017).  <br>  <br>If `recipients` is omitted, `broadcast` must be set to true. However, use caution when setting `broadcast: true`, as unintentionally setting this flag may cause you to send your message to a larger than expected audience. |\n| `trigger_properties` | Optional | Object | Personalization key-value pairs for all users in this send. See [trigger properties](https://www.braze.com/docs/api/objects_filters/trigger_properties_object/). |\n| `schedule` | Required | Schedule object | See [schedule object](https://www.braze.com/docs/api/objects_filters/schedule_object/). |\n\n## Response\n\n### Example success response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-API-KEY-HERE\n{\n{\n    \"dispatch_id\": \"dispatch_identifier\",\n    \"schedule_id\": \"schedule_identifier\",\n    \"message\": \"success\"\n}\n\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                campaign_id: campaign_identifier
+                send_id: send_identifier
+                recipients:
+                - user_alias: example_alias
+                  external_user_id: external_user_identifier
+                  trigger_properties: {}
+                audience:
+                  AND:
+                  - custom_attribute:
+                      custom_attribute_name: eye_color
+                      comparison: equals
+                      value: blue
+                  - custom_attribute:
+                      custom_attribute_name: favorite_foods
+                      comparison: includes_value
+                      value: pizza
+                  - OR:
+                    - custom_attribute:
+                        custom_attribute_name: last_purchase_time
+                        comparison: less_than_x_days_ago
+                        value: 2
+                    - push_subscription_status:
+                        comparison: is
+                        value: opted_in
+                  - email_subscription_status:
+                      comparison: is_not
+                      value: subscribed
+                  - last_used_app:
+                      comparison: after
+                      value: 2019-07-22T13:17:55+0000
+                broadcast: false
+                trigger_properties: {}
+                schedule:
+                  time: ''
+                  in_local_time: false
+                  at_optimal_time: false
+              properties:
+                campaign_id:
+                  type: string
+                send_id:
+                  type: string
+                recipients:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      user_alias:
+                        type: string
+                      external_user_id:
+                        type: string
+                      trigger_properties:
+                        type: object
+                audience:
+                  type: object
+                  properties:
+                    AND:
+                      type: array
+                      items:
+                        type: object
+                broadcast:
+                  type: boolean
+                trigger_properties:
+                  type: object
+                schedule:
+                  type: object
+                  properties:
+                    time:
+                      type: string
+                    in_local_time:
+                      type: boolean
+                    at_optimal_time:
+                      type: boolean
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /canvas/trigger/schedule/create:
+    post:
+      tags:
+      - Messaging > Schedule Mesages
+      summary: Schedule API Triggered Canvases
+      description: "> Use this endpoint to schedule Canvas messages (up to 90 days in advance) via API-triggered delivery, allowing you to decide what action should trigger the message to be sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.trigger.schedule.create` permission.\n\nYou can pass in `canvas_entry_properties` that will be templated into the messages sent by the first steps of the Canvas.\n\nNote that to send messages with this endpoint, you must have a [Canvas ID](https://www.braze.com/docs/api/identifier_types/#canvas-api-identifier) created when you build a Canvas.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\nBraze endpoints support [batching API requests](https://www.braze.com/docs/api/api_limits/#batching-api-requests). A single request to the messaging endpoints can reach any of the following:\n\n- Up to 50 specific external_ids, each with individual message parameters\n- A segment of any size created in the Braze dashboard, specified by its `segment_id`\n- An ad-hoc audience segment of any size, defined in the request as a [Connected Audience](https://www.braze.com/docs/api/objects_filters/connected_audience/) object\n    \n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `canvas_id` | Required | String | See [Canvas identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `send_id` | Optional | String | See [send identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `recipients` | Optional | Array of recipient objects | See [recipients object](https://www.braze.com/docs/api/objects_filters/recipient_object/). |\n| `audience` | Optional | Connected audience object | See [connected audience](https://www.braze.com/docs/api/objects_filters/connected_audience/). |\n| `broadcast` | Optional | Boolean | See [broadcast](https://www.braze.com/docs/api/parameters/#broadcast). This parameter defaults to false (as of August 31, 2017).  <br>  <br>If `recipients` is omitted, `broadcast` must be set to true. However, use caution when setting `broadcast: true`, as unintentionally setting this flag may cause you to send your message to a larger than expected audience. |\n| `trigger_properties` | Optional | Object | Personalization key-value pairs for all users in this send. See [trigger properties](https://www.braze.com/docs/api/objects_filters/trigger_properties_object/). |\n| `schedule` | Required | Schedule object | See [schedule object](https://www.braze.com/docs/api/objects_filters/schedule_object/). |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                canvas_id: canvas_identifier
+                recipients:
+                - user_alias: example_alias
+                  external_user_id: external_user_identifier
+                  trigger_properties: {}
+                  canvas_entry_properties: {}
+                audience:
+                  AND:
+                  - custom_attribute:
+                      custom_attribute_name: eye_color
+                      comparison: equals
+                      value: blue
+                  - custom_attribute:
+                      custom_attribute_name: favorite_foods
+                      comparison: includes_value
+                      value: pizza
+                  - OR:
+                    - custom_attribute:
+                        custom_attribute_name: last_purchase_time
+                        comparison: less_than_x_days_ago
+                        value: 2
+                    - push_subscription_status:
+                        comparison: is
+                        value: opted_in
+                  - email_subscription_status:
+                      comparison: is_not
+                      value: subscribed
+                  - last_used_app:
+                      comparison: after
+                      value: 2019-07-22T13:17:55+0000
+                broadcast: false
+                canvas_entry_properties: {}
+                schedule:
+                  time: ''
+                  in_local_time: false
+                  at_optimal_time: false
+              properties:
+                canvas_id:
+                  type: string
+                recipients:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      user_alias:
+                        type: string
+                      external_user_id:
+                        type: string
+                      trigger_properties:
+                        type: object
+                      canvas_entry_properties:
+                        type: object
+                audience:
+                  type: object
+                  properties:
+                    AND:
+                      type: array
+                      items:
+                        type: object
+                broadcast:
+                  type: boolean
+                canvas_entry_properties:
+                  type: object
+                schedule:
+                  type: object
+                  properties:
+                    time:
+                      type: string
+                    in_local_time:
+                      type: boolean
+                    at_optimal_time:
+                      type: boolean
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /messages/schedule/update:
+    post:
+      tags:
+      - Messaging > Schedule Mesages
+      summary: Update Scheduled Messages
+      description: "> Use this endpoint to update scheduled messages. \n  \n\nTo use this endpoint, youll need to generate an API key with the `messages.schedule.update` permission.\n\nThis endpoint accepts updates to either the `schedule` or `messages` parameter or both. Your request must contain at least one of those two keys.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `schedule_id` | Required | String | The `schedule_id` to update (obtained from the response to create schedule). |\n| `schedule` | Optional | Object | See [schedule object](https://www.braze.com/docs/api/objects_filters/schedule_object/). |\n| `messages` | Optional | Object | See available [message objects](https://www.braze.com/docs/api/objects_filters/#messaging-objects). |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                schedule_id: schedule_identifier
+                schedule:
+                  time: '2017-05-24T20:30:36Z'
+                messages:
+                  apple_push:
+                    alert: Updated Message!
+                    badge: 1
+                  android_push:
+                    title: Updated title!
+                    alert: Updated message!
+                  sms:
+                    subscription_group_id: subscription_group_identifier
+                    message_variation_id: message_variation_identifier
+                    body: This is my SMS body.
+                    app_id: app_identifier
+              properties:
+                schedule_id:
+                  type: string
+                schedule:
+                  type: object
+                  properties:
+                    time:
+                      type: string
+                      format: date-time
+                messages:
+                  type: object
+                  properties:
+                    apple_push:
+                      type: object
+                      properties:
+                        alert:
+                          type: string
+                        badge:
+                          type: integer
+                    android_push:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        alert:
+                          type: string
+                    sms:
+                      type: object
+                      properties:
+                        subscription_group_id:
+                          type: string
+                        message_variation_id:
+                          type: string
+                        body:
+                          type: string
+                        app_id:
+                          type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /campaigns/trigger/schedule/update:
+    post:
+      tags:
+      - Messaging > Schedule Mesages
+      summary: Update Scheduled API Triggered Campaigns
+      description: "> Use this endpoint to update scheduled API-triggered campaigns created in the dashboard, allowing you to decide what action should trigger the message to be sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `campaigns.trigger.schedule.update` permission.\n\nYou can pass in `trigger_properties` that will be templated into the message itself.\n\nNote that to send messages with this endpoint, you must have a campaign ID, created when you build an [API-triggered campaign](https://www.braze.com/docs/api/api_campaigns/).\n\nAny schedule will completely overwrite the one that you provided in the create schedule request or in previous update schedule requests. For example, if you originally provide `\"schedule\" : {\"time\" : \"2015-02-20T13:14:47\", \"in_local_time\" : true}` and then in your update you provide `\"schedule\" : {\"time\" : \"2015-02-20T14:14:47\"}`, your message will now be sent at the provided time in UTC, not in the user's local time. Scheduled triggers that are updated very close to or during the time they were supposed to be sent will be updated with best efforts, so last-second changes could be applied to all, some, or none of your targeted users.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `campaign_id` | Required | String | See [campaign identifier](https://www.braze.com/docs/api/identifier_types/) |\n| `schedule_id` | Optional | String | The `schedule_id` to update (obtained from the response to create schedule). |\n| `schedule` | Required | Object | See [schedule object](https://www.braze.com/docs/api/objects_filters/schedule_object/). |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                campaign_id: campaign_identifier
+                schedule_id: schedule_identifier
+                schedule:
+                  time: '2017-05-24T21:30:00Z'
+                  in_local_time: true
+              properties:
+                campaign_id:
+                  type: string
+                schedule_id:
+                  type: string
+                schedule:
+                  type: object
+                  properties:
+                    time:
+                      type: string
+                      format: date-time
+                    in_local_time:
+                      type: boolean
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /canvas/trigger/schedule/update:
+    post:
+      tags:
+      - Messaging > Schedule Mesages
+      summary: Update Scheduled API Triggered Canvases
+      description: "> Use this endpoint to update scheduled API-triggered Canvases that were created in the dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.trigger.schedule.update` permission.\n\nThis allows you to decide what action should trigger the message to be sent. You can pass in `trigger_properties` that will be templated into the message itself.\n\nNote that to send messages with this endpoint, you must have a Canvas ID, created when you build a [Canvas](https://www.braze.com/docs/api/identifier_types/#canvas-api-identifier).\n\nAny schedule will completely overwrite the one that you provided in the create schedule request or in previous update schedule requests. For example, if you originally provide `\"schedule\" : {\"time\" : \"2015-02-20T13:14:47\", \"in_local_time\" : true}` and then in your update you provide `\"schedule\" : {\"time\" : \"2015-02-20T14:14:47\"}`, your message will now be sent at the provided time in UTC, not in the user's local time. Scheduled triggers that are updated very close to or during the time they were supposed to be sent will be updated with best efforts, so last-second changes could be applied to all, some, or none of your targeted users.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `canvas_id` | Required | String | See [Canvas identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `schedule_id` | Optional | String | The `schedule_id` to update (obtained from the response to create schedule). |\n| `schedule` | Required | Object | See [schedule object](https://www.braze.com/docs/api/objects_filters/schedule_object/). |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                canvas_id: canvas_identifier
+                schedule_id: schedule_identifier
+                schedule:
+                  time: '2017-05-24T21:30:00Z'
+                  in_local_time: true
+              properties:
+                canvas_id:
+                  type: string
+                schedule_id:
+                  type: string
+                schedule:
+                  type: object
+                  properties:
+                    time:
+                      type: string
+                      format: date-time
+                    in_local_time:
+                      type: boolean
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

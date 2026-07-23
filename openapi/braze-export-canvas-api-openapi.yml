@@ -1,0 +1,384 @@
+openapi: 3.0.0
+info:
+  title: Braze Export > Canvas API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: Export > Canvas
+paths:
+  /canvas/data_series:
+    get:
+      tags:
+      - Export > Canvas
+      summary: Export Canvas Data Series Analytics
+      description: "> Use this endpoint to export time series data for a Canvas. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"data\": {\n    \"name\": (string) Canvas name,\n    \"stats\": [\n      {\n        \"time\": (string) date as ISO 8601 date,\n        \"total_stats\": {\n          \"revenue\": (float),\n          \"conversions\": (int),\n          \"conversions_by_entry_time\": (int),\n          \"entries\": (int)\n        },\n        \"variant_stats\": (optional) {\n          \"00000000-0000-0000-0000-0000000000000\": (API identifier for variant) {\n            \"name\": (string) name of variant,\n            \"revenue\": (int),\n            \"conversions\": (int),\n            \"conversions_by_entry_time\": (int),\n            \"entries\": (int)\n          },\n          ... (more variants)\n        },\n        \"step_stats\": (optional) {\n          \"00000000-0000-0000-0000-0000000000000\": (API identifier for step) {\n            \"name\": (string) name of step,\n            \"revenue\": (float),\n            \"conversions\": (int),\n            \"conversions_by_entry_time\": (int),\n            \"messages\": {\n              \"email\": [\n                {\n                  \"sent\": (int),\n                  \"opens\": (int),\n                  \"unique_opens\": (int),\n                  \"clicks\": (int),\n                  ... (more stats)\n                }\n              ],\n              ... (more channels)\n            }\n          },\n          ... (more steps)\n        }\n      },\n      ... (more stats by time)\n    ]\n  },\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: canvas_id
+        in: query
+        schema:
+          type: string
+        description: '(Required) String
+
+
+          See [Canvas API Identifier](https://www.braze.com/docs/api/identifier_types/).'
+        example: '{{canvas_id}}'
+      - name: ending_at
+        in: query
+        schema:
+          type: string
+        description: '(Required) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+
+          Date on which the data export should end. Defaults to time of the request.'
+        example: '2018-05-30T23:59:59-5:00'
+      - name: starting_at
+        in: query
+        schema:
+          type: string
+        description: "(Optional*) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string) \n\nDate on which the data export should begin.\n\n*Either `length` or `starting_at` is required."
+        example: '2018-05-28T23:59:59-5:00'
+      - name: length
+        in: query
+        schema:
+          type: integer
+        description: '(Optional*) String
+
+
+          Maximum number of days before `ending_at` to include in the returned series. Must be between 1 and 14 (inclusive).
+
+
+          *Either `length` or `starting_at` is required.'
+        example: 10
+      - name: include_variant_breakdown
+        in: query
+        schema:
+          type: boolean
+        description: '(Optional) Boolean
+
+
+          Whether or not to include variant stats (defaults to false).'
+        example: true
+      - name: include_step_breakdown
+        in: query
+        schema:
+          type: boolean
+        description: '(Optional) Boolean
+
+
+          Whether or not to include step stats (defaults to false).'
+        example: true
+      - name: include_deleted_step_data
+        in: query
+        schema:
+          type: boolean
+        description: '(Optional) Boolean
+
+
+          Whether or not to include step stats for deleted steps (defaults to false).'
+        example: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /canvas/data_summary:
+    get:
+      tags:
+      - Export > Canvas
+      summary: Export Canvas Data Analytics Summary
+      description: "> Use this endpoint to export rollups of time series data for a Canvas, providing a concise summary of a Canvas results. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.data_summary` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"data\": {\n    \"name\": (string) Canvas name,\n    \"total_stats\": {\n      \"revenue\": (float),\n      \"conversions\": (int),\n      \"conversions_by_entry_time\": (int),\n      \"entries\": (int)\n    },\n    \"variant_stats\": (optional) {\n      \"00000000-0000-0000-0000-0000000000000\": (API identifier for variant) {\n        \"name\": (string) name of variant,\n        \"revenue\": (float),\n        \"conversions\": (int),\n        \"entries\": (int)\n      },\n      ... (more variants)\n    },\n    \"step_stats\": (optional) {\n      \"00000000-0000-0000-0000-0000000000000\": (API identifier for step) {\n        \"name\": (string) name of step,\n        \"revenue\": (float),\n        \"conversions\": (int),\n        \"conversions_by_entry_time\": (int),\n        \"messages\": {\n          \"android_push\": (name of channel) [\n            {\n              \"sent\": (int),\n              \"opens\": (int),\n              \"influenced_opens\": (int),\n              \"bounces\": (int)\n              ... (more stats for channel)\n            }\n          ],\n          ... (more channels)\n        }\n      },\n      ... (more steps)\n    }\n  },\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://desktop.postman.com/?desktopVersion=9.19.0&userId=16580579&teamId=409325)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: canvas_id
+        in: query
+        schema:
+          type: string
+        description: "(Required) String \n\nSee [Canvas API identifier](https://www.braze.com/docs/api/identifier_types/)."
+        example: '{{canvas_id}}'
+      - name: ending_at
+        in: query
+        schema:
+          type: string
+        description: '(Required) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+          Date on which the data export should end. Defaults to time of the request'
+        example: '2018-05-30T23:59:59-5:00'
+      - name: starting_at
+        in: query
+        schema:
+          type: string
+        description: '(Optional*) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+
+          Date on which the data export should begin.
+
+
+          *Either `length` or `starting_at` is required.'
+        example: '2018-05-28T23:59:59-5:00'
+      - name: length
+        in: query
+        schema:
+          type: integer
+        description: '(Optional*) Integer
+
+
+          Max number of days before `ending_at` to include in the returned series. Must be between 1 and 14 (inclusive).
+
+
+          *Either `length` or `starting_at` is required.'
+        example: 5
+      - name: include_variant_breakdown
+        in: query
+        schema:
+          type: boolean
+        description: '(Optional) Boolean
+
+
+          Whether or not to include variant stats (defaults to false).'
+        example: true
+      - name: include_step_breakdown
+        in: query
+        schema:
+          type: boolean
+        description: '(Optional) Boolean
+
+
+          Whether or not to include step stats (defaults to false).'
+        example: true
+      - name: include_deleted_step_data
+        in: query
+        schema:
+          type: boolean
+        description: '(Optional) Boolean
+
+
+          Whether or not to include step stats for deleted steps (defaults to false).'
+        example: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /canvas/details:
+    get:
+      tags:
+      - Export > Canvas
+      summary: Export Canvas Details
+      description: "> Use this endpoint to export metadata about a Canvas, such as the name, time created, current status, and more. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.details` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\nNote: All Canvas steps have a next_paths field, which is an array of `{name, next_step_id}` data. For full steps and Message steps, the `next_step_ids` field will be present, but will not contain data for other Canvas Flow steps.\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"created_at\": (string) date created as ISO 8601 date,\n  \"updated_at\": (string) date updated as ISO 8601 date,\n  \"name\": (string) Canvas name,\n  \"description\": (string) Canvas description,\n  \"archived\": (boolean) whether this Canvas is archived,\n  \"draft\": (boolean) whether this Canvas is a draft,\n  \"schedule_type\": (string) type of scheduling action,\n  \"first_entry\": (string) date of first entry as ISO 8601 date,\n  \"last_entry\": (string) date of last entry as ISO 8601 date,\n  \"channels\": (array of strings) step channels used with Canvas,\n  \"variants\": [\n    {\n      \"name\": (string) name of variant,\n      \"id\": (string) API identifier of the variant,\n      \"first_step_ids\": (array of strings) API identifiers for first steps in variant,\n      \"first_step_id\": (string) API identifier of first step in variant (deprecated in November 2017, only included if the variant has only one first step)\n    },\n    ... (more variations)\n  ],\n  \"tags\": (array of strings) tag names associated with the Canvas,\n  \"steps\": [\n    {\n      \"name\": (string) name of step,\n      \"id\": (string) API identifier of the step,\n      \"next_step_ids\": (array of strings) API identifiers of steps following step,\n      \"channels\": (array of strings) channels used in step,\n      \"messages\": {\n          \"message_variation_id\": (string) {  // <=This is the actual id\n              \"channel\": (string) channel type of the message (eg., \"email\"),\n              ... channel-specific fields for this message, see Campaign Details Endpoint API Response for example message responses ...\n          }\n      }\n    },\n    ... (more steps)\n  ],\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://desktop.postman.com/?desktopVersion=9.19.0&userId=16580579&teamId=409325)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: canvas_id
+        in: query
+        schema:
+          type: string
+        description: '(Required) String
+
+
+          See [Canvas API Identifier](https://www.braze.com/docs/api/identifier_types/) '
+        example: '{{canvas_identifier}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /canvas/list:
+    get:
+      tags:
+      - Export > Canvas
+      summary: Export Canvas List
+      description: "> Use this endpoint to export a list of Canvases, including the name, Canvas API identifier and associated tags. \n  \n\nCanvases are returned in groups of 100 sorted by time of creation (oldest to newest by default).\n\nArchived Canvases will not be included in the API response unless the `include_archived` field is specified. Canvases that are stopped but not archived, however, will be returned by default.\n\nTo use this endpoint, youll need to generate an API key with the `canvas.list` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"canvases\" : [\n      {\n          \"id\" : (string) Canvas API Identifier,\n          \"last_edited\": (ISO 8601 string) the last edited time for the message,\n          \"name\" : (string) Canvas name,\n          \"tags\" : (array) tag names associated with the Canvas,\n      },\n    ... (more Canvases)\n  ],\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://desktop.postman.com/?desktopVersion=9.19.0&userId=16580579&teamId=409325)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: '(Optional) Integer
+
+
+          The page of Canvases to return, defaults to `0` (returns the first set of up to 100).'
+        example: 1
+      - name: include_archived
+        in: query
+        schema:
+          type: boolean
+        description: '(Optional) Boolean
+
+
+          Whether or not to include archived Canvases, defaults to `false`.'
+      - name: sort_direction
+        in: query
+        schema:
+          type: string
+        description: '(Optional) String
+
+
+          - Sort creation time from newest to oldest: pass in the value `desc`.
+
+          - Sort creation time from oldest to newest: pass in the value `asc`.
+
+
+          If `sort_direction` is not included, the default order is oldest to newest.'
+        example: desc
+      - name: last_edit.time[gt]
+        in: query
+        schema:
+          type: string
+        description: '(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)
+
+
+          Filters the results and only returns Canvases that were edited greater than the time provided till now. Format is `yyyy-MM-DDTHH:mm:ss`.'
+        example: '2020-06-28T23:59:59-5:00'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

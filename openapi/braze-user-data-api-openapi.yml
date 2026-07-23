@@ -1,0 +1,533 @@
+openapi: 3.0.0
+info:
+  title: Braze User Data API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: User Data
+  description: 'The User API allows you to track information on your users by logging data about your users that comes from outside your mobile app. You can also use this API to delete users for testing or other purposes.
+
+
+    All API endpoints have a data payload limit of 4MB. Attempts to post more data than 4MB will fail with an HTTP 413 Request Entity Too Large.
+
+
+    The examples below contain the URL https://rest.iad-01.braze.com, but some customers will need to use a different endpoint URL, for example if you are hosted in Brazes EU data center or have a dedicated Braze installation. Your Success Manager will inform you if you should use a different endpoint URL.
+
+
+    '
+paths:
+  /users/track:
+    post:
+      tags:
+      - User Data
+      summary: Track Users
+      description: "> Use this endpoint to record custom events, purchases, and update user profile attributes. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.track` permission.\n\n**Note:** Braze processes the data passed via API at face value and customers should only pass deltas (changing data) to minimize unnecessary data point consumption. To read more, refer to [Data points](https://www.braze.com/docs/user_guide/onboarding_with_braze/data_points#data-points).\n\nCustomers using the API for server-to-server calls may need to allowlist `rest.iad-01.braze.com` if theyre behind a firewall.\n\n### Rate limit\n\nWe apply a base speed limit of 50,000 requests per minute to this endpoint for all customers. Each request to the `/users/track` endpoint can contain up to 75 events, 75 attribute updates, and 75 purchases. Each component (event, attribute, and purchase arrays), can update up to 75 users each for a max of 225 individual data points. Each update can also belong to the same user for a max of 225 updates to a single user in a request.\n\nSee our page on [API rate limits](https://www.braze.com/docs/api/api_limits/) for details, and reach out to your customer success manager if you need your limit increased.\n\n### Request parameters\n\nFor each of the request components listed in the following table, one of `external_id`, `user_alias`, or `braze_id` is required.\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `attributes` | Optional | Array of attributes objects | See [user attributes object](https://www.braze.com/docs/api/objects_filters/user_attributes_object/) |\n| `events` | Optional | Array of event objects | See [events object](https://www.braze.com/docs/api/objects_filters/event_object/) |\n| `purchases` | Optional | Array of purchase objects | See [purchases object](https://www.braze.com/docs/api/objects_filters/purchase_object/) |\n\n## User track responses\n\nUpon using any of the aforementioned API requests you should receive one of the following three general responses:\n\n#### Successful message\n\nSuccessful messages will be met with the following response:\n\n``` json\n{\n  \"message\" : \"success\",\n  \"attributes_processed\" : (optional, integer), if attributes are included in the request, this will return an integer of the number of external_ids with attributes that were queued to be processed,\n  \"events_processed\" : (optional, integer), if events are included in the request, this will return an integer of the number of events that were queued to be processed,\n  \"purchases_processed\" : (optional, integer), if purchases are included in the request, this will return an integer of the number of purchases that were queued to be processed,\n}\n\n```\n\n#### Successful message with non-fatal errors\n\nIf your message is successful but has non-fatal errors such as one invalid event object out of a long list of events, then you will receive the following response:\n\n``` json\n{\n  \"message\" : \"success\",\n  \"errors\" : [\n    {\n    }\n  ]\n}\n\n```\n\n#### Message with fatal errors\n\nIn the case of a success, any data that was not affected by an error in the `errors` array will still be processed. If your message has a fatal error you will receive the following response:\n\n``` json\n{\n  \"message\" : ,\n  \"errors\" : [\n    {\n    }\n  ]\n}\n\n```\n\n### Fatal error response codes\n\nFor status codes and associated error messages that will be returned if your request encounters a fatal error, reference [Fatal errors & responses](https://www.braze.com/api/errors/#fatal-errors).\n\nIf you receive the error provided external_id is blacklisted and disallowed, your request may have included a dummy user. For more information, refer to [Spam blocking](https://www.braze.com/docs/user_guide/data_and_analytics/user_data_collection/user_archival/#spam-blocking).\n\n### Creating an alias-only user profile\n\nKeep the following nuances in mind when using the `/users/track` endpoint:\n\nYou can use the `/users/track` endpoint to create a new alias-only user by setting the `_update_existing_only` key with a value of `false` in the body of the request. If this value is omitted, the alias-only user profile will not be created. Using an alias-only user guarantees that one profile with that alias will exist. This is especially helpful when building a new integration as it prevents the creation of duplicate user profiles.\n\n### Importing legacy user data\n\nYou may submit data through the Braze API for a user who has not yet used your mobile app in order to generate a user profile. If the user subsequently uses the application all information following their identification via the SDK will be merged with the existing user profile you created via the API call. Any user behavior that is recorded anonymously by the SDK prior to identification will be lost upon merging with the existing API-generated user profile.\n\nThe segmentation tool will include these users regardless of whether they have engaged with the app. If you want to exclude users uploaded via the User API who have not yet engaged with the app, simply add the filter: `Session Count > 0`.\n\n### Making bulk updates\n\nIf you have a use case where you need to make batch updates to the `users/track` endpoint, we recommend adding the bulk update header so that Braze can properly identify, observe, and route your request.\n\nRefer to the following sample request with the `X-Braze-Bulk` header:\n\n``` json\ncurl --location --request POST 'https://rest.iad-01.braze.com/users/track' \\\n--header 'Content-Type: application/json' \\\n--header 'X-Braze-Bulk: true' \\\n--header 'Authorization: Bearer YOUR-API-KEY-HERE' \\\n--data-raw '{ \"attributes\": [ ], \"events\": [ ], \"purchases\": [ ] }'\n\n```\n\nWarning: When the `X-Braze-Bulk` header is present with any value, Braze will consider the request a bulk request. Set the value to `true`. Currently, setting the value to `false` does not disable the headerit will still be treated as if it were true.\n\n#### Use cases\n\nConsider the following use cases where you may use the bulk update header:\n\n- A daily job where multiple users custom attributes are updated via the `/users/track` endpoint.\n- An ad-hoc user data backfill script which updates user information via the `/users/track` endpoint."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                attributes:
+                - external_id: rachel_feinberg
+                  string_attribute: fruit
+                  boolean_attribute_1: true
+                  integer_attribute: 25
+                  array_attribute:
+                  - banana
+                  - apple
+                events:
+                - external_id: user_identifier
+                  app_id: your_app_identifier
+                  name: rented_movie
+                  time: '2022-12-06T19:20:45+01:00'
+                  properties:
+                    release:
+                      studio: FilmStudio
+                      year: '2022'
+                    cast:
+                    - name: Actor1
+                    - name: Actor2
+                - user_alias:
+                    alias_name: device123
+                    alias_label: my_device_identifier
+                  app_id: your_app_identifier
+                  name: rented_movie
+                  time: '2013-07-16T19:20:50+01:00'
+                purchases:
+                - external_id: user_identifier
+                  app_id: your_app_identifier
+                  product_id: product_name
+                  currency: USD
+                  price: 12.12
+                  quantity: 6
+                  time: '2017-05-12T18:47:12Z'
+                  properties:
+                    color: red
+                    monogram: ABC
+                    checkout_duration: 180
+                    size: Large
+                    brand: Backpack Locker
+              properties:
+                attributes:
+                  type: array
+                  items:
+                    type: object
+                events:
+                  type: array
+                  items:
+                    type: object
+                purchases:
+                  type: array
+                  items:
+                    type: object
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /users/alias/update:
+    post:
+      tags:
+      - User Data
+      summary: Update User Alias
+      description: "> Use this endpoint to update existing user aliases. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.alias.update` permission.\n\nUp to 50 user aliases may be specified per request.\n\nThis endpoint does not guarantee the sequence of `alias_updates` objects being updated.\n\nUpdating a user alias requires `alias_label`, `old_alias_name`, and `new_alias_name` to be included in the update user alias object. If there is no user alias associated with the `alias_label` and `old_alias_name`, no alias will be updated. If the given `alias_label` and `old_alias_name` is found, then the `old_alias_name` will be updated to the `new_alias_name`.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/delete`, `/users/identify`, `/users/merge`, and `/users/alias/update` endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `alias_updates` | Required | Array of update user alias objects | See [user alias object](https://www.braze.com/docs/api/objects_filters/user_alias_object/).  <br>  <br>For more information on `old_alias_name`, `new_alias_name`, and `alias_label`, refer to [User aliases](https://www.braze.com/docs/user_guide/data_and_analytics/user_data_collection/user_profile_lifecycle/#user-aliases). |\n\n### Endpoint request body with update user alias object specification\n\n``` json\n{\n  \"alias_label\" : (required, string),\n  \"old_alias_name\" : (required, string),\n  \"new_alias_name\" : (required, string)\n}\n\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                alias_updates:
+                - alias_label: example_alias_label
+                  old_alias_name: example_old_alias_name
+                  new_alias_name: example_new_alias_name
+              properties:
+                alias_updates:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      alias_label:
+                        type: string
+                      old_alias_name:
+                        type: string
+                      new_alias_name:
+                        type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /users/alias/new:
+    post:
+      tags:
+      - User Data
+      summary: Create New User Aliases
+      description: "> Use this endpoint to add new user aliases for existing identified users, or to create new unidentified users. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.alias.new` permission.\n\nUp to 50 user aliases may be specified per request.\n\n**Adding a user alias for an existing user** requires an `external_id` to be included in the new user alias object. If the `external_id` is present in the object but there is no user with that `external_id`, the alias will not be added to any users. If an `external_id` is not present, a user will still be created but will need to be identified later. You can do this using the \"Identifying Users\" and the `users/identify` endpoint.\n\n**Creating a new alias-only user** requires the `external_id` to be omitted from the new user alias object. Once the user is created, use the `/users/track` endpoint to associate the alias-only user with attributes, events, and purchases, and the `/users/identify` endpoint to identify the user with an `external_id`.\n\n### Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/delete` and `/users/identify` endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `user_aliases` | Required | Array of new user alias objects | See [user alias object](https://www.braze.com/docs/api/objects_filters/user_alias_object/).  <br>  <br>For more information on `alias_name` and `alias_label`, check out our [User Aliases](https://www.braze.com/docs/user_guide/data_and_analytics/user_data_collection/user_profile_lifecycle/#user-aliases) documentation. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                user_aliases:
+                - external_id: external_identifier
+                  alias_name: example_name
+                  alias_label: example_label
+              properties:
+                user_aliases:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      external_id:
+                        type: string
+                      alias_name:
+                        type: string
+                      alias_label:
+                        type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /users/delete:
+    post:
+      tags:
+      - User Data
+      summary: Delete Users
+      description: "> Use this endpoint to delete any user profile by specifying a known user identifier. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.delete` permission.\n\nUp to 50 `external_ids`, `user_aliases`, or `braze_ids` can be included in a single request. Only one of `external_ids`, `user_aliases`, or `braze_ids` can be included in a single request.\n\n> **Important:** Deleting user profiles cannot be undone. It will permanently remove users which may cause discrepancies in your data. Learn more about what happens when you [delete a user profile via API](https://braze.com/docs/help/help_articles/api/delete_user/) in our Help documentation. \n  \n\n### Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/alias/new` and `/users/identify` endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameter\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `external_ids` | Optional | Array of strings | External identifiers for the users to delete. |\n| `user_aliases` | Optional | Array of user alias object | [User aliases](https://www.braze.com/docs/api/objects_filters/user_alias_object/) for the users to delete. |\n| `braze_ids` | Optional | Array of strings | Braze user identifiers for the users to delete. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                external_ids:
+                - external_identifier1
+                - external_identifier2
+                braze_ids:
+                - braze_identifier1
+                - braze_identifier2
+                user_aliases:
+                - alias_name: user_alias1
+                  alias_label: alias_label1
+                - alias_name: user_alias2
+                  alias_label: alias_label2
+              properties:
+                external_ids:
+                  type: array
+                  items:
+                    type: string
+                braze_ids:
+                  type: array
+                  items:
+                    type: string
+                user_aliases:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      alias_name:
+                        type: string
+                      alias_label:
+                        type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /users/identify:
+    post:
+      tags:
+      - User Data
+      summary: Identify Users
+      description: "> Use this endpoint to identify an unidentified (alias-only) user. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.identify` permission.\n\nCalling `/users/identify` combines the alias-only profile with the identified profile and removes the alias-only profile.\n\nIdentifying a user requires an `external_id` to be included in the `aliases_to_identify` object. If there is no user with that `external_id`, the `external_id` will simply be added to the aliased user's record, and the user will be considered identified. You can add up to 50 user aliases per request.\n\nSubsequently, you can associate multiple additional user aliases with a single `external_id`.\n\n- When these subsequent associations are made with the `merge_behavior` field set to `none`, only the push tokens and message history associated with the user alias are retained; any attributes, events, or purchases will be \"orphaned\" and not available on the identified user. One workaround is to export the aliased user's data before identification using the [`/users/export/ids` endpoint](https://www.braze.com/docs/api/endpoints/export/user_data/post_users_identifier/), then re-associate the attributes, events, and purchases with the identified user.\n- When associations are made with the `merge_behavior` field set to `merge`, this endpoint will merge [specific fields](#merge) found on the anonymous user to the identified user.\n    \n\n> Note: To prevent unexpected loss of data when identifying users, we highly recommend that you first refer to [data collection best practices](https://www.braze.com/docs/user_guide/data_and_analytics/user_data_collection/best_practices/#capturing-user-data-when-alias-only-user-info-is-already-present) to learn about capturing user data when alias-only user info is already present. \n  \n\n### Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/delete` and `/users/alias/new` endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `aliases_to_identify` | Required | Array of aliases to identify object | See [alias to identify object](https://www.braze.com/docs/api/objects_filters/aliases_to_identify/) and [user alias object](https://www.braze.com/docs/api/objects_filters/user_alias_object/). |\n| `merge_behavior` | Optional | String | One of `none` or `merge` is expected. |\n\n#### Merge_behavior field\n\nSetting the `merge_behavior` field to `merge` sets the endpoint to merge any of the following fields found **exclusively** on the anonymous user to the identified user.\n\n- First name\n- Last name\n- Email\n- Gender\n- Date of birth\n- Phone number\n- Time zone\n- Home city\n- Country\n- Language\n- Session count (the sum of sessions from both profiles)\n- Date of first session (Braze will pick the earlier date of the two dates)\n- Date of last session (Braze will pick the later date of the two dates)\n- Custom attributes\n- Custom event and purchase event data (excluding event properties)\n- Custom event and purchase event properties for \"X times in Y days\" segmentation (where X<=50 and Y<=30)\n- Segmentable custom events summary\n    - Event count (the sum from both profiles)\n    - Event first occurred (Braze will pick the earlier date of the two dates)\n    - Event last occurred (Braze will pick the later date of the two dates)\n- In-app purchase total in cents (the sum from both profiles)\n- Total number of purchases (the sum from both profiles)\n- Date of first purchase (Braze will pick the earlier date of the two dates)\n- Date of last purchase (Braze will pick the later date of the two dates)\n- App summaries\n- Last_X_at fields (Braze will update the fields if the orphaned profile fields are more recent)\n- Campaign summaries (Braze will pick the most recent date fields)\n- Workflow summaries (Braze will pick the most recent date fields)\n- Message and message engagement history\n    \n\nAny of the following fields found on the anonymous user to the identified user:\n\n- Custom event and purchase event count and first date and last date timestamps\n    - These merged fields will update \"for X events in Y days\" filters. For purchase events, these filters include \"number of purchases in Y days\" and \"money spent in last Y days\".\n\nSession data will only be merged if the app exists on both user profiles. For example, if our target user doesn't have an app summary for \"ABCApp\" but our original user does, the target user will have the \"ABCApp\" app summary on their profile after the merge.\n\nSetting the field to `none` will not merge any user data to the identified user profile.\n\n### Aliases to Identify object specification\n\n``` json\n{\n  \"external_id\" : (required, string) see External User ID below,\n  // external_ids for users that do not exist will return a non-fatal error. \n  // See Server Responses for details.\n  \"user_alias\" : {\n    \"alias_name\" : (required, string),\n    \"alias_label\" : (required, string)\n  }\n}\n\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                aliases_to_identify:
+                - external_id: external_identifier
+                  user_alias:
+                    alias_name: example_alias
+                    alias_label: example_label
+              properties:
+                aliases_to_identify:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      external_id:
+                        type: string
+                      user_alias:
+                        type: object
+                        properties:
+                          alias_name:
+                            type: string
+                          alias_label:
+                            type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /users/merge:
+    post:
+      tags:
+      - User Data
+      summary: Merge Users
+      description: "> Use this endpoint to merge one user into another user. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.merge` permission.\n\nUp to 50 merges may be specified per request. This endpoint is asynchronous.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/delete`, `/users/alias/new`, `/users/identify`, and `/users/alias/update` endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `merge_updates` | Required | Array | An object array. Each object should contain an `identifier_to_merge` object and an `identifier_to_keep` object, which should each reference a user either by `external_id` or `user_alias`. Both users being merged must be identified using the same method. |\n\n### Merge_updates behavior\n\nThis endpoint will merge any of the following fields found exclusively on the original user to the target user.\n\n- First name\n- Last name\n- Email\n- Gender\n- Date of birth\n- Phone number\n- Time zone\n- Home city\n- Country\n- Language\n- Session count (the sum of sessions from both profiles)\n- Date of first session (Braze will pick the earlier date of the two dates)\n- Date of last session (Braze will pick the later date of the two dates)\n- Custom attributes\n- Custom event and purchase event data (excluding event properties)\n- Custom event and purchase event properties for \"X times in Y days\" segmentation (where X<=50 and Y<=30)\n- Segmentable custom events summary\n    - Event count (the sum from both profiles)\n    - Event first occurred (Braze will pick the earlier date of the two dates)\n    - Event last occurred (Braze will pick the later date of the two dates)\n- In-app purchase total in cents (the sum from both profiles)\n- Total number of purchases (the sum from both profiles)\n- Date of first purchase (Braze will pick the earlier date of the two dates)\n- Date of last purchase (Braze will pick the later date of the two dates)\n- App summaries\n- Last_X_at fields (Braze will update the fields if the orphaned profile fields are more recent)\n- Campaign summaries (Braze will pick the most recent date fields)\n- Workflow summaries (Braze will pick the most recent date fields)\n    \n\nAny of the following fields found on one user to the other user:\n\n- Custom event and purchase event count and first date and last date timestamps\n    - These merged fields will update \"for X events in Y days\" filters. For purchase events, these filters include \"number of purchases in Y days\" and \"money spent in last Y days\".\n\nSession data will only be merged if the app exists on both user profiles. For example, if our target user doesn't have an app summary for \"ABCApp\" but our original user does, the target user will have the \"ABCApp\" app summary on their profile after the merge. Note that message and message engagement history aren't retained after both user profiles are merged.\n\nThe endpoint does not guarantee the sequence of `merge_updates` objects being updated.\n\n## Example request\n\n```\ncurl --location --request POST 'https://rest.iad-03.braze.com/users/merge' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY' \\\n--data-raw '{\n  \"merge_updates\": [\n    {\n      \"identifier_to_merge\": {\n        \"external_id\": \"old-user1\"\n      },\n      \"identifier_to_keep\": {\n        \"external_id\": \"current-user1\"\n      }\n    },\n    {\n      \"identifier_to_merge\": {\n        \"user_alias\": {\n          \"alias_name\": \"old-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      },\n      \"identifier_to_keep\": {\n        \"user_alias\": {\n          \"alias_name\": \"current-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      }\n    }\n  ]\n}'\n\n```\n\n## Response\n\nThere are two status code responses for this endpoint: `202` and `400`.\n\n### Example success response\n\nThe status code `202` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to Troubleshooting (below) for more information about errors you may encounter.\n\n``` json\n{\n  \"message\": \"'merge_updates' must be an array of objects\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible error messages that may occur.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `'merge_updates' must be an array of objects` | Ensure that `merge_updates` is an array of objects. |\n| `a single request may not contain more than 50 merge updates` | You can only specify up to 50 merge updates in a single request. |\n| `identifiers must be objects with an 'external_id' property that is a string, or 'user_alias' property that is an object` | Check the identifiers in your request. |\n| `identifiers must be objects of the same type` | Ensure that the identifier object types match. |\n| `'merge_updates' must only have 'identifier_to_merge' and 'identifier_to_keep'` | Ensure that `merge_updates` only contains the two objects `identifier_to_merge` and `identifier_to_keep`. |"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                merge_updates:
+                - identifier_to_merge:
+                    external_id: old-user1
+                  identifier_to_keep:
+                    external_id: current-user1
+                - identifier_to_merge:
+                    user_alias:
+                      alias_name: old-user2@example.com
+                      alias_label: email
+                  identifier_to_keep:
+                    user_alias:
+                      alias_name: current-user2@example.com
+                      alias_label: email
+              properties:
+                merge_updates:
+                  type: array
+                  items:
+                    type: object
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

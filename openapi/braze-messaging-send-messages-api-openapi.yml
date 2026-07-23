@@ -1,0 +1,608 @@
+openapi: 3.0.0
+info:
+  title: Braze Messaging > Send Messages API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: Messaging > Send Messages
+paths:
+  /sends/id/create:
+    post:
+      tags:
+      - Messaging > Send Messages
+      summary: Create Send IDs For Message Send Tracking
+      description: "> Use this endpoint to create send IDs that can be used to send messages and track message performance programatically, without campaign creation for each send. \n  \n\nTo use this endpoint, youll need to generate an API key with the `sends.id.create` permission.\n\nUsing the send identifier to track and send messages is useful if you are planning to programmatically generate and send content.\n\n## Rate limit\n\nThe daily maximum number of custom send identifiers that can be created via this endpoint is 100 for a given app group. Each `send_id` and `campaign_id` combination that you create will count towards your daily limit. The response headers for any valid request include the current rate limit status, see [API rate limits](https://www.braze.com/docs/api/api_limits/) for details.\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `campaign_id` | Required | String | See [campaign identifier]({{site.baseurl}}/api/identifier_types/). |\n| `send_id` | Optional | String | See [send identifier]({{site.baseurl}}/api/identifier_types/). |\n\n## Response\n\n### Example success response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"message\": \"success\",\n  \"send_id\" : (string) the send identifier\n}\n\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                campaign_id: campaign_identifier
+                send_id: send_identifier
+              properties:
+                campaign_id:
+                  type: string
+                send_id:
+                  type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /messages/send:
+    post:
+      tags:
+      - Messaging > Send Messages
+      summary: Send Messages Immediately via API Only
+      description: "> Use this endpoint to send immediate, ad-hoc messages to designated users via the Braze API. \n  \n\nTo use this endpoint, youll need to generate an API key with the `messages.send` permission.\n\nBe sure to include Messaging Objects in your body to complete your requests.\n\nIf you are targeting a segment, a record of your request will be stored in the [Developer Console](https://dashboard.braze.com/app_settings/developer_console/activitylog/).\n\n## Rate limit\n\nWhen specifying a segment or Connected Audience in your request, we apply a rate limit of 250 requests per minute to this endpoint. Otherwise, if specifying an `external_id`, this endpoint has a default rate limit of 250,000 requests per hour, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\nBraze endpoints support [batching API requests](https://www.braze.com/docs/api/api_limits/#batching-api-requests). A single request to the messaging endpoints can reach any of the following:\n\n- Up to 50 specific `external_ids`, each with individual message parameters\n- A segment of any size created in the Braze dashboard, specified by its `segment_id`\n- An ad-hoc audience segment of any size, defined in the request as a [Connected Audience](https://www.braze.com/docs/api/objects_filters/connected_audience/) object\n    \n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `broadcast` | Optional | Boolean | See [broadcast](https://www.braze.com/docs/api/parameters/#broadcast). This parameter defaults to false (as of August 31, 2017).  <br>  <br>If `recipients` is omitted, `broadcast` must be set to true. However, use caution when setting `broadcast: true`, as unintentionally setting this flag may cause you to send your messages to a larger than expected audience. |\n| `external_user_ids` | Optional | Array of strings | See [external user ID](https://www.braze.com/docs/api/parameters/#external-user-id). |\n| `user_aliases` | Optional | Array of user alias objects | See [user alias object](https://www.braze.com/docs/api/objects_filters/user_alias_object/). |\n| `segment_id` | Optional | String | See [segment identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `audience` | Optional | Connected audience object | See [connected audience](https://www.braze.com/docs/api/objects_filters/connected_audience/). |\n| `campaign_id` | Optional\\* | String | See [campaign identifier](https://www.braze.com/docs/api/identifier_types/) for more information.  <br>  <br>\\*Required if you wish to track campaign stats (e.g. sends, clicks, bounces, etc) on the Braze dashboard. |\n| `send_id` | Optional | String | See [send identifier](https://www.braze.com/docs/api/identifier_types/) |\n| `override_frequency_capping` | Optional | Boolean | Ignore \\`frequency_capping\\` for campaigns, defaults to false. |\n| `recipient_subscription_state` | Optional | String | Use this to send messages to only users who have opted in (`opted_in`), only users who have subscribed or are opted in (`subscribed`) or to all users, including unsubscribed users (`all`).  <br>  <br>Using `all` users is useful for transactional email messaging. Defaults to `subscribed`. |\n| `messages` | Optional | Messaging objects | See available [messaging objects](https://www.braze.com/docs/api/endpoints/messaging/send_messages/post_send_messages/#available-messaging-objects). |\n\n## Response details\n\nMessage sending endpoint responses will include the messages `dispatch_id` for reference back to the dispatch of the message. The `dispatch_id` is the id of the message dispatch (unique id for each transmission sent from the Braze platform). For more, information refer to [Dispatch ID behavior](https://www.braze.com/docs/help/help_articles/data/dispatch_id/)."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                broadcast: 'false'
+                external_user_ids: external_user_identifiers
+                user_aliases:
+                  alias_name: example_name
+                  alias_label: example_label
+                segment_id: segment_identifier
+                audience:
+                  AND:
+                  - custom_attribute:
+                      custom_attribute_name: eye_color
+                      comparison: equals
+                      value: blue
+                  - custom_attribute:
+                      custom_attribute_name: favorite_foods
+                      comparison: includes_value
+                      value: pizza
+                  - OR:
+                    - custom_attribute:
+                        custom_attribute_name: last_purchase_time
+                        comparison: less_than_x_days_ago
+                        value: 2
+                    - push_subscription_status:
+                        comparison: is
+                        value: opted_in
+                  - email_subscription_status:
+                      comparison: is_not
+                      value: subscribed
+                  - last_used_app:
+                      comparison: after
+                      value: 2019-07-22T13:17:55+0000
+                campaign_id: campaign_identifier
+                send_id: send_identifier
+                override_frequency_capping: 'false'
+                recipient_subscription_state: all
+                messages:
+                  android_push: (optional, Android Push Object)
+                  apple_push: (optional, Apple Push Object)
+                  content_card: (optional, Content Card Object)
+                  email: (optional, Email Object)
+                  kindle_push: (optional, Kindle/FireOS Push Object)
+                  web_push: (optional, Web Push Object)
+                  windows_phone8_push: (optional, Windows Phone 8 Push Object)
+                  windows_universal_push: (optional, Windows Universal Push Object)
+              properties:
+                broadcast:
+                  type: string
+                external_user_ids:
+                  type: string
+                user_aliases:
+                  type: object
+                  properties:
+                    alias_name:
+                      type: string
+                    alias_label:
+                      type: string
+                segment_id:
+                  type: string
+                audience:
+                  type: object
+                  properties:
+                    AND:
+                      type: array
+                      items:
+                        type: object
+                campaign_id:
+                  type: string
+                send_id:
+                  type: string
+                override_frequency_capping:
+                  type: string
+                recipient_subscription_state:
+                  type: string
+                messages:
+                  type: object
+                  properties:
+                    android_push:
+                      type: string
+                    apple_push:
+                      type: string
+                    content_card:
+                      type: string
+                    email:
+                      type: string
+                    kindle_push:
+                      type: string
+                    web_push:
+                      type: string
+                    windows_phone8_push:
+                      type: string
+                    windows_universal_push:
+                      type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /transactional/v1/campaigns/{campaign_id}/send:
+    post:
+      tags:
+      - Messaging > Send Messages
+      summary: Send Transactional Email via API Triggered Delivery
+      description: "> Use this endpoint to send immediate, ad-hoc transactional messages to a designated user. \n  \n\nTo use this endpoint, youll need to generate an API key with the `transactional.send` permission.\n\nThis endpoint is used alongside the creation of a [Transactional Email campaign](https://www.braze.com/docs/api/api_campaigns/transactional_campaigns) and corresponding campaign ID.\n\n> **Important:** Transactional Email is currently available as part of select Braze packages. Reach out to your Braze customer success manager for more details. \n  \n\nSimilar to the [Send triggered campaign endpoint](https://www.braze.com/docs/api/endpoints/messaging/send_messages/post_send_triggered_campaigns/), this campaign type allows you to house message content inside of the Braze dashboard while dictating when and to whom a message is sent via your API. Unlike the Send triggered campaign endpoint, which accepts an audience or segment to send messages to, a request to this endpoint must specify a single user either by `external_user_id` or `user_alias`, as this campaign type is purpose-built for 1:1 messaging of alerts like order confirmations or password resets.\n\n## Rate limit\n\nTransactional Emails are not subject to a rate limit. Depending on your chosen package, a set number of Transactional Emails is covered per hour by SLA. Requests that exceed that rate will still send, but are not covered by SLA. 99.9% of emails will send in less than one minute.\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `campaign_id` | Required | String | ID of the campaign |\n\n## Request Parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `external_send_id` | Optional | String | A Base64 compatible string. Validated against the following regex `/^[a-zA-Z0-9-_+\\/=]+$/`. This optional field allows you to pass an internal identifier for this particular send which will be included in events sent from the Transactional HTTP event postback. When passed, this identifier will also be used as a deduplication key, which Braze will store for 24 hours. Passing the same identifier in another request will not result in a new instance of a send by Braze for 24 hours. |\n| `trigger_properties` | Optional | Object | See [trigger properties](https://www.braze.com/docs/api/objects_filters/trigger_properties_object/). Personalization key-value pairs that will apply to the user in this request. |\n| `recipients` | Required | Object | The user you are targeting this message to. Can contain `attributes` and a single `external_user_id` or `user_alias`.  <br>  <br>Note that if you provide an external user ID that doesnt already exist in Braze, passing any fields to the `attributes` object will create this user profile in Braze and send this message to the newly created user.  <br>  <br>If you send multiple requests to the same user with different data in the `attributes` object, Braze will ensure that `first_name`, `last_name`, and `email` attributes will be updated synchronously and templated into your message. Custom attributes dont have this same protection, so proceed with caution when updating a user through this API and passing different custom attribute values in quick succession. |\n\n## Response\n\nThe send transactional email endpoint will respond with the messages `dispatch_id` which represents the instance of this message send. This identifier can be used along with events from the Transactional HTTP event postback to trace the status of an individual email sent to a single user.\n\n### Example response\n\n``` json\n{\n    \"dispatch_id\": Out-of-the-box generated Unique ID of the instance of this send\n    \"status\": Current status of the message\n    \"metadata\": Object containing additional information about the send instance\n}\n\n```\n\n## Troubleshooting\n\nThe endpoint may also return an error code and a human-readable message in some cases, most of which are validation errors. Here are some common errors you may get when making invalid requests.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `The campaign is not a transactional campaign. Only transactional campaigns may use this endpoint` | The campaign ID provided is not for a transactional campaign. |\n| `The external reference has been queued. Please retry to obtain send_id.` | The external_send_id has been created recently, try a new external_send_id if you are intending to send a new message. |\n| `Campaign does not exist` | The campaign ID provided does not correspond to an existing campaign. |\n| `The campaign is archived. Unarchive the campaign to ensure trigger requests will take effect.` | The campaign ID provided corresponds to an archived campaign. |\n| `The campaign is paused. Resume the campaign to ensure trigger requests will take effect.` | The campaign ID provided corresponds to a paused campaign. |\n| `campaign_id must be a string of the campaign api identifier` | The campaign ID provided is not a valid format. |\n| `Error authenticating credentials` | The API key provided is invalid |\n| `Invalid whitelisted IPs` | The IP address sending the request is not on the IP whitelist (if it is being utilized) |\n| `You do not have permission to access this resource` | The API key used does not have permission to take this action |\n\nMost endpoints at Braze have a rate limit implementation that will return a 429 response code if you have made too many requests. The transactional sending endpoint works differently -- if you exceed your allotted rate limit, our system will continue to ingest the API calls, return success codes, and send the messages, however those messages may not be subject to the contractual SLA for the feature. Please reach out if you need more information about this functionality.\n\n## Transactional HTTP Event Postback\n\nAll transactional emails are complemented with event status postbacks sent as an HTTP request back to your specified URL. This will allow you to evaluate the message status in real-time and take action to reach the user on another channel if the message goes undelivered, or fallback to an internal system if Braze is experiencing latency.\n\nIn order to associate the incoming events to a particular instance of send, you can choose to either capture and store the Braze `dispatch_id` returned in the [API response](https://www.braze.com/docs/api/endpoints/messaging/send_messages/post_send_transactional_message/#example-response), or pass your own identifier to the `external_send_id` field. An example of a value you may choose to pass to that field may be an order ID, where after completing order 1234, an order confirmation message is triggered to the user through Braze, and `external_send_id : 1234` is included in the request. All following event postbacks such as `Sent` and `Delivered` will include `external_send_id : 1234` in the payload allowing you to confirm that user successfully received their order confirmation email.\n\nTo get started using the Transactional HTTP Event Postback, navigate to **Settings** > **Workspace Settings** > **Email Preferences**. in your Braze dashboard and input your desired URL to receive postbacks.\n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), **Email Preferences** can be found at ****Manage Settings** > **Email Settings****.\n\n### Postback body\n\n``` json\n// Sent Event\n{\n    \"dispatch_id\": \"acf471119f7449d579e8089032003ded\",\n    \"status\": \"sent\",\n    \"metadata\": {\n      \"received_at\": \"2020-08-31T18:58:41.000+00:00\",\n      \"enqueued_at\": \"2020-08-31T18:58:41.000+00:00\",\n      \"executed_at\": \"2020-08-31T18:58:41.000+00:00\",\n      \"sent_at\": \"2020-08-31T18:58:42.000+00:00\",\n      \"campaign_api_id\": \"417220e4-5a2a-b634-7f7d-9ec891532368\",\n      \"external_send_id\" : \"34a2ceb3cf6184132f3d816e9984269a\"\n    }\n}\n// Processed Event\n{\n    \"dispatch_id\": \"acf471119f7449d579e8089032003ded\",\n    \"status\": \"processed\",\n    \"metadata\": {\n      \"processed_at\": \"2020-08-31T18:58:42.000+00:00\",\n      \"campaign_api_id\": \"417220e4-5a2a-b634-7f7d-9ec891532368\",\n      \"external_send_id\" : \"34a2ceb3cf6184132f3d816e9984269a\"\n    }\n}\n// Aborted\n{\n    \"dispatch_id\": \"acf471119f7449d579e8089032003ded\",\n    \"status\": \"aborted\",\n    \"metadata\": {\n      \"reason\": \"User not emailable\",\n      \"aborted_at\": \"2020-08-31T19:04:51.000+00:00\",\n      \"campaign_api_id\": \"417220e4-5a2a-b634-7f7d-9ec891532368\",\n      \"external_send_id\" : \"34a2ceb3cf6184132f3d816e9984269a\"\n    }\n}\n// Delivered Event\n{\n    \"dispatch_id\": \"acf471119f7449d579e8089032003ded\",\n    \"status\": \"delivered\",\n    \"metadata\": {\n      \"delivered_at\": \"2020-08-31T18:27:32.000+00:00\",\n      \"campaign_api_id\": \"417220e4-5a2a-b634-7f7d-9ec891532368\",\n      \"external_send_id\" : \"34a2ceb3cf6184132f3d816e9984269a\"\n    }\n}\n// Bounced Event\n{\n    \"dispatch_id\": \"acf471119f7449d579e8089032003ded\",\n    \"status\": \"bounced\",\n    \"metadata\": {\n      \"bounced_at\": \"2020-08-31T18:58:43.000+00:00\",\n      \"reason\": \"550 5.1.1 The email account that you tried to reach does not exist\",\n      \"campaign_api_id\": \"417220e4-5a2a-b634-7f7d-9ec891532368\",\n      \"external_send_id\" : \"34a2ceb3cf6184132f3d816e9984269a\"\n    }\n}\n\n```\n\n#### Message status\n\n| **Status** | **Description** |\n| --- | --- |\n| `sent` | Message successfully dispatched to Brazes email sending partner |\n| `processed` | Email sending partner has successfully received and prepared the message for sending to the users inbox provider |\n| `aborted` | Braze was unable to successfully dispatch the message due to the user not having an emailable address, or Liquid abort logic was called in the message body. All aborted events include a reason field within the metadata object indicating why the message was aborted |\n| `delivered` | Message was accepted by the users email inbox provider |\n| `bounced` | Message was rejected by the users email inbox provider. All bounced events include a reason field within the metadata object reflecting the bounce error code provided by the inbox provider |\n\n### Example postback\n\n``` json\n// Sent Event\n{\n    \"dispatch_id\": \"acf471119f7449d579e8089032003ded\",\n    \"status\": \"sent\",\n    \"metadata\": {\n      \"received_at\": \"2020-08-31T18:58:41.000+00:00\",\n      \"enqueued_at\": \"2020-08-31T18:58:41.000+00:00\",\n      \"executed_at\": \"2020-08-31T18:58:41.000+00:00\",\n      \"sent_at\": \"2020-08-31T18:58:42.000+00:00\",\n      \"campaign_api_id\": \"417220e4-5a2a-b634-7f7d-9ec891532368\",\n      \"external_send_id\" : \"34a2ceb3cf6184132f3d816e9984269a\"\n    }\n}\n// Processed Event\n{\n    \"dispatch_id\": \"acf471119f7449d579e8089032003ded\",\n    \"status\": \"processed\",\n    \"metadata\": {\n      \"processed_at\": \"2020-08-31T18:58:42.000+00:00\",\n      \"campaign_api_id\": \"417220e4-5a2a-b634-7f7d-9ec891532368\",\n      \"external_send_id\" : \"34a2ceb3cf6184132f3d816e9984269a\"\n    }\n}\n// Aborted\n{\n    \"dispatch_id\": \"acf471119f7449d579e8089032003ded\",\n    \"status\": \"aborted\",\n    \"metadata\": {\n      \"reason\": \"User not emailable\",\n      \"aborted_at\": \"2020-08-31T19:04:51.000+00:00\",\n      \"campaign_api_id\": \"417220e4-5a2a-b634-7f7d-9ec891532368\",\n      \"external_send_id\" : \"34a2ceb3cf6184132f3d816e9984269a\"\n    }\n}\n// Delivered Event\n{\n    \"dispatch_id\": \"acf471119f7449d579e8089032003ded\",\n    \"status\": \"delivered\",\n    \"metadata\": {\n      \"delivered_at\": \"2020-08-31T18:27:32.000+00:00\",\n      \"campaign_api_id\": \"417220e4-5a2a-b634-7f7d-9ec891532368\",\n      \"external_send_id\" : \"34a2ceb3cf6184132f3d816e9984269a\"\n    }\n}\n// Bounced Event\n{\n    \"dispatch_id\": \"acf471119f7449d579e8089032003ded\",\n    \"status\": \"bounced\",\n    \"metadata\": {\n      \"bounced_at\": \"2020-08-31T18:58:43.000+00:00\",\n      \"reason\": \"550 5.1.1 The email account that you tried to reach does not exist\",\n      \"campaign_api_id\": \"417220e4-5a2a-b634-7f7d-9ec891532368\",\n      \"external_send_id\" : \"34a2ceb3cf6184132f3d816e9984269a\"\n    }\n}\n\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                external_send_id: YOUR_BASE64_COMPATIBLE_ID
+                trigger_properties:
+                  example_string_property: YOUR_EXAMPLE_STRING
+                  example_integer_property: YOUR_EXAMPLE_INTEGER
+                recipient:
+                - external_user_id: TARGETED_USER_ID_STRING
+              properties:
+                external_send_id:
+                  type: string
+                trigger_properties:
+                  type: object
+                  properties:
+                    example_string_property:
+                      type: string
+                    example_integer_property:
+                      type: string
+                recipient:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      external_user_id:
+                        type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: campaign_id
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /campaigns/trigger/send:
+    post:
+      tags:
+      - Messaging > Send Messages
+      summary: Send Campaign Messages via API Triggered Delivery
+      description: "> Use this endpoint to send immediate, ad-hoc messages to designated users via API-triggered delivery. \n  \n\nTo use this endpoint, youll need to generate an API key with the `campaigns.trigger.send` permission.\n\nAPI-triggered delivery allows you to house message content inside of the Braze dashboard while dictating when a message is sent, and to whom via your API.\n\nIf you are targeting a segment, a record of your request will be stored in the [Developer Console](https://dashboard.braze.com/app_settings/developer_console/activitylog/). Note that to send messages with this endpoint, you must have a [campaign ID](https://www.braze.com/docs/api/identifier_types/) created when you build an [API-triggered campaign](https://www.braze.com/docs/api/api_campaigns/).\n\n## Rate limit\n\nWhen specifying a segment or Connected Audience in your request, we apply a rate limit of 250 requests per minute to this endpoint. Otherwise, if specifying an `external_id`, this endpoint has a default rate limit of 250,000 requests per hour, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\nBraze endpoints support [batching API requests](https://www.braze.com/docs/api/api_limits/#batching-api-requests). A single request to the messaging endpoints can reach any of the following:\n\n- Up to 50 specific `external_ids`, each with individual message parameters\n- A segment of any size created in the Braze dashboard, specified by its `segment_id`\n- An ad-hoc audience segment of any size, defined in the request as a [Connected Audience](https://www.braze.com/docs/api/objects_filters/connected_audience/) object\n    \n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `campaign_id` | Required | String | See [campaign identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `send_id` | Optional | String | See [send identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `trigger_properties` | Optional | Object | See [trigger properties](https://www.braze.com/docs/api/objects_filters/trigger_properties_object/). Personalization key-value pairs that will apply to all users in this request. |\n| `broadcast` | Optional | Boolean | See [broadcast](https://www.braze.com/docs/api/parameters/#broadcast). This parameter defaults to false (as of August 31, 2017).  <br>  <br>If `recipients` is omitted, `broadcast` must be set to true. However, use caution when setting `broadcast: true`, as unintentionally setting this flag may cause you to send your campaign to a larger than expected audience. |\n| `audience` | Optional | Connected audience object | See [connected audience](https://www.braze.com/docs/api/objects_filters/connected_audience/). |\n| `recipients` | Optional | Array | See [recipients object](https://www.braze.com/docs/api/objects_filters/recipient_object/). If not provided and `broadcast` is set to true, the message will send to the entire segment targeted by the campaign. |\n\nThe recipients array may contain up to 50 objects, with each object containing a single `external_user_id` string and `trigger_properties` object.\n\nWhen `send_to_existing_only` is `true`, Braze will only send the message to existing users. When `send_to_existing_only` is `false` and a user with the given `id` does not exist, Braze will create a user with that id and attributes before sending the message.\n\n> Important: A users subscription group status can be updated via the inclusion of a subscription_groups parameter within the attributes object. This is currently in early access. Contact your Braze customer success manager if youre interested in participating in the early access. More details can be found in the [User attributes object](https://www.braze.com/docs/api/objects_filters/user_attributes_object). \n  \n\n## Response details\n\nMessage sending endpoint responses will include the messages `dispatch_id` for reference back to the dispatch of the message. The `dispatch_id` is the ID of the message dispatch, a unique ID for each transmission sent from the Braze platform. When using this endpoint, you receive a single `dispatch_id` for an entire batched set of users. For more information on `dispatch_id` check out out our documentation on [Dispatch ID Behavior](https://www.braze.com/docs/help/help_articles/data/dispatch_id/).\n\n## Create send endpoint\n\n**Using the attributes object in campaigns**\n\nBraze has a Messaging Object called `Attributes` that will allow you to add, create, or update attributes and values for a user before you send them an API-triggered campaigns using the `campaign/trigger/send` endpoint as this API call will process the User Attributes object before it processes and sends the campaign. This helps minimize the risk of there being issues caused by [race conditions](https://www.braze.com/docs/help/best_practices/race_conditions/).\n\n> **Important:** Looking for the Canvas version of this endpoint? Check out [Sending Canvas messages via API-triggered delivery](https://www.braze.com/docs/api/endpoints/messaging/send_messages/post_send_triggered_canvases/#create-send-endpoint)."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                campaign_id: campaign_identifier
+                send_id: send_identifier
+                trigger_properties: {}
+                broadcast: false
+                audience:
+                  AND:
+                  - custom_attribute:
+                      custom_attribute_name: eye_color
+                      comparison: equals
+                      value: blue
+                  - custom_attribute:
+                      custom_attribute_name: favorite_foods
+                      comparison: includes_value
+                      value: pizza
+                  - OR:
+                    - custom_attribute:
+                        custom_attribute_name: last_purchase_time
+                        comparison: less_than_x_days_ago
+                        value: 2
+                    - push_subscription_status:
+                        comparison: is
+                        value: opted_in
+                  - email_subscription_status:
+                      comparison: is_not
+                      value: subscribed
+                  - last_used_app:
+                      comparison: after
+                      value: 2019-07-22T13:17:55+0000
+                recipients:
+                - user_alias:
+                    alias_name: example_name
+                    alias_label: example_label
+                  external_user_id: external_user_identifier
+                  trigger_properties: {}
+                  send_to_existing_only: true
+                  attributes:
+                    first_name: Alex
+              properties:
+                campaign_id:
+                  type: string
+                send_id:
+                  type: string
+                trigger_properties:
+                  type: object
+                broadcast:
+                  type: boolean
+                audience:
+                  type: object
+                  properties:
+                    AND:
+                      type: array
+                      items:
+                        type: object
+                recipients:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      user_alias:
+                        type: object
+                        properties:
+                          alias_name:
+                            type: string
+                          alias_label:
+                            type: string
+                      external_user_id:
+                        type: string
+                      trigger_properties:
+                        type: object
+                      send_to_existing_only:
+                        type: boolean
+                      attributes:
+                        type: object
+                        properties:
+                          first_name:
+                            type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /canvas/trigger/send:
+    post:
+      tags:
+      - Messaging > Send Messages
+      summary: Send Canvas Messages via API Triggered Delivery
+      description: "> Use this endpoint to send Canvas messages via API-triggered delivery. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.trigger.send` permission.\n\nAPI-triggered delivery allows you to house message content inside of the Braze dashboard while dictating when a message is sent, and to whom via your API.\n\nNote that to send messages with this endpoint, you must have a [Canvas ID](https://www.braze.com/docs/api/identifier_types/#canvas-api-identifier) created when you build a Canvas.\n\n## Rate limit\n\nWhen specifying a segment or Connected Audience in your request, we apply a rate limit of 250 requests per minute to this endpoint. Otherwise, if specifying an `external_id`, this endpoint has a default rate limit of 250,000 requests per hour, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\nBraze endpoints support [batching API requests](https://www.braze.com/docs/api/api_limits/#batching-api-requests). A single request to the messaging endpoints can reach any of the following:\n\n- Up to 50 specific `external_ids`, each with individual message parameters\n- A segment of any size created in the Braze dashboard, specified by its `segment_id`\n- An ad-hoc audience segment of any size, defined in the request as a [Connected Audience](https://www.braze.com/docs/api/objects_filters/connected_audience/) object\n    \n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `canvas_id` | Required | String | See [Canvas identifier](https://www.braze.com/docs/api/identifier_types/). |\n| `canvas_entry_properties` | Optional | Object | See [Canvas entry properties](https://www.braze.com/docs/api/objects_filters/canvas_entry_properties_object/). Personalization key-value pairs that will apply to all users in this request. The Canvas entry properties object has a maximum size limit of 50 KB. |\n| `broadcast` | Optional | Boolean | You must set `broadcast` to true when sending a message to an entire segment that a campaign or Canvas targets. This parameter defaults to false (as of August 31, 2017).  <br>  <br>If `broadcast` is set to true, a recipients list cannot be included. However, use caution when setting `broadcast: true`, as unintentionally setting this flag may cause you to send your message to a larger than expected audience. |\n| `audience` | Optional | Connected audience object | See [Connected audience](https://braze.com/docs/api/objects_filters/connected_audience/). |\n| `recipients` | Optional | Array | See [Recipients object](https://www.braze.com/docs/api/objects_filters/recipient_object/). If not provided and `broadcast` is set to true, the message will send to the entire segment targeted by the Canvas.  <br>  <br>The `recipients` array may contain up to 50 objects, with each object containing a single `external_user_id` string and `canvas_entry_properties` object. Either `external_user_id` or user_alias is required for this call. Requests must specify only one.  <br>  <br>When `send_to_existing_only` is true, Braze will only send the message to existing usershowever this flag cant be used with user aliases. When `send_to_existing_only` is `false` and a user with the given `id` does not exist, Braze will create a user with that ID and attributes before sending the message. |\n\nCustomers using the API for server-to-server calls may need to whitelist the appropriate API URL if theyre behind a firewall.\n\n> **Note:** If you include both specific users in your API call and a target segment in the dashboard, the message will send to specifically the user profiles that are in the API call and qualify for the segment filters. \n  \n\n## Response details\n\nMessage sending endpoint responses will include the messages `dispatch_id` for reference back to the dispatch of the message. The `dispatch_id` is the ID of the message dispatch (unique ID for each transmission sent from the Braze platform). Check out [Dispatch ID behavior](https://www.braze.com/docs/help/help_articles/data/dispatch_id/) for more information.\n\n## Create send endpoint\n\n**Using the Attributes Object in Canvas**\n\nBraze has a Messaging Object called `Attributes` that allows you to add, create, or update attributes and values for a user before sending them an API-Triggered Canvas using the `canvas/trigger/send` endpoint as this API call will process the User Attributes object before it processes and sends the Canvas. This helps minimize the risk of there being issues caused by [race conditions](https://www.braze.com/docs/help/best_practices/race_conditions/).\n\n> **Important:** Looking for the camaigns version of this endpoint? Check out [Sending campaign messages via API-triggered delivery](https://www.braze.com/docs/api/endpoints/messaging/send_messages/post_send_triggered_campaigns/)."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                canvas_id: canvas_identifier
+                canvas_entry_properties:
+                  product_name: shoes
+                  product_price: 79.99
+                broadcast: false
+                audience:
+                  AND:
+                  - custom_attribute:
+                      custom_attribute_name: eye_color
+                      comparison: equals
+                      value: blue
+                  - custom_attribute:
+                      custom_attribute_name: favorite_foods
+                      comparison: includes_value
+                      value: pizza
+                  - OR:
+                    - custom_attribute:
+                        custom_attribute_name: last_purchase_time
+                        comparison: less_than_x_days_ago
+                        value: 2
+                    - push_subscription_status:
+                        comparison: is
+                        value: opted_in
+                  - email_subscription_status:
+                      comparison: is_not
+                      value: subscribed
+                  - last_used_app:
+                      comparison: after
+                      value: 2019-07-22T13:17:55+0000
+                recipients:
+                - user_alias:
+                    alias_name: example_name
+                    alias_label: example_label
+                  external_user_id: user_identifier
+                  trigger_properties: {}
+                  canvas_entry_properties: ''
+                  send_to_existing_only: true
+                  attributes:
+                    first_name: Alex
+              properties:
+                canvas_id:
+                  type: string
+                canvas_entry_properties:
+                  type: object
+                  properties:
+                    product_name:
+                      type: string
+                    product_price:
+                      type: number
+                broadcast:
+                  type: boolean
+                audience:
+                  type: object
+                  properties:
+                    AND:
+                      type: array
+                      items:
+                        type: object
+                recipients:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      user_alias:
+                        type: object
+                        properties:
+                          alias_name:
+                            type: string
+                          alias_label:
+                            type: string
+                      external_user_id:
+                        type: string
+                      trigger_properties:
+                        type: object
+                      canvas_entry_properties:
+                        type: string
+                      send_to_existing_only:
+                        type: boolean
+                      attributes:
+                        type: object
+                        properties:
+                          first_name:
+                            type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

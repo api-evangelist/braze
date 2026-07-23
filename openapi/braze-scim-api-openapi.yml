@@ -1,0 +1,450 @@
+openapi: 3.0.0
+info:
+  title: Braze SCIM API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: SCIM
+paths:
+  /scim/v2/Users/{id}:
+    delete:
+      tags:
+      - SCIM
+      summary: Remove Dashboard User Account
+      description: "> This endpoint allows you to permanently delete an existing dashboard user by specifying the resource `id` returned by the SCIM [`POST`](https://www.braze.com/docs/scim/post_create_user_account/) method.  \n \n  \n\nThis is similar to deleting a user in the **Manage Users** section of the Braze dashboard. For information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` PUT, GET, and POST endpoints as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data type | Description |\n| --- | --- | --- | --- |\n| `id` | Required | String | The users resource ID. This parameter is returned by the `POST` `/scim/v2/Users/` or `GET` `/scim/v2/Users?filter=userName eq \"[user@test.com](mailto:user@test.com)\"` methods. |\n\n## Request parameters\n\nThere is no request body for this endpoint.\n\n## Response\n\n### Example error response\n\n``` json\nHTTP/1.1 204 Not Found\nContent-Type: text/html; charset=UTF-8\n\n```\n\nIf a developer with this ID doesnt exist in Braze, the endpoint will respond with:\n\n``` json\nHTTP/1.1 404 Not Found Content-Type: text/html; charset=UTF-8\n{ \"schemas\": [\"urn:ietf:params:scim:api:messages:2.0:Error\"], \"detail\": \"User not found\", \"status\": 404 }\n\n```"
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: X-Request-Origin
+        in: header
+        schema:
+          type: string
+        example: YOUR-REQUEST-ORIGIN-HERE
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer YOUR-SCIM-TOKEN-HERE
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+      - SCIM
+      summary: Look Up an Existing Dashboard User Account
+      description: "> This endpoint allows you to look up an existing dashboard user account by specifying the resource `id` returned by the SCIM [`POST`](https://www.braze.com/docs/scim/post_create_user_account/) method.  \n \n  \n\nFor information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` PUT, GET, DELETE, and POST endpoints as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `id` | Required | String | The user's resource ID. This parameter is returned by the `POST` `/scim/v2/Users/` or `GET` `/scim/v2/Users?filter=userName eq \"user@test.com\"` methods. |\n\n## Request parameters\n\nThere is no request body for this endpoint.\n\n## Response\n\n``` json\n{\n    \"schemas\": [\"urn:ietf:params:scim:schemas:core:2.0:User\"],\n    \"id\": \"dfa245b7-24195aec-887bb3ad-602b3340\",\n    \"userName\": \"user@test.com\",\n    \"name\": {\n        \"givenName\": \"Test\",\n        \"familyName\": \"User\"\n    },\n    \"department\": \"finance\",\n    \"lastSignInAt\": \"Thursday, January 1, 1970 12:00:00 AM\",\n    \"permissions\": {\n        \"companyPermissions\": [\"manage_company_settings\"],\n        \"appGroup\": [\n            {\n                \"appGroupId\": \"241adcd25789fabcded\",\n                \"appGroupName\": \"Test App Group\",\n                \"appGroupPermissions\": [\"basic_access\",\"send_campaigns_canvases\"],\n                \"team\": [\n                    {\n                         \"teamId\": \"241adcd25789fabcded\",\n                         \"teamName\": \"Test Team\",                  \n                         \"teamPermissions\": [\"admin\"]\n                    }\n                ]\n            } \n        ]\n    }\n}\n\n```"
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: X-Request-Origin
+        in: header
+        schema:
+          type: string
+        example: YOUR-REQUEST-ORIGIN-HERE
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer YOUR-SCIM-TOKEN-HERE
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+      - SCIM
+      summary: Update Dashboard User Account
+      description: "> This endpoint allows you to update an existing dashboard user account by specifying the resource `id` returned by the SCIM [`POST`](https://www.braze.com/docs/scim/post_create_user_account/) method.  \n \n  \n\nIt allows you to update of given and family names, permissions (for setting permissions at the company, app group, and team level) and department. For information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\nFor security reasons, `userName` (email address) cannot be updated through this endpoint. If you would like to change the `userName` (email address) for a user, contact [Support](https://www.braze.com/docs/support_contact/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` GET, DELETE, and POST endpoints as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `id` | Required | String | The user's resource ID. This parameter is returned by the `POST` `/scim/v2/Users/` or `GET` `/scim/v2/Users?filter=userName eq \"user@test.com\"` methods. |\n\n## Request parameters\n\n| Parameter | Required | Data type | Description |\n| --- | --- | --- | --- |\n| `schemas` | Required | Array of strings | Expected SCIM 2.0 schema name for user object. |\n| `name` | Required | JSON object | This object contains the user's given name and family name. |\n| `department` | Required | String | Valid department string from the [department string documentation]({{site.baseurl}}/scim_api_appendix/#department-strings). |\n| `permissions` | Required | JSON object | Permissions object as described in the [permissions object documentation]({{site.baseurl}}/scim_api_appendix/#permissions-object). |\n\n## Response\n\n``` json\n{\n    \"schemas\": [\"urn:ietf:params:scim:schemas:core:2.0:User\"],\n    \"id\": \"dfa245b7-24195aec-887bb3ad-602b3340\",\n    \"userName\": \"user@test.com\",\n    \"name\": {\n        \"givenName\": \"Test\",\n        \"familyName\": \"User\"\n    },\n    \"department\": \"finance\",\n    \"lastSignInAt\": \"Thursday, January 1, 1970 12:00:00 AM\",\n    \"permissions\": {\n        \"companyPermissions\": [\"manage_company_settings\"],\n        \"appGroup\": [\n            {\n                \"appGroupId\": \"241adcd25789fabcded\",\n                \"appGroupName\": \"Test App Group\",\n                \"appGroupPermissions\": [\"basic_access\",\"send_campaigns_canvases\"],\n                \"team\": [\n                    {\n                         \"teamId\": \"2519dafcdba238ae7\",\n                         \"teamName\": \"Test Team\",                  \n                         \"teamPermissions\": [\"admin\"]\n                    }\n                ]\n            } \n        ]\n    }\n}\n\n```\n\n### Error states\n\nIf a user with this ID doesnt exist in Braze, the endpoint will respond with:\n\n``` json\nHTTP/1.1 404 Not Found\nContent-Type: text/html; charset=UTF-8\n{\n    \"schemas\": [\"urn:ietf:params:scim:api:messages:2.0:Error\"],\n    \"detail\": \"User not found\",\n    \"status\": 404\n}\n\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                schemas:
+                - urn:ietf:params:scim:schemas:core:2.0:User
+                name:
+                  givenName: Test
+                  familyName: User
+                department: finance
+                permissions:
+                  companyPermissions:
+                  - manage_company_settings
+                  appGroup:
+                  - appGroupName: Test App Group
+                    appGroupPermissions:
+                    - basic_access
+                    - send_campaigns_canvases
+                    team:
+                    - teamName: Test Team
+                      teamPermissions:
+                      - admin
+              properties:
+                schemas:
+                  type: array
+                  items:
+                    type: string
+                name:
+                  type: object
+                  properties:
+                    givenName:
+                      type: string
+                    familyName:
+                      type: string
+                department:
+                  type: string
+                permissions:
+                  type: object
+                  properties:
+                    companyPermissions:
+                      type: array
+                      items:
+                        type: string
+                    appGroup:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          appGroupName:
+                            type: string
+                          appGroupPermissions:
+                            type: array
+                            items:
+                              type: string
+                          team:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                teamName:
+                                  type: string
+                                teamPermissions:
+                                  type: array
+                                  items:
+                                    type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: X-Request-Origin
+        in: header
+        schema:
+          type: string
+        example: YOUR-REQUEST-ORIGIN-HERE
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer YOUR-SCIM-TOKEN-HERE
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /scim/v2/Users:
+    get:
+      tags:
+      - SCIM
+      summary: Search Existing Dashboard User by Email
+      description: "> This endpoint allows you to look up an existing dashboard user account by specifying their email in the filter query parameter.  \n \n  \n\nNote that when the query parameter is URL encoded it will read like this:\n\n`/scim/v2/Users?filter=userName eq \"user@test.com\"`\n\nFor information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` PUT, GET, DELETE, and POST endpoints as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `userName@example.com` | Required | String | The user's email. |\n\n## Request parameters\n\nThere is no request body for this endpoint.\n\n## Response\n\n``` json\nContent-Type: application/json\nX-Request-Origin: YOUR-REQUEST-ORIGIN-HERE\nAuthorization: Bearer YOUR-SCIM-TOKEN-HERE\n{\n    \"schemas\": [\"urn:ietf:params:scim:api:messages:2.0:ListResponse\"],\n    \"totalResults\": 1,\n    \"Resources\": [\n        {\n            \"userName\": \"user@test.com\",\n            \"id\": \"dfa245b7-24195aec-887bb3ad-602b3340\",\n            \"name\": {\n                \"givenName\": \"Test\",\n                \"familyName\": \"User\"\n            },\n            \"department\": \"finance\",\n            \"lastSignInAt\": \"Thursday, January 1, 1970 12:00:00 AM\",\n            \"permissions\": {\n                \"companyPermissions\": [\"manage_company_settings\"],\n                \"appGroup\": [\n                    {\n                        \"appGroupId\": \"241adcd25789fabcded\",\n                        \"appGroupName\": \"Test App Group\",\n                        \"appGroupPermissions\": [\"basic_access\",\"send_campaigns_canvases\"],\n                        \"team\": [\n                            {\n                                \"teamId\": \"241adcd25789fabcded\",\n                                \"teamName\": \"Test Team\",                  \n                                \"teamPermissions\": [\"admin\"]\n                            }\n                        ]\n                    } \n                ]\n            }\n        }\n    ]\n}\n\n```"
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: X-Request-Origin
+        in: header
+        schema:
+          type: string
+        example: YOUR-REQUEST-ORIGIN-HERE
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer YOUR-SCIM-TOKEN-HERE
+      - name: filter
+        in: query
+        schema:
+          type: string
+        example: '{userName@example.com}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+      - SCIM
+      summary: Create New Dashboard User Account
+      description: "> This endpoint allows you to create a new dashboard user account by specifying email, given and family names, permissions (for setting permissions at the company, app group, and team level).  \n \n  \n\nFor information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` PUT, GET, and DELETE endpoints as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data type | Description |\n| --- | --- | --- | --- |\n| `schemas` | Required | Array of strings | Expected SCIM 2.0 schema name for user object. |\n| `userName` | Required | String | The users email address. |\n| `name` | Required | JSON object | This object contains the user's given name and family name. |\n| `department` | Required | String | Valid department string from the [department string documentation]({{site.baseurl}}/scim_api_appendix/#department-strings). |\n| `permissions` | Required | JSON object | Permissions object as described in the [permissions object documentation]({{site.baseurl}}/scim_api_appendix/#permissions-object). |\n\n## Response\n\n``` json\n{\n    \"schemas\": [\"urn:ietf:params:scim:schemas:core:2.0:User\"],\n    \"id\": \"dfa245b7-24195aec-887bb3ad-602b3340\",\n    \"userName\": \"user@test.com\",\n    \"name\": {\n        \"givenName\": \"Test\",\n        \"familyName\": \"User\"\n    },\n    \"department\": \"finance\",\n    \"lastSignInAt\": \"Thursday, January 1, 1970 12:00:00 AM\",\n    \"permissions\": {\n        \"companyPermissions\": [\"manage_company_settings\"],\n        \"appGroup\": [\n            {\n                \"appGroupId\": \"241adcd25789fabcded\",\n                \"appGroupName\": \"Test App Group\",\n                \"appGroupPermissions\": [\"basic_access\",\"send_campaigns_canvases\"],\n                \"team\": [\n                    {\n                         \"teamId\": \"2519dafcdba238ae7\",\n                         \"teamName\": \"Test Team\",                  \n                         \"teamPermissions\": [\"basic_access\",\"export_user_data\"]\n                    }\n                ]\n            } \n        ]\n    }\n}\n\n```\n\n### Error states\n\nIf a user with this email address already exists in Braze, the endpoint will respond with:\n\n``` json\nHTTP/1.1 409 Conflict\nDate: Tue, 10 Sep 2019 02:22:30 GMT\nContent-Type: text/json;charset=UTF-8\n{\n  \"schemas\": [\"urn:ietf:params:scim:api:messages:2.0:Error\"],\n  \"detail\": \"User already exists in the database.\",\n  \"status\": 409\n}\n\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                schemas:
+                - urn:ietf:params:scim:schemas:core:2.0:User
+                userName: user@test.com
+                name:
+                  givenName: Test
+                  familyName: User
+                department: finance
+                permissions:
+                  companyPermissions:
+                  - manage_company_settings
+                  appGroup:
+                  - appGroupName: Test App Group
+                    appGroupPermissions:
+                    - basic_access
+                    - send_campaigns_canvases
+                    team:
+                    - teamName: Test Team
+                      teamPermissions:
+                      - basic_access
+                      - export_user_data
+              properties:
+                schemas:
+                  type: array
+                  items:
+                    type: string
+                userName:
+                  type: string
+                  format: email
+                name:
+                  type: object
+                  properties:
+                    givenName:
+                      type: string
+                    familyName:
+                      type: string
+                department:
+                  type: string
+                permissions:
+                  type: object
+                  properties:
+                    companyPermissions:
+                      type: array
+                      items:
+                        type: string
+                    appGroup:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          appGroupName:
+                            type: string
+                          appGroupPermissions:
+                            type: array
+                            items:
+                              type: string
+                          team:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                teamName:
+                                  type: string
+                                teamPermissions:
+                                  type: array
+                                  items:
+                                    type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: X-Request-Origin
+        in: header
+        schema:
+          type: string
+        example: YOUR-REQUEST-ORIGIN-HERE
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer YOUR-SCIM-TOKEN-HERE
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

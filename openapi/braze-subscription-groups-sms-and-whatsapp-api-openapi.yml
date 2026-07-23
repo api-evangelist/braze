@@ -1,0 +1,344 @@
+openapi: 3.0.0
+info:
+  title: Braze Subscription Groups > SMS and WhatsApp API
+  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  version: 1.0.0
+servers:
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-01.braze.com
+  description: REST endpoint for instance US-01
+- url: https://rest.iad-02.braze.com
+  description: REST endpoint for instance US-02
+- url: https://rest.iad-03.braze.com
+  description: REST endpoint for instance US-03
+- url: https://rest.iad-04.braze.com
+  description: REST endpoint for instance US-04
+- url: https://rest.iad-05.braze.com
+  description: REST endpoint for instance US-05
+- url: https://rest.iad-06.braze.com
+  description: REST endpoint for instance US-06
+- url: https://rest.iad-08.braze.com
+  description: REST endpoint for instance US-08
+- url: https://rest.fra-01.braze.eu
+  description: REST endpoint for instance EU-01
+- url: https://rest.fra-02.braze.eu
+  description: REST endpoint for instance EU-02
+security:
+- BearerAuth: []
+tags:
+- name: Subscription Groups > SMS and WhatsApp
+paths:
+  /subscription/status/get:
+    get:
+      tags:
+      - Subscription Groups > SMS and WhatsApp
+      summary: List User's  Subscription Group Status - SMS
+      description: "> Use this endpoint to get the subscription state of a user in a subscription group. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.status.get` permission.\n\nThese groups will be available on the **Subscription Group** page. The response from this endpoint will include the external ID and either subscribed, unsubscribed, or unknown for the specific subscription group requested in the API call. This can be used to update the subscription group state in subsequent API calls or to be displayed on a hosted web page.\n\n\\*Either `external_id` or `phone` are required. When both are submitted, only the external_id is used for querying and the phone number is applied to that user.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\nAll successful responses will return `subscribed`, `unsubscribed`, or `unknown` depending on status and user history with the subscription group.\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"status\": {\n    \"1\": \"Unsubscribed\",\n    \"2\": \"Subscribed\"\n  },\n  \"message\": \"success\"\n}\n\n```"
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: subscription_group_id
+        in: query
+        schema:
+          type: string
+        description: '(Required) String
+
+
+          The `id` of your subscription group.'
+        example: '{{subscription_group_id}}'
+      - name: external_id
+        in: query
+        schema:
+          type: string
+        description: '(Required*) String
+
+
+          The `external_id` of the user (must include at least one and at most 50 `external_ids`).
+
+
+          When both an `external_id` and `phone` are submitted, only the external_id(s) provided will be applied to the result query.
+
+          '
+        example: '{{external_identifier}}'
+      - name: phone
+        in: query
+        schema:
+          type: string
+        description: '(Required*) String in [E.164](https://en.wikipedia.org/wiki/E.164) format
+
+
+          The phone number of the user (must include at least one phone number and at most 50 phone numbers).'
+        example: '+11112223333'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /subscription/user/status:
+    get:
+      tags:
+      - Subscription Groups > SMS and WhatsApp
+      summary: List User's Subscription Group - SMS
+      description: "> Use this endpoint to list and get the subscription groups of a certain user. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.groups.get` permission.\n\nIf there are multiple users (multiple external IDs) who share the same email address, all users will be returned as a separate user (even if they have the same email address or subscription group).\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/)."
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      - name: external_id
+        in: query
+        schema:
+          type: string
+        description: '(Required*) String
+
+
+          The `external_id` of the user (must include at least one and at most 50 `external_ids`).'
+        example: '{{external_id}}'
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        description: '(Optional) Integer
+
+
+          The limit on the maximum number of results returned. Default (and max) limit is 100.'
+        example: 100
+      - name: offset
+        in: query
+        schema:
+          type: integer
+        description: "(Optional) Integer\n\n\tNumber of templates to skip before returning the rest of the templates that fit the search criteria."
+        example: 1
+      - name: phone
+        in: query
+        schema:
+          type: string
+        description: '(Required*) String in [E.164](https://en.wikipedia.org/wiki/E.164) format
+
+
+          The phone number of the user. Must include at least one phone number (with a max of 50).'
+        example: '+11112223333'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /subscription/status/set:
+    post:
+      tags:
+      - Subscription Groups > SMS and WhatsApp
+      summary: Update User's Subscription Group Status - SMS
+      description: "> Use this endpoint to batch update the subscription state of up to 50 users on the Braze dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.status.set` permission.\n\nYou can access a subscription groups `subscription_group_id` by navigating to the **Subscription Group** page.\n\nTip: When creating new users via the [/users/track](https://www.braze.com/docs/api/endpoints/user_data/post_user_track/) endpoint, you can set subscription groups within the user attributes object, which allows you to create a user and set the subscription group state in one API call.\n\n\\*Only `external_id` or `phone` is accepted for SMS subscription groups.\n\n### Rate limit\n\nFor customers who onboarded with Braze on or after January 6, 2022, we apply a rate limit of 5,000 requests per minute shared across the `/subscription/status/set` and `/v2/subscription/status/set` endpoint as documented in [API rate limits](http://localhost:4000/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `subscription_group_id` | Required | String | The `id` of your subscription group. |\n| `subscription_state` | Required | String | Available values are `unsubscribed` (not in subscription group) or `subscribed` (in subscription group). |\n| `external_id` | Required\\* | Array of strings | The `external_id` of the user or users, may include up to 50 `id`s. |\n| `phone` | Required\\* | String in [E.164](https://en.wikipedia.org/wiki/E.164) format | The phone number of the user, can be passed as an array of strings. Must include at least one phone number (with a max of 50). |\n\n### Example successful response\n\nThe status code `201` could return the following response body.\n\n``` json\n{\n    \"message\": \"success\"\n}\n\n```\n\nImportant: The endpoint only accepts the `email` or `phone` value, not both. If given both, you will receive this response: `{\"message\":\"Either an email address or a phone number should be provided, but not both.\"}`"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                subscription_group_id: subscription_group_identifier
+                subscription_state: unsubscribed
+                external_id: external_identifier
+                phone:
+                - '+12223334444'
+                - '+11112223333'
+              properties:
+                subscription_group_id:
+                  type: string
+                subscription_state:
+                  type: string
+                external_id:
+                  type: string
+                phone:
+                  type: array
+                  items:
+                    type: string
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v2/subscription/status/set:
+    post:
+      tags:
+      - Subscription Groups > SMS and WhatsApp
+      summary: Update User's Subscription Group Status V2
+      description: "> Use this endpoint to batch update the subscription state of up to 50 users on the Braze dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.status.set` permission.\n\nYou can access a subscription groups `subscription_group_id` by navigating to the **Subscriptions Group** page.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after January 6, 2022, we apply a rate limit of 5,000 requests per minute shared across the `/subscription/status/set` and `/v2/subscription/status/set` endpoint as documented in [API rate limits](http://localhost:4000/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `subscription_group_id` | Required | String | The `id` of your subscription group. |\n| `subscription_state` | Required | String | Available values are `unsubscribed` (not in subscription group) or `subscribed` (in subscription group). |\n| `external_ids` | Required\\* | Array of strings | The `external_id` of the user or users, may include up to 50 `id`s. |\n| `phones` | Required\\* | String in [E.164](https://en.wikipedia.org/wiki/E.164) format | The phone numbers of the user, can be passed as an array of strings. Must include at least one phone number (with a max of 50). |\n\n### Example successful response\n\nResponse: (status 201)\n\n``` json\n{\n    \"message\": \"success\"\n}\n\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                subscription_groups:
+                - subscription_group_id: subscription_group_identifier
+                  subscription_state: subscribed
+                  emails:
+                  - example1@email.com
+                  - example2@email.com
+              properties:
+                subscription_groups:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      subscription_group_id:
+                        type: string
+                      subscription_state:
+                        type: string
+                      emails:
+                        type: array
+                        items:
+                          type: string
+                          format: email
+      parameters:
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
+        example: application/json
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+        example: Bearer {{api_key}}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 401 Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: 400 Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

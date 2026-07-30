@@ -11,7 +11,19 @@ tags:
 - Mobile
 type: Index
 kind: company
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Paid
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/braze.png
 access: 3rd-Party
 created: '2025-02-06'
 modified: '2026-05-04'
@@ -23,27 +35,354 @@ description: Braze is a leading customer engagement platform providing REST APIs
   with region-specific REST endpoints and offers extensive webhook and Canvas automation
   capabilities for lifecycle marketing.
 apis:
-- aid: braze:braze
-  name: Braze REST API
-  tags:
-  - Customer Engagement
-  - User Management
-  - Messaging
-  - Campaigns
-  - Analytics
+- aid: braze:braze-catalogs-catalog-items-asynchronous-api
+  name: Braze Catalogs > Catalog Items > Asynchronous API
+  description: >-
+    The Catalogs > Catalog Items > Asynchronous API from Braze — 1 operation(s) for catalogs > catalog
+    items > asynchronous.
   humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Catalogs > Catalog Items > Asynchronous
   properties:
-  - url: https://www.braze.com/docs/api/basics/
-    type: Documentation
   - type: OpenAPI
-    url: openapi/braze-openapi.yml
-  - url: graphql/braze-graphql.md
-    type: GraphQL
-  description: The Braze REST API enables server-side operations including creating
-    and updating user profiles, triggering campaigns and Canvases, sending transactional
-    messages, managing product catalogs, controlling subscription groups, and exporting
-    campaign analytics and user data. Region-specific base URLs serve US, EU, AU,
-    ID, and JP instances with Bearer token auth.
+    url: openapi/braze-catalogs-catalog-items-asynchronous-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-catalogs-catalog-items-synchronous-api
+  name: Braze Catalogs > Catalog Items > Synchronous API
+  description: >-
+    The Catalogs > Catalog Items > Synchronous API from Braze — 2 operation(s) for catalogs > catalog
+    items > synchronous.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Catalogs > Catalog Items > Synchronous
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-catalogs-catalog-items-synchronous-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-catalogs-catalog-management-synchronous-api
+  name: Braze Catalogs > Catalog Management > Synchronous API
+  description: >-
+    The Catalogs > Catalog Management > Synchronous API from Braze — 2 operation(s) for catalogs > catalog
+    management > synchronous.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Catalogs > Catalog Management > Synchronous
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-catalogs-catalog-management-synchronous-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-email-lists-addresses-api
+  name: Braze Email Lists & Addresses API
+  description: >-
+    Users email subscription status can be updated and retrieved via Braze using a RESTful API. You can
+    use the API to set up bi-directional sync between Braze and other email systems or your own database.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Email Lists & Addresses
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-email-lists-addresses-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-export-campaign-api
+  name: Braze Export > Campaign API
+  description: The Export > Campaign API from Braze — 4 operation(s) for export > campaign.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Export > Campaign
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-export-campaign-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-export-canvas-api
+  name: Braze Export > Canvas API
+  description: The Export > Canvas API from Braze — 4 operation(s) for export > canvas.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Export > Canvas
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-export-canvas-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-export-custom-events-api
+  name: Braze Export > Custom Events API
+  description: The Export > Custom Events API from Braze — 2 operation(s) for export > custom events.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Export > Custom Events
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-export-custom-events-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-export-kpi-api
+  name: Braze Export > KPI API
+  description: The Export > KPI API from Braze — 4 operation(s) for export > kpi.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Export > KPI
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-export-kpi-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-export-news-feed-api
+  name: Braze Export > News Feed API
+  description: The Export > News Feed API from Braze — 3 operation(s) for export > news feed.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Export > News Feed
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-export-news-feed-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-export-purchases-api
+  name: Braze Export > Purchases API
+  description: The Export > Purchases API from Braze — 3 operation(s) for export > purchases.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Export > Purchases
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-export-purchases-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-export-segment-api
+  name: Braze Export > Segment API
+  description: The Export > Segment API from Braze — 3 operation(s) for export > segment.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Export > Segment
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-export-segment-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-export-session-analytics-api
+  name: Braze Export > Session Analytics API
+  description: >-
+    The Export > Session Analytics API from Braze — 1 operation(s) for export > session analytics.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Export > Session Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-export-session-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-export-users-api
+  name: Braze Export > Users API
+  description: The Export > Users API from Braze — 3 operation(s) for export > users.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Export > Users
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-export-users-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-messaging-live-activities-api
+  name: Braze Messaging > Live Activities API
+  description: >-
+    The Messaging > Live Activities API from Braze — 1 operation(s) for messaging > live activities.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Messaging > Live Activities
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-messaging-live-activities-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-messaging-schedule-mesages-api
+  name: Braze Messaging > Schedule Mesages API
+  description: >-
+    The Messaging > Schedule Mesages API from Braze — 10 operation(s) for messaging > schedule mesages.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Messaging > Schedule Mesages
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-messaging-schedule-mesages-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-messaging-send-messages-api
+  name: Braze Messaging > Send Messages API
+  description: >-
+    The Messaging > Send Messages API from Braze — 5 operation(s) for messaging > send messages.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Messaging > Send Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-messaging-send-messages-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-preference-center-api
+  name: Braze Preference Center API
+  description: The Preference Center API from Braze — 4 operation(s) for preference center.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Preference Center
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-preference-center-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-scim-api
+  name: Braze SCIM API
+  description: The SCIM API from Braze — 2 operation(s) for scim.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - SCIM
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-scim-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-sms-api
+  name: Braze SMS API
+  description: >-
+    Use the Braze SMS Endpoints to manage your users phone numbers in your subscription groups.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - SMS
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-sms-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-subscription-groups-sms-and-whatsapp-api
+  name: Braze Subscription Groups > SMS and WhatsApp API
+  description: >-
+    The Subscription Groups > SMS and WhatsApp API from Braze — 4 operation(s) for subscription groups
+    > sms and whatsapp.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Subscription Groups > SMS and WhatsApp
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-subscription-groups-sms-and-whatsapp-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-templates-content-blocks-api
+  name: Braze Templates > Content Blocks API
+  description: "Content Blocks are an Email Templating feature that allow you to: \n- Create a consistent\
+    \ look and feel to your Email campaigns using Content Blocks as Headers and Footers.\n- Distribute\
+    \ the same offer codes through different channels.\n- Create pre-defined assets that can be used to\
+    \ build messages with consistent information and assets.\n- Copy entire message bodies to other messages.\n\
+    \nYou can edit Content Blocks in the Templates & Media section of the Braze UI, or here, via API."
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Templates > Content Blocks
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-templates-content-blocks-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-templates-email-templates-api
+  name: Braze Templates > Email Templates API
+  description: >-
+    The Templates > Email Templates API from Braze — 4 operation(s) for templates > email templates.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - Templates > Email Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-templates-email-templates-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-user-data-api
+  name: Braze User Data API
+  description: >-
+    The User API allows you to track information on your users by logging data about your users that comes
+    from outside your mobile app. You can also use this API to delete users for testing or other purposes.
+
+
+    All API endpoints have a data payload limit of 4MB. Attempts to post more data than 4MB will fail
+    with an HTTP 413 Request Entity Too Large.
+
+
+    The examples below contain the URL https://rest.iad-01.braze.com, but some customers will need to
+    use a different endpoint URL, for example if you are hosted in Brazes EU data center or have a dedicated
+    Braze installation. Your Success Manager will inform you if you should use a different endpoint URL.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - User Data
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-user-data-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
+- aid: braze:braze-user-data-external-id-migration-api
+  name: Braze User Data > External ID Migration API
+  description: >-
+    The External ID Migration API allows you to rename existing external IDs (creating a new primary ID
+    and deprecating the existing ID) and remove deprecated IDs post-migration. <br><br> We've architected
+    this solution to allow multiple External IDs in order to support a migration period whereby older
+    versions of your apps still in the wild that use the previous External ID naming schema dont break.
+    We highly recommend removing deprecated External IDs once your old naming schema is no longer in use.
+  humanURL: https://www.braze.com/docs/api/basics/
+  tags:
+  - User Data > External ID Migration
+  properties:
+  - type: OpenAPI
+    url: openapi/braze-user-data-external-id-migration-api-openapi.yml
+  - type: Documentation
+    url: https://www.braze.com/docs/api/basics/
+  - type: GraphQL
+    url: graphql/braze-graphql.md
 common:
 - type: VulnerabilityDisclosure
   url: security/braze-vulnerability-disclosure.yml

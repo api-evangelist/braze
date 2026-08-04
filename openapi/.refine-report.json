@@ -1,0 +1,39 @@
+{
+  "provider": "braze",
+  "sources": [
+    "braze-openapi.yml"
+  ],
+  "outputs": [
+    "braze-catalogs-catalog-items-asynchronous-api-openapi.yml",
+    "braze-catalogs-catalog-items-synchronous-api-openapi.yml",
+    "braze-catalogs-catalog-management-synchronous-api-openapi.yml",
+    "braze-email-lists-addresses-api-openapi.yml",
+    "braze-export-campaign-api-openapi.yml",
+    "braze-export-canvas-api-openapi.yml",
+    "braze-export-custom-events-api-openapi.yml",
+    "braze-export-kpi-api-openapi.yml",
+    "braze-export-news-feed-api-openapi.yml",
+    "braze-export-purchases-api-openapi.yml",
+    "braze-export-segment-api-openapi.yml",
+    "braze-export-session-analytics-api-openapi.yml",
+    "braze-export-users-api-openapi.yml",
+    "braze-messaging-live-activities-api-openapi.yml",
+    "braze-messaging-schedule-mesages-api-openapi.yml",
+    "braze-messaging-send-messages-api-openapi.yml",
+    "braze-preference-center-api-openapi.yml",
+    "braze-scim-api-openapi.yml",
+    "braze-sms-api-openapi.yml",
+    "braze-subscription-groups-sms-and-whatsapp-api-openapi.yml",
+    "braze-templates-content-blocks-api-openapi.yml",
+    "braze-templates-email-templates-api-openapi.yml",
+    "braze-user-data-api-openapi.yml",
+    "braze-user-data-external-id-migration-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/braze-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

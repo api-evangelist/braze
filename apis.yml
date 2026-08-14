@@ -26,7 +26,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/braze.png
 access: 3rd-Party
 created: '2025-02-06'
-modified: '2026-05-04'
+modified: '2026-08-13'
 position: Consumer
 description: Braze is a leading customer engagement platform providing REST APIs for
   managing user profiles, orchestrating multi-channel messaging campaigns, and exporting
@@ -41,11 +41,14 @@ apis:
     The Catalogs > Catalog Items > Asynchronous API from Braze — 1 operation(s) for catalogs > catalog
     items > asynchronous.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Catalogs > Catalog Items > Asynchronous
   properties:
   - type: OpenAPI
     url: openapi/braze-catalogs-catalog-items-asynchronous-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-catalogs-catalog-items-asynchronous-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -56,11 +59,14 @@ apis:
     The Catalogs > Catalog Items > Synchronous API from Braze — 2 operation(s) for catalogs > catalog
     items > synchronous.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Catalogs > Catalog Items > Synchronous
   properties:
   - type: OpenAPI
     url: openapi/braze-catalogs-catalog-items-synchronous-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-catalogs-catalog-items-synchronous-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -71,11 +77,14 @@ apis:
     The Catalogs > Catalog Management > Synchronous API from Braze — 2 operation(s) for catalogs > catalog
     management > synchronous.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Catalogs > Catalog Management > Synchronous
   properties:
   - type: OpenAPI
     url: openapi/braze-catalogs-catalog-management-synchronous-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-catalogs-catalog-management-synchronous-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -86,11 +95,14 @@ apis:
     Users email subscription status can be updated and retrieved via Braze using a RESTful API. You can
     use the API to set up bi-directional sync between Braze and other email systems or your own database.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Email Lists & Addresses
   properties:
   - type: OpenAPI
     url: openapi/braze-email-lists-addresses-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-email-lists-addresses-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -99,11 +111,14 @@ apis:
   name: Braze Export > Campaign API
   description: The Export > Campaign API from Braze — 4 operation(s) for export > campaign.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Export > Campaign
   properties:
   - type: OpenAPI
     url: openapi/braze-export-campaign-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-export-campaign-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -112,11 +127,14 @@ apis:
   name: Braze Export > Canvas API
   description: The Export > Canvas API from Braze — 4 operation(s) for export > canvas.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Export > Canvas
   properties:
   - type: OpenAPI
     url: openapi/braze-export-canvas-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-export-canvas-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -125,11 +143,14 @@ apis:
   name: Braze Export > Custom Events API
   description: The Export > Custom Events API from Braze — 2 operation(s) for export > custom events.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Export > Custom Events
   properties:
   - type: OpenAPI
     url: openapi/braze-export-custom-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-export-custom-events-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -138,11 +159,14 @@ apis:
   name: Braze Export > KPI API
   description: The Export > KPI API from Braze — 4 operation(s) for export > kpi.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Export > KPI
   properties:
   - type: OpenAPI
     url: openapi/braze-export-kpi-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-export-kpi-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -151,11 +175,14 @@ apis:
   name: Braze Export > News Feed API
   description: The Export > News Feed API from Braze — 3 operation(s) for export > news feed.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Export > News Feed
   properties:
   - type: OpenAPI
     url: openapi/braze-export-news-feed-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-export-news-feed-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -164,11 +191,14 @@ apis:
   name: Braze Export > Purchases API
   description: The Export > Purchases API from Braze — 3 operation(s) for export > purchases.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Export > Purchases
   properties:
   - type: OpenAPI
     url: openapi/braze-export-purchases-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-export-purchases-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -177,11 +207,14 @@ apis:
   name: Braze Export > Segment API
   description: The Export > Segment API from Braze — 3 operation(s) for export > segment.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Export > Segment
   properties:
   - type: OpenAPI
     url: openapi/braze-export-segment-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-export-segment-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -191,11 +224,14 @@ apis:
   description: >-
     The Export > Session Analytics API from Braze — 1 operation(s) for export > session analytics.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Export > Session Analytics
   properties:
   - type: OpenAPI
     url: openapi/braze-export-session-analytics-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-export-session-analytics-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -204,11 +240,14 @@ apis:
   name: Braze Export > Users API
   description: The Export > Users API from Braze — 3 operation(s) for export > users.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Export > Users
   properties:
   - type: OpenAPI
     url: openapi/braze-export-users-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-export-users-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -218,11 +257,14 @@ apis:
   description: >-
     The Messaging > Live Activities API from Braze — 1 operation(s) for messaging > live activities.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Messaging > Live Activities
   properties:
   - type: OpenAPI
     url: openapi/braze-messaging-live-activities-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-messaging-live-activities-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -232,11 +274,14 @@ apis:
   description: >-
     The Messaging > Schedule Mesages API from Braze — 10 operation(s) for messaging > schedule mesages.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Messaging > Schedule Mesages
   properties:
   - type: OpenAPI
     url: openapi/braze-messaging-schedule-mesages-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-messaging-schedule-mesages-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -246,11 +291,14 @@ apis:
   description: >-
     The Messaging > Send Messages API from Braze — 5 operation(s) for messaging > send messages.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Messaging > Send Messages
   properties:
   - type: OpenAPI
     url: openapi/braze-messaging-send-messages-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-messaging-send-messages-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -259,11 +307,14 @@ apis:
   name: Braze Preference Center API
   description: The Preference Center API from Braze — 4 operation(s) for preference center.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Preference Center
   properties:
   - type: OpenAPI
     url: openapi/braze-preference-center-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-preference-center-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -272,11 +323,14 @@ apis:
   name: Braze SCIM API
   description: The SCIM API from Braze — 2 operation(s) for scim.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - SCIM
   properties:
   - type: OpenAPI
     url: openapi/braze-scim-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-scim-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -286,11 +340,14 @@ apis:
   description: >-
     Use the Braze SMS Endpoints to manage your users phone numbers in your subscription groups.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - SMS
   properties:
   - type: OpenAPI
     url: openapi/braze-sms-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-sms-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -301,11 +358,14 @@ apis:
     The Subscription Groups > SMS and WhatsApp API from Braze — 4 operation(s) for subscription groups
     > sms and whatsapp.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Subscription Groups > SMS and WhatsApp
   properties:
   - type: OpenAPI
     url: openapi/braze-subscription-groups-sms-and-whatsapp-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-subscription-groups-sms-and-whatsapp-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -318,11 +378,14 @@ apis:
     \ build messages with consistent information and assets.\n- Copy entire message bodies to other messages.\n\
     \nYou can edit Content Blocks in the Templates & Media section of the Braze UI, or here, via API."
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Templates > Content Blocks
   properties:
   - type: OpenAPI
     url: openapi/braze-templates-content-blocks-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-templates-content-blocks-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -332,11 +395,14 @@ apis:
   description: >-
     The Templates > Email Templates API from Braze — 4 operation(s) for templates > email templates.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - Templates > Email Templates
   properties:
   - type: OpenAPI
     url: openapi/braze-templates-email-templates-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-templates-email-templates-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -356,11 +422,14 @@ apis:
     use a different endpoint URL, for example if you are hosted in Brazes EU data center or have a dedicated
     Braze installation. Your Success Manager will inform you if you should use a different endpoint URL.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - User Data
   properties:
   - type: OpenAPI
     url: openapi/braze-user-data-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-user-data-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
@@ -374,16 +443,21 @@ apis:
     versions of your apps still in the wild that use the previous External ID naming schema dont break.
     We highly recommend removing deprecated External IDs once your old naming schema is no longer in use.
   humanURL: https://www.braze.com/docs/api/basics/
+  baseURL: https://rest.iad-01.braze.com
   tags:
   - User Data > External ID Migration
   properties:
   - type: OpenAPI
     url: openapi/braze-user-data-external-id-migration-api-openapi.yml
+  - type: Overlay
+    url: overlays/braze-user-data-external-id-migration-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
   - type: GraphQL
     url: graphql/braze-graphql.md
 common:
+- type: Authentication
+  url: authentication/braze-authentication.yml
 - type: VulnerabilityDisclosure
   url: security/braze-vulnerability-disclosure.yml
 - type: DomainSecurity
@@ -443,9 +517,78 @@ common:
   url: https://www.braze.com/partners
 - type: LlmsText
   url: https://braze.com/llms.txt
+- type: MCPServer
+  url: mcp/braze-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/braze-tool-crosswalk.yml
+- type: Packages
+  url: packages/braze-packages.yml
+- type: SDKs
+  url: packages/braze-packages.yml
+- type: WellKnown
+  url: well-known/braze-well-known.yml
+- type: SecurityTxt
+  url: well-known/braze-security.txt
+- type: LLMsTxt
+  url: llms/braze-llms.txt
+- type: OAuthScopes
+  url: scopes/braze-scopes.yml
+- type: Conformance
+  url: conformance/braze-conformance.yml
+- type: Compliance
+  url: https://www.braze.com/docs/developer_guide/disclosures/security_qualifications
+- type: TrustCenter
+  url: security/braze-trust-center.yml
+- type: Security
+  url: https://hackerone.com/braze_inc
+- type: ErrorCatalog
+  url: errors/braze-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/braze-lifecycle.yml
+- type: StatusPage
+  url: https://status.braze.com
+- type: Deprecation
+  url: https://www.braze.com/docs/releases/deprecations
+- type: Conventions
+  url: conventions/braze-conventions.yml
+- type: ChangeLog
+  url: changelog/braze-changelog.yml
+- type: Components
+  url: components/braze-components.yml
+- type: DataModel
+  url: data-model/braze-data-model.yml
+- type: Webhooks
+  url: asyncapi/braze-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/braze-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/braze-rate-limits.yml
+- type: DeveloperPortal
+  url: https://www.braze.com/docs/developer_guide/home
+- type: APIReference
+  url: https://www.braze.com/docs/api/basics/
+- type: GettingStarted
+  url: https://www.braze.com/docs/developer_guide/sdk_integration/
+- type: Pricing
+  url: https://www.braze.com/pricing
+- type: SignUp
+  url: https://www.braze.com/get-started/
+- type: Login
+  url: https://dashboard.braze.com/sign_in
+- type: TermsOfService
+  url: https://www.braze.com/company/legal/terms/
+- type: Postman
+  url: https://www.postman.com/braze-inc/braze-public-workspace
 integrations:
 - name: Become a Partner
 maintainers:
 - FN: Kin Lane
   email: info@apievangelist.com
 specificationVersion: '0.19'
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 48
+  pass: local-v1

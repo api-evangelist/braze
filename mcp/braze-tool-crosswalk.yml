@@ -1,0 +1,112 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  mcp/braze-mcp.yml (tool names published at
+  https://www.braze.com/docs/user_guide/brazeai/mcp_server/available_api_functions)
+  bound against the 95 operations in openapi/
+note: >-
+  IMPORTANT — the harvested Braze OpenAPI files declare NO operationId on any of their 95
+  operations (verified: 95 operations, 0 operationIds). REST references below are therefore
+  written as "METHOD path" plus the spec file that carries them, which is the only stable
+  identifier the contract actually provides. overlays/ adds proposed operationIds as an
+  API Evangelist enhancement without mutating the harvested specs.
+surfaces:
+  openapi:
+    dir: openapi/
+    files: 24
+    operations: 95
+    operation_ids: 0
+  mcp:
+    url: https://mcp.braze.com/mcp
+    gated: true
+    note: tools/list returns 401 Missing bearer token; tool names taken from the docs page
+  graphql:
+    file: graphql/braze-graphql.md
+    gated: n/a
+    note: >-
+      Braze publishes no GraphQL API. The graphql/ file in this repo is an API Evangelist
+      conceptual model of the REST data core and is NOT a provider surface, so it is not
+      crosswalked here.
+crosswalk:
+- {tool: get_campaign_list, category: campaigns, rest: ['GET /campaigns/list'], spec: openapi/braze-export-campaign-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_campaign_details, category: campaigns, rest: ['GET /campaigns/details'], spec: openapi/braze-export-campaign-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_campaign_dataseries, category: campaigns, rest: ['GET /campaigns/data_series'], spec: openapi/braze-export-campaign-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_canvas_list, category: canvases, rest: ['GET /canvas/list'], spec: openapi/braze-export-canvas-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_canvas_details, category: canvases, rest: ['GET /canvas/details'], spec: openapi/braze-export-canvas-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_canvas_data_series, category: canvases, rest: ['GET /canvas/data_series'], spec: openapi/braze-export-canvas-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_canvas_data_summary, category: canvases, rest: ['GET /canvas/data_summary'], spec: openapi/braze-export-canvas-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_catalogs, category: catalogs, rest: ['GET /catalogs'], spec: openapi/braze-catalogs-catalog-management-synchronous-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_catalog_items, category: catalogs, rest: ['GET /catalogs/{catalog_name}/items'], spec: openapi/braze-catalogs-catalog-items-synchronous-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_catalog_item, category: catalogs, rest: ['GET /catalogs/{catalog_name}/items/{item_id}'], spec: openapi/braze-catalogs-catalog-items-synchronous-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_events_list, category: custom-data, rest: ['GET /events/list'], spec: openapi/braze-export-custom-events-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_events_data_series, category: custom-data, rest: ['GET /events/data_series'], spec: openapi/braze-export-custom-events-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_dau_data_series, category: kpi, rest: ['GET /kpi/dau/data_series'], spec: openapi/braze-export-kpi-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_mau_data_series, category: kpi, rest: ['GET /kpi/mau/data_series'], spec: openapi/braze-export-kpi-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_new_users_data_series, category: kpi, rest: ['GET /kpi/new_users/data_series'], spec: openapi/braze-export-kpi-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_uninstalls_data_series, category: kpi, rest: ['GET /kpi/uninstalls/data_series'], spec: openapi/braze-export-kpi-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_product_list, category: purchases, rest: ['GET /purchases/product_list'], spec: openapi/braze-export-purchases-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_quantity_series, category: purchases, rest: ['GET /purchases/quantity_series'], spec: openapi/braze-export-purchases-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_revenue_series, category: purchases, rest: ['GET /purchases/revenue_series'], spec: openapi/braze-export-purchases-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_segment_list, category: segments, rest: ['GET /segments/list'], spec: openapi/braze-export-segment-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_segment_details, category: segments, rest: ['GET /segments/details'], spec: openapi/braze-export-segment-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_segment_data_series, category: segments, rest: ['GET /segments/data_series'], spec: openapi/braze-export-segment-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_send_data_series, category: sends, rest: ['GET /sends/data_series'], spec: openapi/braze-export-campaign-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_session_data_series, category: sessions, rest: ['GET /sessions/data_series'], spec: openapi/braze-export-session-analytics-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_subscription_group_status, category: subscription-groups, rest: ['GET /subscription/status/get'], spec: openapi/braze-subscription-groups-sms-and-whatsapp-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_user_subscription_groups, category: subscription-groups, rest: ['GET /subscription/user/status'], spec: openapi/braze-subscription-groups-sms-and-whatsapp-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_email_templates, category: templates, rest: ['GET /templates/email/list'], spec: openapi/braze-templates-email-templates-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_email_template_info, category: templates, rest: ['GET /templates/email/info'], spec: openapi/braze-templates-email-templates-api-openapi.yml, binding: rest, confidence: high}
+- {tool: create_email_template, category: templates, rest: ['POST /templates/email/create'], spec: openapi/braze-templates-email-templates-api-openapi.yml, binding: rest, confidence: high, note: write tool}
+- {tool: update_email_template, category: templates, rest: ['POST /templates/email/update'], spec: openapi/braze-templates-email-templates-api-openapi.yml, binding: rest, confidence: high, note: write tool}
+- {tool: get_content_blocks, category: content-blocks, rest: ['GET /content_blocks/list'], spec: openapi/braze-templates-content-blocks-api-openapi.yml, binding: rest, confidence: high}
+- {tool: get_content_block_info, category: content-blocks, rest: ['GET /content_blocks/info'], spec: openapi/braze-templates-content-blocks-api-openapi.yml, binding: rest, confidence: high}
+- {tool: create_content_block, category: content-blocks, rest: ['POST /content_blocks/create'], spec: openapi/braze-templates-content-blocks-api-openapi.yml, binding: rest, confidence: high, note: write tool}
+- {tool: update_content_block, category: content-blocks, rest: ['POST /content_blocks/update'], spec: openapi/braze-templates-content-blocks-api-openapi.yml, binding: rest, confidence: high, note: write tool}
+- {tool: get_custom_attributes, category: custom-data, rest: ['GET /custom_attributes'], spec: null, binding: rest-documented-not-in-spec, confidence: medium, note: 'Braze documents this REST endpoint but it is absent from every harvested OpenAPI file — a real spec gap, not an MCP-only capability.'}
+- {tool: get_events, category: custom-data, rest: ['GET /events'], spec: null, binding: rest-documented-not-in-spec, confidence: medium, note: 'Documented REST endpoint; absent from the harvested specs.'}
+- {tool: list_integrations, category: cdi, rest: ['GET /cdi/integrations'], spec: null, binding: rest-documented-not-in-spec, confidence: medium, note: 'Cloud Data Ingestion endpoints are documented and rate-limited but never made it into the harvested specs.'}
+- {tool: get_integration_job_sync_status, category: cdi, rest: ['GET /cdi/integrations/{integration_id}/job_sync_status'], spec: null, binding: rest-documented-not-in-spec, confidence: medium}
+- {tool: create_media_library_asset, category: media-library, rest: ['POST /media_library/create'], spec: null, binding: rest-documented-not-in-spec, confidence: medium, note: 'write tool; documented REST endpoint absent from the harvested specs'}
+mcp_only:
+- tool: get_workspaces
+  reason: >-
+    No public REST equivalent. Workspace (app group) enumeration is a server-side
+    capability of the MCP layer — Braze's own mapping table records this tool's REST
+    endpoint as N/A. It is what makes the server cross-workspace.
+rest_only:
+- capability: User data ingestion and identity
+  operations: ['POST /users/track', 'POST /users/identify', 'POST /users/merge', 'POST /users/delete', 'POST /users/alias/new', 'POST /users/alias/update', 'POST /users/external_ids/rename', 'POST /users/external_ids/remove']
+  note: The entire write path into the user profile is deliberately absent from MCP.
+- capability: User export
+  operations: ['POST /users/export/ids', 'POST /users/export/segment', 'POST /users/export/global_control_group']
+  note: PII-bearing exports; excluded from the non-PII MCP surface.
+- capability: Messaging send
+  operations: ['POST /messages/send', 'POST /campaigns/trigger/send', 'POST /canvas/trigger/send', 'POST /transactional/v1/campaigns/{campaign_id}/send', 'POST /sends/id/create', 'POST /messages/live_activity/update']
+- capability: Message scheduling
+  operations: ['GET /messages/scheduled_broadcasts', 'POST /messages/schedule/create', 'POST /messages/schedule/update', 'POST /messages/schedule/delete', 'POST /campaigns/trigger/schedule/create', 'POST /campaigns/trigger/schedule/update', 'POST /campaigns/trigger/schedule/delete', 'POST /canvas/trigger/schedule/create', 'POST /canvas/trigger/schedule/update', 'POST /canvas/trigger/schedule/delete']
+- capability: Email list and deliverability management
+  operations: ['GET /email/hard_bounces', 'GET /email/unsubscribes', 'POST /email/status', 'POST /email/bounce/remove', 'POST /email/spam/remove', 'POST /email/blocklist', 'POST /email/blacklist']
+- capability: SMS list hygiene
+  operations: ['GET /sms/invalid_phone_numbers', 'POST /sms/invalid_phone_numbers/remove']
+- capability: Subscription group writes
+  operations: ['POST /subscription/status/set', 'POST /v2/subscription/status/set']
+- capability: Preference center
+  operations: ['GET /preference_center/v1/list', 'GET /preference_center/v1/{PreferenceCenterExternalID}', 'PUT /preference_center/v1/{PreferenceCenterExternalID}', 'POST /preference_center/v1', 'GET /preference_center_v1/{PreferenceCenterExternalID}/url/{UserID}']
+- capability: SCIM dashboard user provisioning
+  operations: ['GET /scim/v2/Users', 'POST /scim/v2/Users', 'GET /scim/v2/Users/{id}', 'PUT /scim/v2/Users/{id}', 'DELETE /scim/v2/Users/{id}']
+- capability: Catalog writes
+  operations: ['POST /catalogs', 'DELETE /catalogs/{catalog_name}', 'POST /catalogs/{catalog_name}/items', 'PUT /catalogs/{catalog_name}/items', 'PATCH /catalogs/{catalog_name}/items', 'DELETE /catalogs/{catalog_name}/items', 'POST /catalogs/{catalog_name}/items/{item_id}', 'PUT /catalogs/{catalog_name}/items/{item_id}', 'PATCH /catalogs/{catalog_name}/items/{item_id}', 'DELETE /catalogs/{catalog_name}/items/{item_id}']
+- capability: News Feed (legacy)
+  operations: ['GET /feed/list', 'GET /feed/details', 'GET /feed/data_series']
+  note: News Feed is deprecated across the Braze SDKs; see lifecycle/braze-lifecycle.yml.
+coverage:
+  tools_named: 40
+  tools_bound_to_spec: 34
+  tools_bound_to_documented_rest_only: 5
+  mcp_only: 1
+  rest_operations_total: 95
+  rest_operations_with_a_tool: 34
+  rest_operations_without_a_tool: 61
+  read_write_split:
+    read_tools: 34
+    write_tools: 6

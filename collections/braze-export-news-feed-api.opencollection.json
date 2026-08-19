@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Export > News Feed API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Export > News Feed",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export News Feed Card Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/feed/data_series",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "card_id",
+                "value": "{{card_identifier}}",
+                "type": "query",
+                "description": "(Required) String\n\nSee [Card API identifier](https://www.braze.com/docs/api/identifier_types/).\n\nThe `card_id` for a given card can be found in the **Settings > Setup and Testing > API Keys** page and on the card details page within your dashboard, or you can use the [News Feed List Endpoint](https://www.braze.com/docs/api/endpoints/export/news_feed/get_news_feed_cards/)."
+              },
+              {
+                "name": "length",
+                "value": "14",
+                "type": "query",
+                "description": "(Required) Integer\n\nMax number of units (days or hours) before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive)."
+              },
+              {
+                "name": "unit",
+                "value": "day",
+                "type": "query",
+                "description": "(Optional) String\n\nUnit of time between data points. Can be `day` or `hour`, defaults to `day`."
+              },
+              {
+                "name": "ending_at",
+                "value": "2018-06-28T23:59:59-5:00",
+                "type": "query",
+                "description": "(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data series should end. Defaults to time of the request.\n"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve a daily series of engagement stats for a card over time. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), \\`card_id\\` can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `feed.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com"
+        },
+        {
+          "info": {
+            "name": "Export News Feed Cards Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/feed/details",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "card_id",
+                "value": "{{card_identifier}}",
+                "type": "query",
+                "description": "(Required) String\n\nSee [Card API identifier](https://www.braze.com/docs/api/identifier_types/).\n\nThe `card_id` for a given card can be found in the **Settings > Setup and Testing > API Keys** page and on the card details page within your dashboard, or you can use the [News Feed List Endpoint](https://www.braze.com/docs/api/endpoints/export/news_feed/get_news_feed_cards/)."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve relevant information on a card, which can be identified by the `card_id`. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `card_id` can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `feed.details` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://ww"
+        },
+        {
+          "info": {
+            "name": "Export News Feed Cards List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/feed/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "(Optional) Integer\n\nThe page of cards to return, defaults to 0 (returns the first set of up to 100)."
+              },
+              {
+                "name": "include_archived",
+                "value": "true",
+                "type": "query",
+                "description": "(Optional) Boolean\n\nWhether or not to include archived cards, defaults to false."
+              },
+              {
+                "name": "sort_direction",
+                "value": "desc",
+                "type": "query",
+                "description": "(Optional) String\n\n- Sort creation time from newest to oldest: pass in the value `desc`.\n- Sort creation time from oldest to newest: pass in the value `asc`.\n\nIf `sort_direction` is not included, the default order is oldest to newest."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to export a list of News Feed cards, each of which will include its name and card API identifier. \n  \n\nThe cards are returned in groups of 100 sorted by time of creation (oldest to newest by default).\n\nTo use this endpoint, youll need to generate an API key with the `feed.list` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Resp"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

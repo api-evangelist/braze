@@ -1,0 +1,2620 @@
+{
+  "item": [
+    {
+      "id": "b7f76faf-5537-4490-a793-beb995425bfd",
+      "name": "Preference Center",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c05a74a4-6924-425a-b916-a11a1f257df0",
+          "name": "Generate Preference Center URL",
+          "request": {
+            "name": "Generate Preference Center URL",
+            "description": {
+              "content": "> Use this endpoint to generate a URL for a preference center. \n  \n\nTo use this endpoint, youll need to generate an API key with the `preference_center.user.get` permission.\n\nEach preference center URL is unique to each user.\n\n## Rate limit\n\nThis endpoint has a rate limit of 1,000 requests per minute, per workspace.\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `preferenceCenterExternalID` | Required | String | The ID for your preference center. |\n| `userID` | Required | String | The user ID. |\n\n## Example request\n\n```\ncurl --location --request GET 'https://rest.iad-01.braze.com/preference_center/v1/$preference_center_external_id/url/$user_external_id' \\\n--header 'Authorization: Bearer YOUR-API-KEY-HERE'\n\n```\n\n## Response\n\n``` json\n{\n  \"preference_center_url\": \"https://www.example.com/preferences\"\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preference_center_v1",
+                ":PreferenceCenterExternalID",
+                "url",
+                ":UserID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "preference_center_api_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "external_id",
+                  "value": "<string>",
+                  "description": "(Required) String"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "PreferenceCenterExternalID",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "UserID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5495fbde-c54b-4f61-96ce-38d3bd3888d0",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center_v1",
+                    ":PreferenceCenterExternalID",
+                    "url",
+                    ":UserID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "preference_center_api_id",
+                      "value": "{{preference_center_api_id}}"
+                    },
+                    {
+                      "key": "external_id",
+                      "value": "{{external_id}}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UserID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a68ccb0-8da8-4219-bb31-83040bc49efa",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center_v1",
+                    ":PreferenceCenterExternalID",
+                    "url",
+                    ":UserID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "preference_center_api_id",
+                      "value": "{{preference_center_api_id}}"
+                    },
+                    {
+                      "key": "external_id",
+                      "value": "{{external_id}}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UserID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ede1aa1-f41f-46e4-aa8b-4c5fe9b21fb6",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center_v1",
+                    ":PreferenceCenterExternalID",
+                    "url",
+                    ":UserID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "preference_center_api_id",
+                      "value": "{{preference_center_api_id}}"
+                    },
+                    {
+                      "key": "external_id",
+                      "value": "{{external_id}}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UserID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d7eb37d-4149-44c7-b641-b8c5e2f6c70c",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center_v1",
+                    ":PreferenceCenterExternalID",
+                    "url",
+                    ":UserID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "preference_center_api_id",
+                      "value": "{{preference_center_api_id}}"
+                    },
+                    {
+                      "key": "external_id",
+                      "value": "{{external_id}}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UserID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e895d40-fdd6-4fa8-bb5c-53ad25f02ad6",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center_v1",
+                    ":PreferenceCenterExternalID",
+                    "url",
+                    ":UserID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "preference_center_api_id",
+                      "value": "{{preference_center_api_id}}"
+                    },
+                    {
+                      "key": "external_id",
+                      "value": "{{external_id}}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UserID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98b51204-90c5-43f6-9fba-90be017c732e",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center_v1",
+                    ":PreferenceCenterExternalID",
+                    "url",
+                    ":UserID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "preference_center_api_id",
+                      "value": "{{preference_center_api_id}}"
+                    },
+                    {
+                      "key": "external_id",
+                      "value": "{{external_id}}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UserID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24057e56-b9bd-433e-9c81-0091015a4b72",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center_v1",
+                    ":PreferenceCenterExternalID",
+                    "url",
+                    ":UserID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "preference_center_api_id",
+                      "value": "{{preference_center_api_id}}"
+                    },
+                    {
+                      "key": "external_id",
+                      "value": "{{external_id}}"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UserID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1178caf-ccc4-4f11-afaf-a4c6a9017b81",
+          "name": "List Preference Centers",
+          "request": {
+            "name": "List Preference Centers",
+            "description": {
+              "content": "> Use this endpoint to list your available preference centers. \n  \n\nTo use this endpoint, youll need to generate an API key with the `preference_center.list` permission.\n\n## Rate limit\n\nThis endpoint has a rate limit of 1,000 requests per minute, per workspace.\n\n## Path and request parameters\n\nThere are no path or request parameters for this endpoint.\n\n## Example request\n\n```\ncurl --location -g --request GET https://rest.iad-01.braze.com/preference_center/v1/list \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\n``` json\n{\n  \"preference_centers\": [\n    {\n      \"name\": \"My Preference Center 1\",\n      \"preference_center_api_id\": \"preference_center_api_id\",\n      \"created_at\": \"2022-08-17T15:46:10Z\",\n      \"updated_at\": \"2022-08-17T15:46:10Z\"\n    },\n    {\n      \"name\": \"My Preference Center 2\",\n      \"preference_center_api_id\": \"preference_center_api_id\",\n      \"created_at\": \"2022-08-19T11:13:06Z\",\n      \"updated_at\": \"2022-08-19T11:13:06Z\"\n    },\n    {\n      \"name\": \"My Preference Center 3\",\n      \"preference_center_api_id\": \"preference_center_api_id\",\n      \"created_at\": \"2022-08-19T11:30:50Z\",\n      \"updated_at\": \"2022-08-19T11:30:50Z\"\n    },\n    {\n      \"name\": \"My Preference Center 4\",\n      \"preference_center_api_id\": \"preference_center_api_id\",\n      \"created_at\": \"2022-09-13T20:41:34Z\",\n      \"updated_at\": \"2022-09-13T20:41:34Z\"\n    }\n  ]\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preference_center",
+                "v1",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "675272f7-a154-4128-93ca-aa48f8288e6c",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d751f0c0-2b2f-4019-a14c-bf051e9c09fc",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ba29327-1a81-4c13-8dc3-fe43f620ede8",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4e872b7-2146-4961-ac3a-0539a5db50d9",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c1d213d-50b2-4a23-9123-55d1a0bf333e",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0307aadd-e663-4514-9f74-8d8efaa75f1a",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "107ebbde-ca32-40a3-9259-a904d97b80c6",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18f4ad24-ce3c-406a-b9fa-449e36f48418",
+          "name": "View Details for Preference Center",
+          "request": {
+            "name": "View Details for Preference Center",
+            "description": {
+              "content": "> Use this endpoint to view the details for your preference centers, including when it was created and updated. \n  \n\nTo use this endpoint, youll need to generate an API key with the `preference_center.get` permission.\n\n## Rate limit\n\nThis endpoint has a rate limit of 1,000 requests per minute, per workspace.\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `preferenceCenterExternalID` | Required | String | The ID for your preference center. |\n\n## Request parameters\n\nThere are no request parameters for this endpoint.\n\n## Example request\n\n```\ncurl --location -g --request GET https://rest.iad-01.braze.com/preference_center/v1/preference_center_external_id \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\n``` json\n{\n  \"name\": \"My Preference Center\",\n  \"preference_center_api_id\": \"preference_center_api_id\",\n  \"created_at\": \"example_time_created\",\n  \"updated_at\": \"example_time_updated\",\n  \"preference_center_title\": \"Example preference center title\",\n  \"preference_center_page_html\": \"HTML for preference center here\",\n  \"confirmation_page_html\": \"HTML for confirmation page here\",\n  \"redirect_page_html\": null,\n  \"preference_center_options\": {\n    \"meta-viewport-content\": \"width=device-width, initial-scale=2\"\n  },\n  \"state\": \"active\"\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preference_center",
+                "v1",
+                ":PreferenceCenterExternalID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "PreferenceCenterExternalID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6497f7d5-d654-4d7d-97f1-8ecf2cbddab7",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88085b32-b484-4eb6-b082-32031cfc5290",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28f4658d-f52a-419f-bae7-6726ec6ef6f8",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90dbff8a-d098-41ee-8263-b668b0ea3d75",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd82d1ff-3d7a-420b-bd71-302fcfab8a93",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15a92f03-bd58-4a7e-9425-377b916a4248",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4870f942-cad6-4ddc-85f2-27b45a680f6a",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38ea9c0f-de1e-46af-b0b1-b8c4f69a359f",
+          "name": "Update Preference Center",
+          "request": {
+            "name": "Update Preference Center",
+            "description": {
+              "content": "> Use this endpoint to update a preference center. \n  \n\nTo use this endpoint, youll need to generate an API key with the `preference_center.update` permission.\n\n## Rate limit\n\nThis endpoint has a rate limit of 10 requests per minute, per workspace.\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `preferenceCenterExternalID` | Required | String | The ID for your preference center. |\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `preference_center_page_html` | Required | String | The HTML for the preference center page. |\n| `preference_center_title` | Optional | String | The title for the preference center and confirmation pages. If a title is not specified, the title of the pages will default to \"Preference Center\". |\n| `confirmation_page_html` | Required | String | The HTML for the confirmation page. |\n| `state` | Optional | String | Choose `active` or `draft`. |\n| `options` | Optional | Object | Attributes: `meta-viewport-content`. When present, a `viewport` meta tag will be added to the page with `content=` . |\n\n## Example request\n\n```\ncurl --location --request POST 'https://rest.iad-01.braze.com/preference_center/v1/{preferenceCenterExternalId}' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-API-KEY-HERE' \\\n--data-raw '{\n  \"name\": \"Example\",\n  \"preference_center_title\": \"Example Preference Center Title\",\n  \"preference_center_page_html\": \"HTML for preference center here\",\n  \"confirmation_page_html\": \"HTML here with a message to users here\",\n  \"state\": \"active\"\n}\n'\n\n```\n\n## Example response\n\n```\n{\n  \"preference_center_api_id\": \"8efc52aa-935e-42b7-bd6b-98f43bb9b0f1\",\n  \"created_at\": \"2022-09-22T18:28:07Z\",\n  \"updated_at\": \"2022-09-22T18:32:07Z\",\n  \"message\": \"success\"\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preference_center",
+                "v1",
+                ":PreferenceCenterExternalID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "PreferenceCenterExternalID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_send_id\": \"<string>\",\n  \"trigger_properties\": {\n    \"example_string_property\": \"<string>\",\n    \"example_integer_property\": \"<string>\"\n  },\n  \"recipient\": [\n    {\n      \"external_user_id\": \"<string>\"\n    },\n    {\n      \"external_user_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2025f5f4-277d-4f7d-b61a-a092b9795d37",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_send_id\": \"<string>\",\n  \"trigger_properties\": {\n    \"example_string_property\": \"<string>\",\n    \"example_integer_property\": \"<string>\"\n  },\n  \"recipient\": [\n    {\n      \"external_user_id\": \"<string>\"\n    },\n    {\n      \"external_user_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7ecdc58-a1a6-4903-ace6-aa2a3c86e443",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_send_id\": \"<string>\",\n  \"trigger_properties\": {\n    \"example_string_property\": \"<string>\",\n    \"example_integer_property\": \"<string>\"\n  },\n  \"recipient\": [\n    {\n      \"external_user_id\": \"<string>\"\n    },\n    {\n      \"external_user_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df87beb2-a67c-4f4c-adc7-1bb59262a684",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_send_id\": \"<string>\",\n  \"trigger_properties\": {\n    \"example_string_property\": \"<string>\",\n    \"example_integer_property\": \"<string>\"\n  },\n  \"recipient\": [\n    {\n      \"external_user_id\": \"<string>\"\n    },\n    {\n      \"external_user_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36e260d6-47ff-4adc-8d72-8a37a9d2f933",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_send_id\": \"<string>\",\n  \"trigger_properties\": {\n    \"example_string_property\": \"<string>\",\n    \"example_integer_property\": \"<string>\"\n  },\n  \"recipient\": [\n    {\n      \"external_user_id\": \"<string>\"\n    },\n    {\n      \"external_user_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "142856cf-fa23-48b3-96e9-4eecdd80ea06",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_send_id\": \"<string>\",\n  \"trigger_properties\": {\n    \"example_string_property\": \"<string>\",\n    \"example_integer_property\": \"<string>\"\n  },\n  \"recipient\": [\n    {\n      \"external_user_id\": \"<string>\"\n    },\n    {\n      \"external_user_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80869412-9f2b-40ff-8bdb-45f95c0f2d6b",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_send_id\": \"<string>\",\n  \"trigger_properties\": {\n    \"example_string_property\": \"<string>\",\n    \"example_integer_property\": \"<string>\"\n  },\n  \"recipient\": [\n    {\n      \"external_user_id\": \"<string>\"\n    },\n    {\n      \"external_user_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8200bd76-7383-4d52-9e7c-768a19ba6f32",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1",
+                    ":PreferenceCenterExternalID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "PreferenceCenterExternalID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_send_id\": \"<string>\",\n  \"trigger_properties\": {\n    \"example_string_property\": \"<string>\",\n    \"example_integer_property\": \"<string>\"\n  },\n  \"recipient\": [\n    {\n      \"external_user_id\": \"<string>\"\n    },\n    {\n      \"external_user_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66a3f6d5-6624-4017-8bd4-fc7e269a816b",
+          "name": "Create Preference Center",
+          "request": {
+            "name": "Create Preference Center",
+            "description": {
+              "content": "> Use this endpoint to create a preference center to allow users to manage their notification preferences for email campaigns. \n  \n\nTo use this endpoint, youll need to generate an API key with the `preference_center.update` permission.\n\nCheck out [Creating a preference center via API](https://www.braze.com/docs/user_guide/message_building_by_channel/email/preference_center/) for details on how to include this in your email campaigns.\n\n## Rate limit\n\nThis endpoint has a rate limit of 10 requests per minute, per workspace.\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `name` | Required | String | The name of the preference center that meets the following requirements:  <br>\\- Only contains letters, numbers, hyphens, and underscores  <br>\\- Does not have spaces |\n| `preference_center_title` | Optional | String | The title for the preference center and confirmation pages. If a title is not specified, the title of the pages will default to \"Preference Center\". |\n| `preference_center_page_html` | Required | String | The HTML for the preference center page. |\n| `confirmation_page_html` | Required | String | The HTML for the confirmation page. |\n| `state` | Optional | String | Choose `active` or `draft`. Defaults to `active` if not specified. |\n| `options` | Optional | Object | Attributes: `meta-viewport-content`. When present, a `viewport` meta tag will be added to the page with `content=` . |\n\n> **Note:** The preference center name can't be edited once created. \n  \n\n### Liquid tags\n\nRefer to the following Liquid tags that can be included in your HTML to generate a user's subscription state on the preference center page.\n\n#### User subscription state\n\n| Liquid | Description |\n| --- | --- |\n| `{{subscribed_state.${email_global}}}` | Get the global email subscribed state for the user (i.e., \"opted_in\", \"subscribed\", or \"unsubscribed\". |\n| `{{subscribed_state.${}}}` | Get the subscribed state of the specified subscription group for the user (i.e., \"subscribed\" or \"unsubscribed\"). |\n\n#### Form inputs and action\n\n| Liquid | Description |\n| --- | --- |\n| `{% form_field_name :email_global_state %}` | Indicates that a specific form input element corresponds to the user's global email subscribed state. The user's selection state should be \"opted_in\", \"subscribed\", or \"unsubscribed\" when the form is submitted with selection data for the global email subscribed state. If it's a checkbox, the user will either be \"opted_in\" or \"unsubscribed\". For a hidden input, the \"subscribed\" state will also be valid. |\n| `{% form_field_name :subscription_group %}` | Indicates that a specific form input element corresponds to a given subscription group. The user's selection state should be either \"subscribed\" or \"unsubscribed\" when the form is submitted with selection data for a specific subscription group. |\n| `{{preference_center_submit_url}}` | Generates URL for form submission. |\n\n## Example response\n\n```\n{\n  \"preference_center_api_id\": \"preference_center_api_id_example\",\n  \"liquid_tag\": \"{{preference_center.${MyPreferenceCenter2022-09-22}}}\",\n  \"created_at\": \"2022-09-22T18:28:07+00:00\",\n  \"message\": \"success\"\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preference_center",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"preference_center_title\": \"<string>\",\n  \"preference_center_page_html\": \"<string>\",\n  \"confirmation_page_html\": \"<string>\",\n  \"state\": \"<string>\",\n  \"options\": {\n    \"meta-viewport-content\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eedddd02-2eb1-4ef4-81a8-aeb9710544dc",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"preference_center_title\": \"string\",\n  \"preference_center_page_html\": \"string\",\n  \"confirmation_page_html\": \"string\",\n  \"state\": \"active\",\n  \"options\": {\n    \"meta-viewport-content\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1a06fde-706a-4641-b31e-706bc225e3ce",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"preference_center_title\": \"string\",\n  \"preference_center_page_html\": \"string\",\n  \"confirmation_page_html\": \"string\",\n  \"state\": \"active\",\n  \"options\": {\n    \"meta-viewport-content\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58af81b3-68e4-4ae8-b676-197b77e2cbb6",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"preference_center_title\": \"string\",\n  \"preference_center_page_html\": \"string\",\n  \"confirmation_page_html\": \"string\",\n  \"state\": \"active\",\n  \"options\": {\n    \"meta-viewport-content\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5888d0e5-d30a-4332-b14d-62b62a03710e",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"preference_center_title\": \"string\",\n  \"preference_center_page_html\": \"string\",\n  \"confirmation_page_html\": \"string\",\n  \"state\": \"active\",\n  \"options\": {\n    \"meta-viewport-content\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a23ec063-3877-47d9-be5a-7ba47182edf1",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"preference_center_title\": \"string\",\n  \"preference_center_page_html\": \"string\",\n  \"confirmation_page_html\": \"string\",\n  \"state\": \"active\",\n  \"options\": {\n    \"meta-viewport-content\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd08aaed-fb35-4aeb-8d41-b6cee859d97d",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"preference_center_title\": \"string\",\n  \"preference_center_page_html\": \"string\",\n  \"confirmation_page_html\": \"string\",\n  \"state\": \"active\",\n  \"options\": {\n    \"meta-viewport-content\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37a4274b-4261-4fad-ba2b-45d7fafced77",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"preference_center_title\": \"string\",\n  \"preference_center_page_html\": \"string\",\n  \"confirmation_page_html\": \"string\",\n  \"state\": \"active\",\n  \"options\": {\n    \"meta-viewport-content\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "787a358c-60ff-454e-912b-973293d75f62",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preference_center",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"preference_center_title\": \"string\",\n  \"preference_center_page_html\": \"string\",\n  \"confirmation_page_html\": \"string\",\n  \"state\": \"active\",\n  \"options\": {\n    \"meta-viewport-content\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rest.iad-01.braze.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2f1d1a9b-1c0a-4257-ba47-d1aff7494d72",
+    "name": "Braze Preference Center API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. ",
+      "type": "text/plain"
+    }
+  }
+}

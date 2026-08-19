@@ -4,42 +4,71 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Braze
 providerId: braze
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+sources:
+  - https://www.braze.com/docs/api/api_limits/
+  - https://www.braze.com/docs/api/errors/
 reconciled: true
 tags:
   - Rate Limiting
   - Marketing
-description: Braze REST API rate limits per workspace.
-sources:
-  - https://www.braze.com/pricing
-  - https://www.braze.com/docs/api/api_limits/
+description: >-
+  Braze REST API rate limits, per workspace. Supersedes the 2026-05-04 bulk-sweep version of
+  this file, which carried a handful of limits from the pricing page and no response headers.
+  Everything below is read from the published API limits reference.
 headers:
-  retryAfter: Retry-After
+  limit: X-RateLimit-Limit
+  remaining: X-RateLimit-Remaining
+  reset: X-RateLimit-Reset
+  retryAfter: null
+  note: >-
+    Reset is a UTC epoch second. Braze notes the headers arrive lowercased under HTTP/2.
+    Retry-After is NOT documented — an agent must back off to X-RateLimit-Reset instead.
+    Windows reset on the clock hour; they are not rolling, so plain exponential backoff will
+    keep colliding with the same wall.
 responseCodes:
   throttled: 429
+shared_pool:
+  limit: 250000
+  metric: requests_per_hour
+  scope: workspace
+  note: >-
+    Most endpoints — campaign/Canvas exports, messaging, content blocks, email management,
+    KPI exports, subscription endpoints — draw on one shared 250,000/hour bucket. A wide
+    analytics backfill competes with production sends for the same budget.
+limit_count: 22
 limits:
-  - name: /users/track
-    scope: workspace
-    metric: requests_per_minute
-    limit: 50000
-    timeFrame: minute
-  - name: /messages/send
-    scope: workspace
-    metric: requests_per_minute
-    limit: 250
-    timeFrame: minute
-  - name: /users/export
-    scope: workspace
-    metric: requests_per_minute
-    limit: 100
-    timeFrame: minute
-  - name: /transactional/send
-    scope: workspace
-    metric: requests_per_second
-    limit: 250
-    timeFrame: second
-  - name: Default endpoints
-    scope: workspace
-    metric: requests_per_minute
-    limit: 250000
-    timeFrame: minute
+  - {name: /users/track, scope: workspace, metric: requests_per_3_seconds, limit: 3000, timeFrame: 3 seconds, note: 'burst ceiling; the sustained limit varies by contract'}
+  - {name: /users/export/ids, scope: workspace, metric: requests_per_minute, limit: 250, timeFrame: minute, note: '2500/minute for workspaces onboarded before 2024-08-22'}
+  - {name: /users/delete + /users/alias/* + /users/identify + /users/merge, scope: workspace, metric: requests_per_minute, limit: 20000, timeFrame: minute, note: shared across the four}
+  - {name: /users/external_ids/rename, scope: workspace, metric: requests_per_minute, limit: 1000, timeFrame: minute}
+  - {name: /users/external_ids/remove, scope: workspace, metric: requests_per_minute, limit: 1000, timeFrame: minute}
+  - {name: /events/list, scope: workspace, metric: requests_per_hour, limit: 1000, timeFrame: hour, note: shared with /purchases/product_list}
+  - {name: /purchases/product_list, scope: workspace, metric: requests_per_hour, limit: 1000, timeFrame: hour, note: shared with /events/list}
+  - {name: /campaigns/data_series, scope: workspace, metric: requests_per_minute, limit: 50000, timeFrame: minute}
+  - {name: /messages/send (broadcast), scope: workspace, metric: requests_per_minute, limit: 250, timeFrame: minute}
+  - {name: /campaigns/trigger/send (broadcast), scope: workspace, metric: requests_per_minute, limit: 250, timeFrame: minute}
+  - {name: /canvas/trigger/send (broadcast), scope: workspace, metric: requests_per_minute, limit: 250, timeFrame: minute}
+  - {name: /messages/send + /campaigns/trigger/send + /canvas/trigger/send (non-broadcast), scope: workspace, metric: requests_per_hour, limit: 250000, timeFrame: hour}
+  - {name: /sends/id/create, scope: workspace, metric: requests_per_day, limit: 100, timeFrame: day, note: 'the tightest limit in the API — mint one send id per campaign run, not per message'}
+  - {name: /subscription/status/set, scope: workspace, metric: requests_per_minute, limit: 5000, timeFrame: minute}
+  - {name: /preference_center/* (GET/list), scope: workspace, metric: requests_per_minute, limit: 1000, timeFrame: minute}
+  - {name: /preference_center/* (POST/PUT), scope: workspace, metric: requests_per_minute, limit: 10, timeFrame: minute}
+  - {name: /catalogs/* (management), scope: workspace, metric: requests_per_minute, limit: 50, timeFrame: minute, note: shared with the synchronous item endpoints}
+  - {name: '/catalogs/{catalog_name}/items (async bulk)', scope: workspace, metric: requests_per_minute, limit: 16000, timeFrame: minute, note: shared}
+  - {name: '/catalogs/{catalog_name}/items/{item_id} (sync)', scope: workspace, metric: requests_per_minute, limit: 50, timeFrame: minute, note: shared with catalog management}
+  - {name: /scim/v2/Users/*, scope: company, metric: requests_per_day, limit: 5000, timeFrame: day, note: per company, shared across the SCIM endpoints}
+  - {name: /cdi/integrations, scope: workspace, metric: requests_per_minute, limit: 50, timeFrame: minute}
+  - {name: /media_library/create + /media_library/replace_file, scope: workspace, metric: requests_per_hour, limit: 100, timeFrame: hour}
+payload_limits:
+  default: 4 MB
+  users_track_bulk: 2 MB
+  users_track_objects_per_request: 75
+  ids_per_request: 50
+  note: Exceeding these returns 400 (object caps) or 413 (payload size), not truncation.
+guidance:
+  consistency_delay: >-
+    Braze recommends a 5-minute gap between consecutive calls to the same endpoint for data
+    consistency — the analytics endpoints are not read-your-writes.

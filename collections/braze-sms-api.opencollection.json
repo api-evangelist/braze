@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze SMS API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SMS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query Invalid Phone Numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/sms/invalid_phone_numbers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2018-09-01",
+                "type": "query",
+                "description": "(Optional*) String in YYYY-MM-DD format \nStart date of the range to retrieve invalid phone numbers, must be earlier than `end_date`. This is treated as midnight in UTC time by the API.\n"
+              },
+              {
+                "name": "end_date",
+                "value": "2018-09-01",
+                "type": "query",
+                "description": "(Optional*) String in YYYY-MM-DD format \nEnd date of the range to retrieve invalid phone numbers. This is treated as midnight in UTC time by the API.\n"
+              },
+              {
+                "name": "limit",
+                "value": "100",
+                "type": "query",
+                "description": "(Optional) Integer\nOptional field to limit the number of results returned. Defaults to 100, maximum is 500."
+              },
+              {
+                "name": "offset",
+                "value": "1",
+                "type": "query",
+                "description": "(Optional) Integer\nOptional beginning point in the list to retrieve from."
+              },
+              {
+                "name": "phone_numbers",
+                "value": "12345678901",
+                "type": "query",
+                "description": "(Optional*) Array of Strings in e.164 format\nIf provided, we will return the phone number if it has been found to be invalid.\n"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to pull a list of phone numbers that have been deemed invalid within a certain time frame. \n  \n\nTo use this endpoint, youll need to generate an API key with the `sms.invalid_phone_numbers` permission.\n\n- If you provide a `start_date`, an `end_date`, and `phone_numbers`, we prioritize the given phone numbers and disregard the date range.\n- If your date range has more than the `limit` number of invalid phone numbers, you will need to make multiple API calls with increasing the "
+        },
+        {
+          "info": {
+            "name": "Remove Invalid Phone Numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/sms/invalid_phone_numbers/remove",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to remove invalid phone numbers from Brazes invalid list. \n  \n\nTo use this endpoint, youll need to generate an API key with the `sms.invalid_phone_numbers.remove` permission.\n\nThis can be used to re-validate phone numbers after they have been marked as invalid.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter |"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

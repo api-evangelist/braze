@@ -1,0 +1,605 @@
+{
+  "item": [
+    {
+      "id": "766fe0f3-a776-4bd9-b35c-645d13b5f3fb",
+      "name": "Export > Session Analytics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1a304d0a-1ee3-452e-be3f-edc64887d622",
+          "name": "Export App Sessions by Time",
+          "request": {
+            "name": "Export App Sessions by Time",
+            "description": {
+              "content": "> Use this endpoint to retrieve a series of the number of sessions for your app over a designated time period. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `segment_id` can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `sessions.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"data\" : [\n        {\n            \"time\" : (string) point in time - as ISO 8601 extended when unit is \"hour\" and as ISO 8601 date when unit is \"day\",\n            \"sessions\" : (int)\n        },\n        ...\n    ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sessions",
+                "data_series"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "length",
+                  "value": "<integer>",
+                  "description": "(Required) Integer\n\nMax number of days before `ending_at` to include in the returned series - must be between 1 and 100 (inclusive)."
+                },
+                {
+                  "disabled": false,
+                  "key": "unit",
+                  "value": "<string>",
+                  "description": "(Optional) String\n\nUnit of time between data points. Can be `day` or `hour`, defaults to `day`. "
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_at",
+                  "value": "<string>",
+                  "description": "(Optional) Datetime (ISO 8601 string)\n\nDate on which the data series should end. Defaults to time of the request."
+                },
+                {
+                  "disabled": false,
+                  "key": "app_id",
+                  "value": "<string>",
+                  "description": "(Optional) String\n\nApp API identifier retrieved from the **Settings > Setup and Testing > API Keys** to limit analytics to a specific app."
+                },
+                {
+                  "disabled": false,
+                  "key": "segment_id",
+                  "value": "<string>",
+                  "description": "(Required) String\n\nSee [Segment API identifier](https://www.braze.com/docs/api/identifier_types/). Segment ID indicating the analytics-enabled segment for which sessions should be returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f44bc8d-a5a5-4460-9ea4-cd2776a50019",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sessions",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "length",
+                      "value": "14"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "segment_id",
+                      "value": "{{segment_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc85cedb-af0b-4cf7-b04f-c1f03dc190fd",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sessions",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "length",
+                      "value": "14"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "segment_id",
+                      "value": "{{segment_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cd6531a-6e14-4ee6-aeb9-2b7e0684674f",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sessions",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "length",
+                      "value": "14"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "segment_id",
+                      "value": "{{segment_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13a56bb0-4940-4167-b427-05938d9675be",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sessions",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "length",
+                      "value": "14"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "segment_id",
+                      "value": "{{segment_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "baa67783-9aa0-4659-b5b0-d3617d6ce409",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sessions",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "length",
+                      "value": "14"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "segment_id",
+                      "value": "{{segment_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "973f7503-03df-453b-8a13-ab9ca1657b33",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sessions",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "length",
+                      "value": "14"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "segment_id",
+                      "value": "{{segment_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b14c338c-6ac8-45de-9540-2cfe2e028fc3",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sessions",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "length",
+                      "value": "14"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "day"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "segment_id",
+                      "value": "{{segment_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rest.iad-01.braze.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3559c7b5-ca12-416b-94d6-c59969d549df",
+    "name": "Braze Export > Session Analytics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. ",
+      "type": "text/plain"
+    }
+  }
+}

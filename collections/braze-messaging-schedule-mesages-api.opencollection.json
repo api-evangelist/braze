@@ -1,0 +1,264 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Messaging > Schedule Mesages API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Messaging > Schedule Mesages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Upcoming Scheduled Campaigns and Canvases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/messages/scheduled_broadcasts",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "end_time",
+                "value": "2018-09-01T00:00:00-04:00",
+                "type": "query",
+                "description": "(Required) String in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format\n\nEnd date of the range to retrieve upcoming scheduled Campaigns and Canvases. This is treated as midnight in UTC time by the API."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to return a JSON list of information about scheduled campaigns and entry Canvases between now and a designated `end_time` specified in the request. \n  \n\nTo use this endpoint, youll need to generate an API key with the `messages.schedule_broadcasts` permission.\n\nDaily, recurring messages will only appear once with their next occurrence. Results returned in this endpoint are only for campaigns and Canvases created and scheduled in Braze.\n\n### Rate limit\n\nWe apply the default Br"
+        },
+        {
+          "info": {
+            "name": "Delete Scheduled Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/messages/schedule/delete",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to cancel a message that you previously scheduled before it has been sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `messages.schedule.delete` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `schedule_"
+        },
+        {
+          "info": {
+            "name": "Delete Scheduled API-Triggered Canvases",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/canvas/trigger/schedule/delete",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to cancel a Canvas message that you previously scheduled via API-triggered before it has been sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.trigger.schedule.delete` permission.\n\nScheduled messages or triggers that are deleted very close to or during the time they were supposed to be sent will be updated with best efforts, so last-second deletions could be applied to all, some, or none of your targeted users.\n\n### Rate limit\n\nWe apply the "
+        },
+        {
+          "info": {
+            "name": "Delete Scheduled API Triggered Campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/campaigns/trigger/schedule/delete",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> The delete schedule endpoint allows you to cancel a message that you previously scheduled API-triggered Canvases before it has been sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `campaigns.trigger.schedule.delete` permission.\n\nScheduled messages or triggers that are deleted very close to or during the time they were supposed to be sent will be updated with best efforts, so last-second deletions could be applied to all, some, or none of your targeted users.\n\n### Ra"
+        },
+        {
+          "info": {
+            "name": "Create Scheduled Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/messages/schedule/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to schedule a campaign, Canvas, or other message to be sent at a designated time (up to 90 days in the future) and provides you with an identifier to reference that message for updates. \n  \n\nTo use this endpoint, youll need to generate an API key with the `messages.schedule.create` permission.\n\nIf you are targeting a segment, a record of your request will be stored in the [Developer Console](https://dashboard.braze.com/app_settings/developer_console/activitylog/) after all sc"
+        },
+        {
+          "info": {
+            "name": "Schedule API Triggered Campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/campaigns/trigger/schedule/create",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to send dashboard created campaign messages (up to 90 days in advance) via API-triggered delivery, allowing you to decide what action should trigger the message to be sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `campaigns.trigger.schedule.create` permission.\n\nYou can pass in `trigger_properties` that will be templated into the message itself.\n\nNote that to send messages with this endpoint, you must have a [Campaign ID](https://www.braze.com/doc"
+        },
+        {
+          "info": {
+            "name": "Schedule API Triggered Canvases",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/canvas/trigger/schedule/create",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to schedule Canvas messages (up to 90 days in advance) via API-triggered delivery, allowing you to decide what action should trigger the message to be sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.trigger.schedule.create` permission.\n\nYou can pass in `canvas_entry_properties` that will be templated into the messages sent by the first steps of the Canvas.\n\nNote that to send messages with this endpoint, you must have a [Canvas ID](https://w"
+        },
+        {
+          "info": {
+            "name": "Update Scheduled Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/messages/schedule/update",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to update scheduled messages. \n  \n\nTo use this endpoint, youll need to generate an API key with the `messages.schedule.update` permission.\n\nThis endpoint accepts updates to either the `schedule` or `messages` parameter or both. Your request must contain at least one of those two keys.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request"
+        },
+        {
+          "info": {
+            "name": "Update Scheduled API Triggered Campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/campaigns/trigger/schedule/update",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to update scheduled API-triggered campaigns created in the dashboard, allowing you to decide what action should trigger the message to be sent. \n  \n\nTo use this endpoint, youll need to generate an API key with the `campaigns.trigger.schedule.update` permission.\n\nYou can pass in `trigger_properties` that will be templated into the message itself.\n\nNote that to send messages with this endpoint, you must have a campaign ID, created when you build an [API-triggered campaign](http"
+        },
+        {
+          "info": {
+            "name": "Update Scheduled API Triggered Canvases",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/canvas/trigger/schedule/update",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to update scheduled API-triggered Canvases that were created in the dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.trigger.schedule.update` permission.\n\nThis allows you to decide what action should trigger the message to be sent. You can pass in `trigger_properties` that will be templated into the message itself.\n\nNote that to send messages with this endpoint, you must have a Canvas ID, created when you build a [Canvas](https://www.br"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

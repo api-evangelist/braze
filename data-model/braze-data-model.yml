@@ -1,0 +1,154 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/ (24 specs, 95 operations) — path parameters, request-body id-reference fields
+  and response shapes; enriched from https://www.braze.com/docs/api/objects_filters/
+note: >-
+  The harvested specs declare exactly ONE reusable component schema per file (Error), so
+  there is no $ref graph to walk. This entity graph is therefore derived from id-reference
+  field names and path structure across all 95 operations, cross-checked against Braze's
+  object and filter reference. Relationship cardinalities marked `docs` come from the
+  object reference; those marked `spec` are visible in the contract itself.
+identity_model:
+  note: >-
+    Braze has no single primary key for a user. Four addressing schemes coexist and most
+    write endpoints accept a mix of them, capped at 50 identifiers per request.
+  identifiers:
+  - {field: external_id, kind: customer-owned, note: 'the canonical app-side user id; renameable via POST /users/external_ids/rename'}
+  - {field: braze_id, kind: braze-owned, note: internal user id returned by exports}
+  - {field: user_alias, kind: composite, fields: [alias_label, alias_name], note: 'for users without an external_id'}
+  - {field: email / phone, kind: channel-address, note: accepted on some subscription and email endpoints}
+entities:
+- name: User
+  id_fields: [external_id, braze_id, user_alias, device_id]
+  operations: ['POST /users/track', 'POST /users/identify', 'POST /users/merge', 'POST /users/delete', 'POST /users/export/ids', 'POST /users/export/segment', 'POST /users/export/global_control_group']
+  spec: openapi/braze-user-data-api-openapi.yml
+- name: UserAlias
+  id_fields: [alias_label, alias_name, old_alias_name, new_alias_name]
+  operations: ['POST /users/alias/new', 'POST /users/alias/update']
+  spec: openapi/braze-user-data-api-openapi.yml
+- name: ExternalId
+  id_fields: [current_external_id, new_external_id, external_ids]
+  operations: ['POST /users/external_ids/rename', 'POST /users/external_ids/remove']
+  spec: openapi/braze-user-data-external-id-migration-api-openapi.yml
+- name: CustomAttribute
+  id_fields: [custom_attribute_name]
+  note: key/value on the User profile; written through POST /users/track
+- name: CustomEvent
+  id_fields: [event_name]
+  operations: ['GET /events/list', 'GET /events/data_series']
+  spec: openapi/braze-export-custom-events-api-openapi.yml
+- name: Purchase
+  id_fields: [product_id, product_name]
+  operations: ['GET /purchases/product_list', 'GET /purchases/quantity_series', 'GET /purchases/revenue_series']
+  spec: openapi/braze-export-purchases-api-openapi.yml
+- name: Session
+  operations: ['GET /sessions/data_series']
+  spec: openapi/braze-export-session-analytics-api-openapi.yml
+- name: App
+  id_fields: [app_id]
+  note: an app within a workspace; scopes session, KPI and event analytics
+- name: Campaign
+  id_fields: [campaign_id]
+  operations: ['GET /campaigns/list', 'GET /campaigns/details', 'GET /campaigns/data_series', 'POST /campaigns/trigger/send']
+  spec: openapi/braze-export-campaign-api-openapi.yml
+- name: MessageVariation
+  id_fields: [message_variation_id]
+  note: an A/B variant belonging to a Campaign
+- name: Canvas
+  id_fields: [canvas_id]
+  operations: ['GET /canvas/list', 'GET /canvas/details', 'GET /canvas/data_series', 'GET /canvas/data_summary', 'POST /canvas/trigger/send']
+  spec: openapi/braze-export-canvas-api-openapi.yml
+- name: Segment
+  id_fields: [segment_id]
+  operations: ['GET /segments/list', 'GET /segments/details', 'GET /segments/data_series']
+  spec: openapi/braze-export-segment-api-openapi.yml
+- name: ScheduledMessage
+  id_fields: [schedule_id]
+  operations: ['GET /messages/scheduled_broadcasts', 'POST /messages/schedule/create', 'POST /messages/schedule/update', 'POST /messages/schedule/delete']
+  spec: openapi/braze-messaging-schedule-mesages-api-openapi.yml
+- name: Send
+  id_fields: [send_id, external_send_id]
+  operations: ['POST /sends/id/create', 'GET /sends/data_series']
+  spec: openapi/braze-messaging-send-messages-api-openapi.yml
+- name: LiveActivity
+  id_fields: [activity_id]
+  operations: ['POST /messages/live_activity/update']
+  spec: openapi/braze-messaging-live-activities-api-openapi.yml
+- name: SubscriptionGroup
+  id_fields: [subscription_group_id]
+  operations: ['GET /subscription/status/get', 'GET /subscription/user/status', 'POST /subscription/status/set', 'POST /v2/subscription/status/set']
+  spec: openapi/braze-subscription-groups-sms-and-whatsapp-api-openapi.yml
+- name: PreferenceCenter
+  id_fields: [PreferenceCenterExternalID, preference_center_api_id]
+  operations: ['GET /preference_center/v1/list', 'POST /preference_center/v1', 'GET /preference_center/v1/{PreferenceCenterExternalID}', 'PUT /preference_center/v1/{PreferenceCenterExternalID}', 'GET /preference_center_v1/{PreferenceCenterExternalID}/url/{UserID}']
+  spec: openapi/braze-preference-center-api-openapi.yml
+- name: EmailTemplate
+  id_fields: [email_template_id, template_name]
+  operations: ['GET /templates/email/list', 'GET /templates/email/info', 'POST /templates/email/create', 'POST /templates/email/update']
+  spec: openapi/braze-templates-email-templates-api-openapi.yml
+- name: ContentBlock
+  id_fields: [content_block_id]
+  operations: ['GET /content_blocks/list', 'GET /content_blocks/info', 'POST /content_blocks/create', 'POST /content_blocks/update']
+  spec: openapi/braze-templates-content-blocks-api-openapi.yml
+- name: Catalog
+  id_fields: [catalog_name]
+  operations: ['GET /catalogs', 'POST /catalogs', 'DELETE /catalogs/{catalog_name}']
+  spec: openapi/braze-catalogs-catalog-management-synchronous-api-openapi.yml
+- name: CatalogItem
+  id_fields: [item_id]
+  operations: ['GET /catalogs/{catalog_name}/items', 'GET /catalogs/{catalog_name}/items/{item_id}', 'POST /catalogs/{catalog_name}/items/{item_id}', 'PUT /catalogs/{catalog_name}/items/{item_id}', 'PATCH /catalogs/{catalog_name}/items/{item_id}', 'DELETE /catalogs/{catalog_name}/items/{item_id}']
+  spec: openapi/braze-catalogs-catalog-items-synchronous-api-openapi.yml
+- name: NewsFeedCard
+  id_fields: [card_id]
+  operations: ['GET /feed/list', 'GET /feed/details', 'GET /feed/data_series']
+  spec: openapi/braze-export-news-feed-api-openapi.yml
+  note: sunsetting product — see lifecycle/braze-lifecycle.yml
+- name: EmailAddress
+  id_fields: [email]
+  operations: ['GET /email/hard_bounces', 'GET /email/unsubscribes', 'POST /email/status', 'POST /email/bounce/remove', 'POST /email/spam/remove', 'POST /email/blocklist']
+  spec: openapi/braze-email-lists-addresses-api-openapi.yml
+- name: PhoneNumber
+  id_fields: [phone, phone_numbers]
+  operations: ['GET /sms/invalid_phone_numbers', 'POST /sms/invalid_phone_numbers/remove']
+  spec: openapi/braze-sms-api-openapi.yml
+- name: DashboardUser
+  id_fields: [id, userName]
+  operations: ['GET /scim/v2/Users', 'POST /scim/v2/Users', 'GET /scim/v2/Users/{id}', 'PUT /scim/v2/Users/{id}', 'DELETE /scim/v2/Users/{id}']
+  spec: openapi/braze-scim-api-openapi.yml
+  note: >-
+    A SCIM 2.0 resource for dashboard operators — an entirely separate identity domain from
+    User. The two never join.
+relationships:
+- {from: User, to: UserAlias, kind: has_many, via: user_alias, basis: spec}
+- {from: User, to: ExternalId, kind: has_many, via: external_ids, basis: spec}
+- {from: User, to: CustomAttribute, kind: has_many, via: custom_attribute_name, basis: spec}
+- {from: User, to: CustomEvent, kind: has_many, via: event_name, basis: spec}
+- {from: User, to: Purchase, kind: has_many, via: product_id, basis: spec}
+- {from: User, to: Session, kind: has_many, via: app_id, basis: docs}
+- {from: User, to: SubscriptionGroup, kind: has_many, via: subscription_group_id, basis: spec}
+- {from: User, to: EmailAddress, kind: has_one, via: email, basis: spec}
+- {from: User, to: PhoneNumber, kind: has_one, via: phone, basis: spec}
+- {from: Segment, to: User, kind: has_many, via: segment_id, basis: spec}
+- {from: Campaign, to: MessageVariation, kind: has_many, via: message_variation_id, basis: spec}
+- {from: Campaign, to: Send, kind: has_many, via: send_id, basis: spec}
+- {from: Campaign, to: ScheduledMessage, kind: has_many, via: schedule_id, basis: spec}
+- {from: Canvas, to: ScheduledMessage, kind: has_many, via: schedule_id, basis: spec}
+- {from: Canvas, to: Segment, kind: belongs_to, via: segment_id, basis: docs}
+- {from: Campaign, to: Segment, kind: belongs_to, via: segment_id, basis: docs}
+- {from: Catalog, to: CatalogItem, kind: has_many, via: catalog_name, basis: spec}
+- {from: Campaign, to: EmailTemplate, kind: belongs_to, via: email_template_id, basis: docs}
+- {from: EmailTemplate, to: ContentBlock, kind: has_many, via: content_block_id, basis: docs}
+- {from: App, to: Session, kind: has_many, via: app_id, basis: spec}
+- {from: PreferenceCenter, to: SubscriptionGroup, kind: has_many, via: subscription_group_id, basis: docs}
+- {from: Send, to: Campaign, kind: belongs_to, via: campaign_id, basis: spec}
+- {from: LiveActivity, to: User, kind: belongs_to, via: external_id, basis: spec}
+stats:
+  entities: 25
+  relationships: 22
+  component_schemas_in_spec: 1
+  note: >-
+    One shared Error schema across 24 documents and no request/response models — the specs
+    describe paths and parameters but almost no reusable data types. That is the largest
+    contract-quality gap in this repo, and it is why this graph had to be derived from field
+    names rather than from $refs.

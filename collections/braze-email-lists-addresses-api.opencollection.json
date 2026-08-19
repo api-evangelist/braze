@@ -1,0 +1,253 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Email Lists & Addresses API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Lists & Addresses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query Hard Bounced Emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/email/hard_bounces",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2019-01-01",
+                "type": "query",
+                "description": "(Optional*) String in YYYY-MM-DD format \n\nStart date of the range to retrieve hard bounces, must be earlier than `end_date`. This is treated as midnight in UTC time by the API.\n\n*You must provide either an `email` or a `start_date`, and an `end_date`.\n"
+              },
+              {
+                "name": "end_date",
+                "value": "2019-02-01",
+                "type": "query",
+                "description": "(Optional*) String in YYYY-MM-DD format\n\nString in YYYY-MM-DD format. End date of the range to retrieve hard bounces. This is treated as midnight in UTC time by the API.\n\n*You must provide either an `email` or a `start_date`, and an `end_date`."
+              },
+              {
+                "name": "limit",
+                "value": "100",
+                "type": "query",
+                "description": "(Optional) Integer\n\nOptional field to limit the number of results returned. Defaults to 100, maximum is 500."
+              },
+              {
+                "name": "offset",
+                "value": "1",
+                "type": "query",
+                "description": "(Optional) Integer\n\nOptional beginning point in the list to retrieve from."
+              },
+              {
+                "name": "email",
+                "value": "example@braze.com",
+                "type": "query",
+                "description": "(Optional*) String\n\nIf provided, we will return whether or not the user has hard bounced.\n\n*You must provide either an `email` or a `start_date`, and an `end_date`."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to pull a list of email addresses that have hard bounced your email messages within a certain time frame. \n  \n\nTo use this endpoint, youll need to generate an API key with the `email.hard_bounces` permission.\n\n**Note:** You must provide an `end_date`, as well as either an `email` or a `start_date`. If you provide all three, `start_date`, `end_date`, and an `email`, we prioritize the emails given and disregard the date range.\n\nIf your date range has more than `limit` number of"
+        },
+        {
+          "info": {
+            "name": "Query List of Unsubscribed Email Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/email/unsubscribes",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2020-01-01",
+                "type": "query",
+                "description": "(Optional*) String in YYYY-MM-DD format\n\nStart date of the range to retrieve unsubscribes, must be earlier than end_date. This is treated as midnight in UTC time by the API."
+              },
+              {
+                "name": "end_date",
+                "value": "2020-02-01",
+                "type": "query",
+                "description": "(Optional*)  String in YYYY-MM-DD format\n\nEnd date of the range to retrieve unsubscribes. This is treated as midnight in UTC time by the API."
+              },
+              {
+                "name": "limit",
+                "value": "1",
+                "type": "query",
+                "description": "(Optional) Integer\n\nOptional field to limit the number of results returned. Limit must be greater than 1. Defaults to 100, maximum is 500."
+              },
+              {
+                "name": "offset",
+                "value": "1",
+                "type": "query",
+                "description": "(Optional) Integer \n\nOptional beginning point in the list to retrieve from."
+              },
+              {
+                "name": "sort_direction",
+                "value": "desc",
+                "type": "query",
+                "description": "(Optional) String\n\nPass in the value `asc` to sort unsubscribes from oldest to newest. Pass in `desc` to sort from newest to oldest. If sort_direction is not included, the default order is newest to oldest."
+              },
+              {
+                "name": "email",
+                "value": "example@braze.com",
+                "type": "query",
+                "description": "(Optional*) String\n\nIf provided, we will return whether or not the user has unsubscribed."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to return emails that have unsubscribed during the time period from `start_date` to `end_date`. \n  \n\nYou can use this endpoint to set up a bi-directional sync between Braze and other email systems or your own database.\n\nTo use this endpoint, youll need to generate an API key with the `email.unsubscribe` permission.\n\n**Note:** You must provide an `end_date`, as well as either an `email` or a `start_date`.\n\nIf your date range has more than `limit` number of unsubscribes, you wi"
+        },
+        {
+          "info": {
+            "name": "Change Email Subscription Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/email/status",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to set the email subscription state for your users. Users can be `opted_in`, `unsubscribed`, or `subscribed` (not specifically opted in or out). \n  \n\nYou can set the email subscription state for an email address that is not yet associated with any of your users within Braze. When that email address is subsequently associated with a user, the email subscription state that you uploaded will be automatically set.\n\nTo use this endpoint, youll need to generate an API key with the "
+        },
+        {
+          "info": {
+            "name": "Remove Hard Bounced Emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/email/bounce/remove",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to remove email addresses from your Braze bounce list. \n  \n\nWe will also remove them from the bounce list maintained by your email provider.\n\nTo use this endpoint, youll need to generate an API key with the `email.bounce.remove` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type"
+        },
+        {
+          "info": {
+            "name": "Remove Email Addresses from Spam List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/email/spam/remove",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to remove email addresses from your Braze spam list. \n  \n\nWe will also remove them from the spam list maintained by your email provider.\n\nTo use this endpoint, youll need to generate an API key with the `email.spam.remove` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Des"
+        },
+        {
+          "info": {
+            "name": "Blocklist Email Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/email/blocklist",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to unsubscribe a user from email and mark them as hard bounced. \n  \n\nTo use this endpoint, youll need to generate an API key with the `email.blacklist` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `email` | Required | String or a"
+        },
+        {
+          "info": {
+            "name": "Blacklist Email Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/email/blacklist",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to unsubscribe a user from email and mark them as hard bounced. \n  \n\nTo use this endpoint, youll need to generate an API key with the `email.blacklist` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `email` | Required | String or a"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

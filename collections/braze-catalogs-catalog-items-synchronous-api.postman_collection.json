@@ -1,0 +1,3649 @@
+{
+  "item": [
+    {
+      "id": "dc64d58e-e054-4c02-9c1f-4125713e1fec",
+      "name": "Catalogs > Catalog Items > Synchronous",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "acd376a3-33a6-4b18-ad4d-b2f26a0c601c",
+          "name": "List Multiple Catalog Item Details",
+          "request": {
+            "name": "List Multiple Catalog Item Details",
+            "description": {
+              "content": "> Use this endpoint to return multiple catalog items and their content. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.get_items` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n\n## Query parameters\n\nNote that each call to this endpoint will return 50 items. For a catalog with more than 50 items, use the `Link` header to retrieve the data on the next page as shown in the following example response.\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `cursor` | Optional | String | Determines the pagination of the catalog items. |\n\n## Example requests\n\n### Without cursor\n\n```\ncurl --location --request GET 'https://rest.iad-03.braze.com/catalogs/restaurants/items' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n### With cursor\n\n```\ncurl --location --request GET 'https://rest.iad-03.braze.com/catalogs/restaurants/items?cursor=c2tpcDow' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\nThere are three status code responses for this endpoint: `200`, `400`, and `404`.\n\n### Example success response\n\nThe status code `200` could return the following response header and body.\n\n{% alert note %}  \nThe `Link` header won't exist if the catalog has less than or equal to 50 items. For calls without a cursor, `prev` will not show. When looking at the last page of items, `next` will not show.  \n{% endalert %}\n\n```\nLink: ; rel=\"prev\",; rel=\"next\"\n\n```\n\n``` json\n{\n  \"items\": [\n    {\n      \"id\": \"restaurant1\",\n      \"Name\": \"Restaurant1\",\n      \"City\": \"New York\",\n      \"Cuisine\": \"American\",\n      \"Rating\": 5,\n      \"Loyalty_Program\": true,\n      \"Open_Time\": \"2022-11-02T09:03:19.967Z\"\n    },\n    {\n      \"id\": \"restaurant2\",\n      \"Name\": \"Restaurant2\",\n      \"City\": \"New York\",\n      \"Cuisine\": \"American\",\n      \"Rating\": 10,\n      \"Loyalty_Program\": true,\n      \"Open_Time\": \"2022-11-02T09:03:19.967Z\"\n    },\n    {\n      \"id\": \"restaurant3\",\n      \"Name\": \"Restaurant3\",\n      \"City\": \"New York\",\n      \"Cuisine\": \"American\",\n      \"Rating\": 5,\n      \"Loyalty_Program\": false,\n      \"Open_Time\": \"2022-11-02T09:03:19.967Z\"\n    }\n  ],\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"invalid-cursor\",\n      \"message\": \"'cursor' is not valid\",\n      \"parameters\": [\n        \"cursor\"\n      ],\n      \"parameter_values\": [\n        \"bad-cursor\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `catalog-not-found` | Check that the catalog name is valid. |\n| `invalid-cursor` | Check that your `cursor` is valid. |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalogs",
+                ":catalog_name",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "catalog_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "622691f1-e325-44a6-a02f-01893df9eebe",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea380867-ba0f-496e-bffa-3060d7e5a885",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7a1aac8-2544-426e-9845-a4fdd3403608",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78a08081-7935-444d-adfd-d94e40aab0f7",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1c44b62-18a6-41b2-90ae-97540c62ed1f",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b966a24-bed7-439b-be4a-e84c0c5631e8",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d25336fa-515d-4c80-8a3a-b395357fb264",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc0481e7-26d2-4949-8590-008333c16731",
+          "name": "Delete a Catalog Item",
+          "request": {
+            "name": "Delete a Catalog Item",
+            "description": {
+              "content": "> Use this endpoint to delete an item in your catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.delete_item` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n| `item_id` | Required | String | The ID of the catalog item. |\n\n## Request parameters\n\nThere is no request body for this endpoint.\n\n## Example request\n\n```\ncurl --location --request DELETE 'https://rest.iad-03.braze.com/catalogs/restaurants/items/restaurant1' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\nThere are three status code responses for this endpoint: `202`, `400`, and `404`.\n\n### Example success response\n\nThe status code `202` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"item-not-found\",\n      \"message\": \"Could not find item\",\n      \"parameters\": [\n        \"item_id\"\n      ],\n      \"parameter_values\": [\n        \"restaurant34\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `arbitrary-error` | An arbitrary error occurred. Please try again or contact [Support](https://www.braze.com/docs/support_contact/). |\n| `catalog-not-found` | Check that the catalog name is valid. |\n| `item-not-found` | Check that the item to be deleted exists in your catalog. |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalogs",
+                ":catalog_name",
+                "items",
+                ":item_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "catalog_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "item_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c4986023-2696-456a-8a84-38bef11e8b63",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b61ee44-eb3c-4910-9369-6289e7e4f996",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f6ce9ce-c2be-4c52-84b7-92a4342d9c21",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54742c29-205f-4a12-a271-a33254723c20",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a218addb-b5db-4cba-a7ac-05551f9ddfec",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "376f4d96-d642-4429-b924-c8244325153a",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5d6a98f-9b0a-415a-ba17-e0806aaf8643",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d73334bd-91bd-4293-bf8b-78d944fe3367",
+          "name": "List Catalog Item Details",
+          "request": {
+            "name": "List Catalog Item Details",
+            "description": {
+              "content": "> Use this endpoint to return a catalog item and its content. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.get_item` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n| `item_id` | Required | String | The ID of the catalog item. |\n\n## Request parameters\n\nThere is no request body for this endpoint.\n\n## Example request\n\n```\ncurl --location --request GET 'https://rest.iad-03.braze.com/catalogs/restaurants/items/restaurant1' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\nThere are two status code responses for this endpoint: `200` and `404`.\n\n### Example success response\n\nThe status code `200` could return the following response body.\n\n``` json\n{\n  \"items\": [\n    {\n      \"id\": \"restaurant3\",\n      \"Name\": \"Restaurant1\",\n      \"City\": \"New York\",\n      \"Cuisine\": \"American\",\n      \"Rating\": 5,\n      \"Loyalty_Program\": true,\n      \"Open_Time\": \"2022-11-01T09:03:19.967Z\"\n    }\n  ],\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `404` could return the following response. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"item-not-found\",\n      \"message\": \"Could not find item\",\n      \"parameters\": [\n        \"item_id\"\n      ],\n      \"parameter_values\": [\n        \"restaurant34\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps, if applicable.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `catalog-not-found` | Check that the catalog name is valid. |\n| `item-not-found` | Check that the item is in the catalog. |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalogs",
+                ":catalog_name",
+                "items",
+                ":item_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "catalog_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "item_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ca95f1ff-a163-480c-b061-e9a64d95d207",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47a67d2a-4099-4b8c-9000-5b0605d8d874",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41976c4b-70f0-4619-a8da-d5e826473549",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "676da096-dd94-4a4c-a66f-8cc4a59a0441",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d81fdbfc-d6f8-4d2a-b9dc-ce3f3ddcd497",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2aac8baa-ab72-4a66-8610-b55f8b2abed7",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e4735ed-44a6-4eb8-90d7-ae05bec6923d",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fba8818f-5d6b-4a6f-b30c-79adb307469b",
+          "name": "Edit Catalog Items",
+          "request": {
+            "name": "Edit Catalog Items",
+            "description": {
+              "content": "> Use this endpoint to edit an item in your catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.update_item` permission.\n\n## Rate Limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n| `item_id` | Required | String | The ID of the catalog item. |\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `items` | Required | Array | An array that contains item objects. The item objects should contain fields that exist in the catalog except for the `id` field. Only one item object is allowed per request. |\n\n## Example request\n\n```\ncurl --location --request PATCH 'https://rest.iad-03.braze.com/catalogs/restaurants/items/restaurant1' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY' \\\n--data-raw '{\n  \"items\": [\n    {\n      \"Name\": \"Restaurant\",\n      \"Loyalty_Program\": false,\n      \"Open_Time\": \"2021-09-03T09:03:19.967+00:00\"\n    }\n  ]\n}'\n\n```\n\n## Response\n\nThere are three status code responses for this endpoint: `200`, `400`, and `404`.\n\n### Example success response\n\nThe status code `200` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"invalid-fields\",\n      \"message\": \"Some of the fields given do not exist in the catalog\",\n      \"parameters\": [\n        \"id\"\n      ],\n      \"parameter_values\": [\n        \"restaurant1\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `arbitrary-error` | An arbitrary error occurred. Please try again or contact [Support](https://www.braze.com/docs/support_contact/). |\n| `catalog-not-found` | Check that the catalog name is valid. |\n| `filtered-set-field-too-long` | The field value is being used in a filtered set that exceeds the character limit for an item. |\n| `id-in-body` | An item ID already exists in the catalog. |\n| `ids-too-large` | Character limit for each item ID is 250 characters. |\n| `invalid-ids` | Supported characters for item ID names are letters, numbers, hyphens, and underscores. |\n| `invalid-fields` | Confirm that the fields in the request exist in the catalog. |\n| `invalid-keys-in-value-object` | Item object keys can't include `.` or `$`. |\n| `item-not-found` | Check that the item is in the catalog. |\n| `item-array-invalid` | `items` must be an array of objects. |\n| `items-too-large` | Character limit for each item is 5,000 characters. |\n| `request-includes-too-many-items` | You can only edit one catalog item per request. |\n| `too-deep-nesting-in-value-object` | Item objects can't have more than 50 levels of nesting. |\n| `unable-to-coerce-value` | Item types can't be converted. |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalogs",
+                ":catalog_name",
+                "items",
+                ":item_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "catalog_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "item_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "98ef65c9-c331-447e-9a97-441ab13cbe1a",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "909b07b7-2a5e-47f9-ae42-aae87d68c6da",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3757c959-d932-457b-a2aa-55d66e188ab4",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07aea7f1-ef15-4d43-985a-65dc0327cd4d",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0691aeb-358f-4036-ae47-221ec2f305fc",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2d043f1-8c65-421d-a545-56f5c3fe4e5e",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcf664f8-924d-439a-91ce-b178a81041ad",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aff75405-a6d8-4863-9692-affa10dd61ec",
+          "name": "Create Catalog Item",
+          "request": {
+            "name": "Create Catalog Item",
+            "description": {
+              "content": "> Use this endpoint to create an item in your catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.create_item` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n| `item_id` | Required | String | The ID of the catalog item. |\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `items` | Required | Array | An array that contains item objects. The item objects should contain all of the fields in the catalog except for the `id` field. Only one item object is allowed per request. |\n\n## Example Request\n\n```\ncurl --location --request POST 'https://rest.iad-03.braze.com/catalogs/restaurants/items/restaurant1' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY' \\\n--data-raw '{\n  \"items\": [\n    {\n      \"Name\": \"Restaurant1\",\n      \"City\": \"New York\",\n      \"Cuisine\": \"American\",\n      \"Rating\": 5,\n      \"Loyalty_Program\": true,\n      \"Created_At\": \"2022-11-01T09:03:19.967+00:00\"\n    }\n  ]\n}'\n\n```\n\n## Response\n\nThere are three status code responses for this endpoint: `201`, `400`, and `404`.\n\n### Example success response\n\nThe status code `201` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"fields-do-not-match\",\n      \"message\": \"Fields do not match with fields on the catalog\",\n      \"parameters\": [\n        \"id\"\n      ],\n      \"parameter_values\": [\n        \"restaurant2\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `already-reached-catalog-item-limit` | Maximum number of catalogs reached. Contact your Braze account manager for more information. |\n| `already-reached-company-item-limit` | Maximum number of catalog items reached. Contact your Braze account manager for more information. |\n| `arbitrary-error` | An arbitrary error occurred. Please try again or contact [Support](https://www.braze.com/docs/support_contact/). |\n| `catalog-not-found` | Check that the catalog name is valid. |\n| `filtered-set-field-too-long` | The field value is being used in a filtered set that exceeds the character limit for an item. |\n| `id-in-body` | Remove any item IDs in the request body. |\n| `ids-too-large` | Character limit for each item ID is 250 characters. |\n| `invalid-ids` | Supported characters for item ID names are letters, numbers, hyphens, and underscores. |\n| `invalid-fields` | Confirm that the fields in the request exist in the catalog. |\n| `invalid-keys-in-value-object` | Item object keys can't include `.` or `$`. |\n| `item-already-exists` | The item already exists in the catalog. |\n| `item-array-invalid` | `items` must be an array of objects. |\n| `items-too-large` | Character limit for each item is 5,000 characters. |\n| `request-includes-too-many-items` | You can only create one catalog item per request. |\n| `too-deep-nesting-in-value-object` | Item objects can't have more than 50 levels of nesting. |\n| `unable-to-coerce-value` | Item types can't be converted. |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalogs",
+                ":catalog_name",
+                "items",
+                ":item_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "catalog_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "item_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "202d03ed-e7ca-482d-adbe-93ee66e077c6",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58db69a4-1930-438c-b4f3-4592a6f93e45",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70a6b50a-1dd6-4f51-bf1a-58eabf139d7d",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15a263b6-994a-4798-939b-b1eadb79cfe3",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5ed2122-f8dc-48eb-b760-f5a33852ff4b",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61a2aee4-f5ee-40fb-af22-3fe4629d5272",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0dc3b368-d6a9-4f3b-a377-0cc0d1948e8a",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c56eff8-ff49-439b-90ac-b4f05e8aeb6c",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f913feb-19db-4fa6-813f-0db58f75ad9c",
+          "name": "Update Catalog Item",
+          "request": {
+            "name": "Update Catalog Item",
+            "description": {
+              "content": "> Use this endpoint to update an item in your catalog. \n  \n\nTo use this endpoint, you'll need to generate an API key with the `catalogs.replace_item` permission.\n\nIf the `item_id` isn't found, this endpoint will create the item. This endpoint is synchronous.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n| `item_id` | Required | String | The ID of the catalog item. |\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `items` | Required | Array | An array that contains item objects. The item objects should contain fields that exist in the catalog except for the `id` field. Only one item object is allowed per request. |\n\n## Example request\n\n```\ncurl --location --request PUT 'https://rest.iad-03.braze.com/catalogs/restaurants/items/restaurant1' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY' \\\n--data-raw '{\n  \"items\": [\n    {\n      \"Name\": \"Restaurant\",\n      \"Loyalty_Program\": false,\n      \"Location\": {\n        \"Latitude\": 33.6112,\n        \"Longitude\": -117.8711\n      },\n      \"Open_Time\": \"2021-09-03T09:03:19.967+00:00\"\n    }\n  ]\n}'\n\n```\n\n## Response\n\nThere are three status code responses for this endpoint: `200`, `400`, and `404`.\n\n### Example success response\n\nThe status code `200` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"invalid-fields\",\n      \"message\": \"Some of the fields given do not exist in the catalog\",\n      \"parameters\": [\n        \"id\"\n      ],\n      \"parameter_values\": [\n        \"restaurant1\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `already_reached_catalog_item_limit` | Maximum number of catalogs reached. Contact your Braze account manager for more information. |\n| `already_reached_company_item_limit` | Maximum number of items reached. Contact your Braze account manager for more information. |\n| `arbitrary_error` | An arbitrary error occurred. Please try again or contact [Support](https://www.braze.com/docs/support_contact/). |\n| `catalog_not_found` | Check that the catalog name is valid. |\n| `filtered-set-field-too-long` | The field value is being used in a filtered set that exceeds the character limit for an item. |\n| `id_in_body` | Remove any item IDs in the request body. |\n| `ids_too_large` | Character limit for each item ID is 250 characters. |\n| `invalid_ids` | Supported characters for item ID names are letters, numbers, hyphens, and underscores. |\n| `invalid_fields` | Confirm that the fields in the request exist in the catalog. |\n| `invalid_keys_in_value_object` | Item object keys can't include `.` or `$`. |\n| `item_already_exists` | The item already exists in the catalog. |\n| `item_array_invalid` | `items` must be an array of objects. |\n| `items_too_large` | Item values can't exceed 5,000 characters. |\n| `request_includes_too_many_items` | Your request has too many items. The item limit per request is 50. |\n| `too_deep_nesting_in_value_object` | Item objects can't have more than 50 levels of nesting. |\n| `unable_to_coerce_value` | Item types can't be converted. |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "catalogs",
+                ":catalog_name",
+                "items",
+                ":item_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "catalog_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "item_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6fe77cff-05f3-4367-b94e-572d41810abd",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83d18f93-3321-4b8c-b3ef-01ddf2a5f2c4",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adf1350f-2ec7-4410-bd3c-ade0000c9cd1",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ab2c51c-c377-435f-9a0d-3e535ba0470c",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e5c0c7d-c961-4a6d-bf71-4ffce3d9e7bb",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a430cfa-8a73-4920-884b-a7a0e83a509f",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae8cae69-318e-4193-87f4-2363335f99d3",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "catalogs",
+                    ":catalog_name",
+                    "items",
+                    ":item_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "catalog_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "item_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rest.iad-01.braze.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0de7c642-16a8-43c2-aba6-8e4942b406d3",
+    "name": "Braze Catalogs > Catalog Items > Synchronous API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. ",
+      "type": "text/plain"
+    }
+  }
+}

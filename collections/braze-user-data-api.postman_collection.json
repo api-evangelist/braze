@@ -1,0 +1,3425 @@
+{
+  "item": [
+    {
+      "id": "a68d80d7-3de9-405e-8147-ff3ac98fab2c",
+      "name": "User Data",
+      "description": {
+        "content": "The User API allows you to track information on your users by logging data about your users that comes from outside your mobile app. You can also use this API to delete users for testing or other purposes.\n\nAll API endpoints have a data payload limit of 4MB. Attempts to post more data than 4MB will fail with an HTTP 413 Request Entity Too Large.\n\nThe examples below contain the URL https://rest.iad-01.braze.com, but some customers will need to use a different endpoint URL, for example if you are hosted in Brazes EU data center or have a dedicated Braze installation. Your Success Manager will inform you if you should use a different endpoint URL.\n\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "89c688da-f02c-4e40-b172-97449b1bb2f2",
+          "name": "Track Users",
+          "request": {
+            "name": "Track Users",
+            "description": {
+              "content": "> Use this endpoint to record custom events, purchases, and update user profile attributes. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.track` permission.\n\n**Note:** Braze processes the data passed via API at face value and customers should only pass deltas (changing data) to minimize unnecessary data point consumption. To read more, refer to [Data points](https://www.braze.com/docs/user_guide/onboarding_with_braze/data_points#data-points).\n\nCustomers using the API for server-to-server calls may need to allowlist `rest.iad-01.braze.com` if theyre behind a firewall.\n\n### Rate limit\n\nWe apply a base speed limit of 50,000 requests per minute to this endpoint for all customers. Each request to the `/users/track` endpoint can contain up to 75 events, 75 attribute updates, and 75 purchases. Each component (event, attribute, and purchase arrays), can update up to 75 users each for a max of 225 individual data points. Each update can also belong to the same user for a max of 225 updates to a single user in a request.\n\nSee our page on [API rate limits](https://www.braze.com/docs/api/api_limits/) for details, and reach out to your customer success manager if you need your limit increased.\n\n### Request parameters\n\nFor each of the request components listed in the following table, one of `external_id`, `user_alias`, or `braze_id` is required.\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `attributes` | Optional | Array of attributes objects | See [user attributes object](https://www.braze.com/docs/api/objects_filters/user_attributes_object/) |\n| `events` | Optional | Array of event objects | See [events object](https://www.braze.com/docs/api/objects_filters/event_object/) |\n| `purchases` | Optional | Array of purchase objects | See [purchases object](https://www.braze.com/docs/api/objects_filters/purchase_object/) |\n\n## User track responses\n\nUpon using any of the aforementioned API requests you should receive one of the following three general responses:\n\n#### Successful message\n\nSuccessful messages will be met with the following response:\n\n``` json\n{\n  \"message\" : \"success\",\n  \"attributes_processed\" : (optional, integer), if attributes are included in the request, this will return an integer of the number of external_ids with attributes that were queued to be processed,\n  \"events_processed\" : (optional, integer), if events are included in the request, this will return an integer of the number of events that were queued to be processed,\n  \"purchases_processed\" : (optional, integer), if purchases are included in the request, this will return an integer of the number of purchases that were queued to be processed,\n}\n\n```\n\n#### Successful message with non-fatal errors\n\nIf your message is successful but has non-fatal errors such as one invalid event object out of a long list of events, then you will receive the following response:\n\n``` json\n{\n  \"message\" : \"success\",\n  \"errors\" : [\n    {\n    }\n  ]\n}\n\n```\n\n#### Message with fatal errors\n\nIn the case of a success, any data that was not affected by an error in the `errors` array will still be processed. If your message has a fatal error you will receive the following response:\n\n``` json\n{\n  \"message\" : ,\n  \"errors\" : [\n    {\n    }\n  ]\n}\n\n```\n\n### Fatal error response codes\n\nFor status codes and associated error messages that will be returned if your request encounters a fatal error, reference [Fatal errors & responses](https://www.braze.com/api/errors/#fatal-errors).\n\nIf you receive the error provided external_id is blacklisted and disallowed, your request may have included a dummy user. For more information, refer to [Spam blocking](https://www.braze.com/docs/user_guide/data_and_analytics/user_data_collection/user_archival/#spam-blocking).\n\n### Creating an alias-only user profile\n\nKeep the following nuances in mind when using the `/users/track` endpoint:\n\nYou can use the `/users/track` endpoint to create a new alias-only user by setting the `_update_existing_only` key with a value of `false` in the body of the request. If this value is omitted, the alias-only user profile will not be created. Using an alias-only user guarantees that one profile with that alias will exist. This is especially helpful when building a new integration as it prevents the creation of duplicate user profiles.\n\n### Importing legacy user data\n\nYou may submit data through the Braze API for a user who has not yet used your mobile app in order to generate a user profile. If the user subsequently uses the application all information following their identification via the SDK will be merged with the existing user profile you created via the API call. Any user behavior that is recorded anonymously by the SDK prior to identification will be lost upon merging with the existing API-generated user profile.\n\nThe segmentation tool will include these users regardless of whether they have engaged with the app. If you want to exclude users uploaded via the User API who have not yet engaged with the app, simply add the filter: `Session Count > 0`.\n\n### Making bulk updates\n\nIf you have a use case where you need to make batch updates to the `users/track` endpoint, we recommend adding the bulk update header so that Braze can properly identify, observe, and route your request.\n\nRefer to the following sample request with the `X-Braze-Bulk` header:\n\n``` json\ncurl --location --request POST 'https://rest.iad-01.braze.com/users/track' \\\n--header 'Content-Type: application/json' \\\n--header 'X-Braze-Bulk: true' \\\n--header 'Authorization: Bearer YOUR-API-KEY-HERE' \\\n--data-raw '{ \"attributes\": [ ], \"events\": [ ], \"purchases\": [ ] }'\n\n```\n\nWarning: When the `X-Braze-Bulk` header is present with any value, Braze will consider the request a bulk request. Set the value to `true`. Currently, setting the value to `false` does not disable the headerit will still be treated as if it were true.\n\n#### Use cases\n\nConsider the following use cases where you may use the bulk update header:\n\n- A daily job where multiple users custom attributes are updated via the `/users/track` endpoint.\n- An ad-hoc user data backfill script which updates user information via the `/users/track` endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "track"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"attributes\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"events\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"purchases\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "429601d2-a47a-4d04-8078-9a13eb3cd3e0",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "track"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"events\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"purchases\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f56a6bc1-5670-4b29-99b0-d27aaef9d23d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "track"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"events\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"purchases\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9be45a5-35b6-471d-8206-a0162c89d350",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "track"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"events\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"purchases\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79ec5826-0538-40d5-a279-f591f8581145",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "track"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"events\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"purchases\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1606c052-dc50-481e-aca3-5019f1eb3bf0",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "track"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"events\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"purchases\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4aff07e4-ac16-40dd-99e8-b4b07d65c71b",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "track"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"events\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"purchases\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68299b9a-3f82-4ba7-903e-d5b4100cb4aa",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "track"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"events\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"purchases\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19574cbe-8dbe-4353-9b38-c8bbf78a25fd",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "track"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"events\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"purchases\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0aa282cb-db9a-4663-9499-22df395ac4e2",
+          "name": "Update User Alias",
+          "request": {
+            "name": "Update User Alias",
+            "description": {
+              "content": "> Use this endpoint to update existing user aliases. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.alias.update` permission.\n\nUp to 50 user aliases may be specified per request.\n\nThis endpoint does not guarantee the sequence of `alias_updates` objects being updated.\n\nUpdating a user alias requires `alias_label`, `old_alias_name`, and `new_alias_name` to be included in the update user alias object. If there is no user alias associated with the `alias_label` and `old_alias_name`, no alias will be updated. If the given `alias_label` and `old_alias_name` is found, then the `old_alias_name` will be updated to the `new_alias_name`.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/delete`, `/users/identify`, `/users/merge`, and `/users/alias/update` endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `alias_updates` | Required | Array of update user alias objects | See [user alias object](https://www.braze.com/docs/api/objects_filters/user_alias_object/).  <br>  <br>For more information on `old_alias_name`, `new_alias_name`, and `alias_label`, refer to [User aliases](https://www.braze.com/docs/user_guide/data_and_analytics/user_data_collection/user_profile_lifecycle/#user-aliases). |\n\n### Endpoint request body with update user alias object specification\n\n``` json\n{\n  \"alias_label\" : (required, string),\n  \"old_alias_name\" : (required, string),\n  \"new_alias_name\" : (required, string)\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "alias",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alias_updates\": [\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    },\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a107712e-0d58-41d1-a3ca-5791d991872c",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias_updates\": [\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    },\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c35ab7d-b588-453c-913c-e69d04d0b892",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias_updates\": [\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    },\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0ac1e93-37fd-4358-8236-1dad20868d22",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias_updates\": [\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    },\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0225df85-6d53-44f9-85df-27e1bb1f4103",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias_updates\": [\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    },\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e922b842-1445-494a-8844-9e7621572027",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias_updates\": [\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    },\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5dbdf6e2-0c3b-4b37-8682-3a1715b9fd76",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias_updates\": [\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    },\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fc34119-0983-412c-a622-806cd1711c9b",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias_updates\": [\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    },\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fbb5587-9288-4b30-b544-66efd0074f52",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias_updates\": [\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    },\n    {\n      \"alias_label\": \"<string>\",\n      \"old_alias_name\": \"<string>\",\n      \"new_alias_name\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef6b9c23-3337-4eff-8fd7-0fc8f1ee925e",
+          "name": "Create New User Aliases",
+          "request": {
+            "name": "Create New User Aliases",
+            "description": {
+              "content": "> Use this endpoint to add new user aliases for existing identified users, or to create new unidentified users. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.alias.new` permission.\n\nUp to 50 user aliases may be specified per request.\n\n**Adding a user alias for an existing user** requires an `external_id` to be included in the new user alias object. If the `external_id` is present in the object but there is no user with that `external_id`, the alias will not be added to any users. If an `external_id` is not present, a user will still be created but will need to be identified later. You can do this using the \"Identifying Users\" and the `users/identify` endpoint.\n\n**Creating a new alias-only user** requires the `external_id` to be omitted from the new user alias object. Once the user is created, use the `/users/track` endpoint to associate the alias-only user with attributes, events, and purchases, and the `/users/identify` endpoint to identify the user with an `external_id`.\n\n### Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/delete` and `/users/identify` endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `user_aliases` | Required | Array of new user alias objects | See [user alias object](https://www.braze.com/docs/api/objects_filters/user_alias_object/).  <br>  <br>For more information on `alias_name` and `alias_label`, check out our [User Aliases](https://www.braze.com/docs/user_guide/data_and_analytics/user_data_collection/user_profile_lifecycle/#user-aliases) documentation. |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "alias",
+                "new"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_aliases\": [\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "18e34eec-963e-462c-97b2-06c19fd76efe",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_aliases\": [\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0b02f17-b4ef-42d5-879e-b0f46306846d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_aliases\": [\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94f9bf5a-7018-4ee9-b8e7-d806252afe0f",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_aliases\": [\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adf06c53-c171-464a-8f0a-f653af3dced5",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_aliases\": [\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20ee1bb9-40f2-4b8b-b001-52e0a192f91e",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_aliases\": [\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91b6fbcb-3767-4add-be00-df238c6a709f",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_aliases\": [\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52575196-95ba-4289-896c-86bfd8f89fb6",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_aliases\": [\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d19fcbb0-8d02-4886-9d11-fa9a8a9df9be",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "alias",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_aliases\": [\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c60bf56-289b-48ec-8cb6-b43bc1e4188e",
+          "name": "Delete Users",
+          "request": {
+            "name": "Delete Users",
+            "description": {
+              "content": "> Use this endpoint to delete any user profile by specifying a known user identifier. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.delete` permission.\n\nUp to 50 `external_ids`, `user_aliases`, or `braze_ids` can be included in a single request. Only one of `external_ids`, `user_aliases`, or `braze_ids` can be included in a single request.\n\n> **Important:** Deleting user profiles cannot be undone. It will permanently remove users which may cause discrepancies in your data. Learn more about what happens when you [delete a user profile via API](https://braze.com/docs/help/help_articles/api/delete_user/) in our Help documentation. \n  \n\n### Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/alias/new` and `/users/identify` endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameter\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `external_ids` | Optional | Array of strings | External identifiers for the users to delete. |\n| `user_aliases` | Optional | Array of user alias object | [User aliases](https://www.braze.com/docs/api/objects_filters/user_alias_object/) for the users to delete. |\n| `braze_ids` | Optional | Array of strings | Braze user identifiers for the users to delete. |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"braze_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"user_aliases\": [\n    {\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    },\n    {\n      \"alias_name\": \"<string>\",\n      \"alias_label\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4e5fbf63-8a25-4208-99dd-f94ba7370ec5",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_ids\": [\n    \"external_identifier1\",\n    \"external_identifier2\"\n  ],\n  \"braze_ids\": [\n    \"braze_identifier1\",\n    \"braze_identifier2\"\n  ],\n  \"user_aliases\": [\n    {\n      \"alias_name\": \"user_alias1\",\n      \"alias_label\": \"alias_label1\"\n    },\n    {\n      \"alias_name\": \"user_alias2\",\n      \"alias_label\": \"alias_label2\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92bc14af-bad1-46a4-abcd-d9899644a589",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_ids\": [\n    \"external_identifier1\",\n    \"external_identifier2\"\n  ],\n  \"braze_ids\": [\n    \"braze_identifier1\",\n    \"braze_identifier2\"\n  ],\n  \"user_aliases\": [\n    {\n      \"alias_name\": \"user_alias1\",\n      \"alias_label\": \"alias_label1\"\n    },\n    {\n      \"alias_name\": \"user_alias2\",\n      \"alias_label\": \"alias_label2\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "131184be-9fef-4ffe-b2bf-9bc3b715f68b",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_ids\": [\n    \"external_identifier1\",\n    \"external_identifier2\"\n  ],\n  \"braze_ids\": [\n    \"braze_identifier1\",\n    \"braze_identifier2\"\n  ],\n  \"user_aliases\": [\n    {\n      \"alias_name\": \"user_alias1\",\n      \"alias_label\": \"alias_label1\"\n    },\n    {\n      \"alias_name\": \"user_alias2\",\n      \"alias_label\": \"alias_label2\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9593be62-f0a4-49ad-99ef-51bd45605cfa",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_ids\": [\n    \"external_identifier1\",\n    \"external_identifier2\"\n  ],\n  \"braze_ids\": [\n    \"braze_identifier1\",\n    \"braze_identifier2\"\n  ],\n  \"user_aliases\": [\n    {\n      \"alias_name\": \"user_alias1\",\n      \"alias_label\": \"alias_label1\"\n    },\n    {\n      \"alias_name\": \"user_alias2\",\n      \"alias_label\": \"alias_label2\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29d33e30-e70a-4898-89dd-04b9c90d58da",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_ids\": [\n    \"external_identifier1\",\n    \"external_identifier2\"\n  ],\n  \"braze_ids\": [\n    \"braze_identifier1\",\n    \"braze_identifier2\"\n  ],\n  \"user_aliases\": [\n    {\n      \"alias_name\": \"user_alias1\",\n      \"alias_label\": \"alias_label1\"\n    },\n    {\n      \"alias_name\": \"user_alias2\",\n      \"alias_label\": \"alias_label2\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "daed0733-796a-4443-9ba6-6fb95cf5f2b3",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_ids\": [\n    \"external_identifier1\",\n    \"external_identifier2\"\n  ],\n  \"braze_ids\": [\n    \"braze_identifier1\",\n    \"braze_identifier2\"\n  ],\n  \"user_aliases\": [\n    {\n      \"alias_name\": \"user_alias1\",\n      \"alias_label\": \"alias_label1\"\n    },\n    {\n      \"alias_name\": \"user_alias2\",\n      \"alias_label\": \"alias_label2\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6482c7f1-b667-4534-af20-942db21435b3",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_ids\": [\n    \"external_identifier1\",\n    \"external_identifier2\"\n  ],\n  \"braze_ids\": [\n    \"braze_identifier1\",\n    \"braze_identifier2\"\n  ],\n  \"user_aliases\": [\n    {\n      \"alias_name\": \"user_alias1\",\n      \"alias_label\": \"alias_label1\"\n    },\n    {\n      \"alias_name\": \"user_alias2\",\n      \"alias_label\": \"alias_label2\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5ecfcea-c1d6-4644-9360-40201d3ebdf6",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_ids\": [\n    \"external_identifier1\",\n    \"external_identifier2\"\n  ],\n  \"braze_ids\": [\n    \"braze_identifier1\",\n    \"braze_identifier2\"\n  ],\n  \"user_aliases\": [\n    {\n      \"alias_name\": \"user_alias1\",\n      \"alias_label\": \"alias_label1\"\n    },\n    {\n      \"alias_name\": \"user_alias2\",\n      \"alias_label\": \"alias_label2\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08c91002-1b6c-4457-a2b8-97896bc41fa0",
+          "name": "Identify Users",
+          "request": {
+            "name": "Identify Users",
+            "description": {
+              "content": "> Use this endpoint to identify an unidentified (alias-only) user. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.identify` permission.\n\nCalling `/users/identify` combines the alias-only profile with the identified profile and removes the alias-only profile.\n\nIdentifying a user requires an `external_id` to be included in the `aliases_to_identify` object. If there is no user with that `external_id`, the `external_id` will simply be added to the aliased user's record, and the user will be considered identified. You can add up to 50 user aliases per request.\n\nSubsequently, you can associate multiple additional user aliases with a single `external_id`.\n\n- When these subsequent associations are made with the `merge_behavior` field set to `none`, only the push tokens and message history associated with the user alias are retained; any attributes, events, or purchases will be \"orphaned\" and not available on the identified user. One workaround is to export the aliased user's data before identification using the [`/users/export/ids` endpoint](https://www.braze.com/docs/api/endpoints/export/user_data/post_users_identifier/), then re-associate the attributes, events, and purchases with the identified user.\n- When associations are made with the `merge_behavior` field set to `merge`, this endpoint will merge [specific fields](#merge) found on the anonymous user to the identified user.\n    \n\n> Note: To prevent unexpected loss of data when identifying users, we highly recommend that you first refer to [data collection best practices](https://www.braze.com/docs/user_guide/data_and_analytics/user_data_collection/best_practices/#capturing-user-data-when-alias-only-user-info-is-already-present) to learn about capturing user data when alias-only user info is already present. \n  \n\n### Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/delete` and `/users/alias/new` endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `aliases_to_identify` | Required | Array of aliases to identify object | See [alias to identify object](https://www.braze.com/docs/api/objects_filters/aliases_to_identify/) and [user alias object](https://www.braze.com/docs/api/objects_filters/user_alias_object/). |\n| `merge_behavior` | Optional | String | One of `none` or `merge` is expected. |\n\n#### Merge_behavior field\n\nSetting the `merge_behavior` field to `merge` sets the endpoint to merge any of the following fields found **exclusively** on the anonymous user to the identified user.\n\n- First name\n- Last name\n- Email\n- Gender\n- Date of birth\n- Phone number\n- Time zone\n- Home city\n- Country\n- Language\n- Session count (the sum of sessions from both profiles)\n- Date of first session (Braze will pick the earlier date of the two dates)\n- Date of last session (Braze will pick the later date of the two dates)\n- Custom attributes\n- Custom event and purchase event data (excluding event properties)\n- Custom event and purchase event properties for \"X times in Y days\" segmentation (where X<=50 and Y<=30)\n- Segmentable custom events summary\n    - Event count (the sum from both profiles)\n    - Event first occurred (Braze will pick the earlier date of the two dates)\n    - Event last occurred (Braze will pick the later date of the two dates)\n- In-app purchase total in cents (the sum from both profiles)\n- Total number of purchases (the sum from both profiles)\n- Date of first purchase (Braze will pick the earlier date of the two dates)\n- Date of last purchase (Braze will pick the later date of the two dates)\n- App summaries\n- Last_X_at fields (Braze will update the fields if the orphaned profile fields are more recent)\n- Campaign summaries (Braze will pick the most recent date fields)\n- Workflow summaries (Braze will pick the most recent date fields)\n- Message and message engagement history\n    \n\nAny of the following fields found on the anonymous user to the identified user:\n\n- Custom event and purchase event count and first date and last date timestamps\n    - These merged fields will update \"for X events in Y days\" filters. For purchase events, these filters include \"number of purchases in Y days\" and \"money spent in last Y days\".\n\nSession data will only be merged if the app exists on both user profiles. For example, if our target user doesn't have an app summary for \"ABCApp\" but our original user does, the target user will have the \"ABCApp\" app summary on their profile after the merge.\n\nSetting the field to `none` will not merge any user data to the identified user profile.\n\n### Aliases to Identify object specification\n\n``` json\n{\n  \"external_id\" : (required, string) see External User ID below,\n  // external_ids for users that do not exist will return a non-fatal error. \n  // See Server Responses for details.\n  \"user_alias\" : {\n    \"alias_name\" : (required, string),\n    \"alias_label\" : (required, string)\n  }\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "identify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"aliases_to_identify\": [\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f7c51c40-6339-4f6e-95b7-0e927c08997e",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aliases_to_identify\": [\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c9397e8-af35-432f-813c-9d3e044378e5",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aliases_to_identify\": [\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83ea3223-ca95-4c68-ae29-c82c1c7c0788",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aliases_to_identify\": [\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c15d9596-d1b7-439c-8819-00af36d4e83c",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aliases_to_identify\": [\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6b2b8e9-80dd-4b82-8969-e463ffb47441",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aliases_to_identify\": [\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "411ce187-129e-4bd8-b627-6c321375aa35",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aliases_to_identify\": [\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c6745f5-f3a3-4eaf-8aaf-008620702c83",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aliases_to_identify\": [\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9947fd9-00c2-4b60-8fee-4341abb31ebd",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "identify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aliases_to_identify\": [\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    },\n    {\n      \"external_id\": \"<string>\",\n      \"user_alias\": {\n        \"alias_name\": \"<string>\",\n        \"alias_label\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19dca3de-11b4-4948-91ca-cd45f461e6d3",
+          "name": "Merge Users",
+          "request": {
+            "name": "Merge Users",
+            "description": {
+              "content": "> Use this endpoint to merge one user into another user. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.merge` permission.\n\nUp to 50 merges may be specified per request. This endpoint is asynchronous.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/delete`, `/users/alias/new`, `/users/identify`, and `/users/alias/update` endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `merge_updates` | Required | Array | An object array. Each object should contain an `identifier_to_merge` object and an `identifier_to_keep` object, which should each reference a user either by `external_id` or `user_alias`. Both users being merged must be identified using the same method. |\n\n### Merge_updates behavior\n\nThis endpoint will merge any of the following fields found exclusively on the original user to the target user.\n\n- First name\n- Last name\n- Email\n- Gender\n- Date of birth\n- Phone number\n- Time zone\n- Home city\n- Country\n- Language\n- Session count (the sum of sessions from both profiles)\n- Date of first session (Braze will pick the earlier date of the two dates)\n- Date of last session (Braze will pick the later date of the two dates)\n- Custom attributes\n- Custom event and purchase event data (excluding event properties)\n- Custom event and purchase event properties for \"X times in Y days\" segmentation (where X<=50 and Y<=30)\n- Segmentable custom events summary\n    - Event count (the sum from both profiles)\n    - Event first occurred (Braze will pick the earlier date of the two dates)\n    - Event last occurred (Braze will pick the later date of the two dates)\n- In-app purchase total in cents (the sum from both profiles)\n- Total number of purchases (the sum from both profiles)\n- Date of first purchase (Braze will pick the earlier date of the two dates)\n- Date of last purchase (Braze will pick the later date of the two dates)\n- App summaries\n- Last_X_at fields (Braze will update the fields if the orphaned profile fields are more recent)\n- Campaign summaries (Braze will pick the most recent date fields)\n- Workflow summaries (Braze will pick the most recent date fields)\n    \n\nAny of the following fields found on one user to the other user:\n\n- Custom event and purchase event count and first date and last date timestamps\n    - These merged fields will update \"for X events in Y days\" filters. For purchase events, these filters include \"number of purchases in Y days\" and \"money spent in last Y days\".\n\nSession data will only be merged if the app exists on both user profiles. For example, if our target user doesn't have an app summary for \"ABCApp\" but our original user does, the target user will have the \"ABCApp\" app summary on their profile after the merge. Note that message and message engagement history aren't retained after both user profiles are merged.\n\nThe endpoint does not guarantee the sequence of `merge_updates` objects being updated.\n\n## Example request\n\n```\ncurl --location --request POST 'https://rest.iad-03.braze.com/users/merge' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY' \\\n--data-raw '{\n  \"merge_updates\": [\n    {\n      \"identifier_to_merge\": {\n        \"external_id\": \"old-user1\"\n      },\n      \"identifier_to_keep\": {\n        \"external_id\": \"current-user1\"\n      }\n    },\n    {\n      \"identifier_to_merge\": {\n        \"user_alias\": {\n          \"alias_name\": \"old-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      },\n      \"identifier_to_keep\": {\n        \"user_alias\": {\n          \"alias_name\": \"current-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      }\n    }\n  ]\n}'\n\n```\n\n## Response\n\nThere are two status code responses for this endpoint: `202` and `400`.\n\n### Example success response\n\nThe status code `202` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to Troubleshooting (below) for more information about errors you may encounter.\n\n``` json\n{\n  \"message\": \"'merge_updates' must be an array of objects\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible error messages that may occur.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `'merge_updates' must be an array of objects` | Ensure that `merge_updates` is an array of objects. |\n| `a single request may not contain more than 50 merge updates` | You can only specify up to 50 merge updates in a single request. |\n| `identifiers must be objects with an 'external_id' property that is a string, or 'user_alias' property that is an object` | Check the identifiers in your request. |\n| `identifiers must be objects of the same type` | Ensure that the identifier object types match. |\n| `'merge_updates' must only have 'identifier_to_merge' and 'identifier_to_keep'` | Ensure that `merge_updates` only contains the two objects `identifier_to_merge` and `identifier_to_keep`. |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "merge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merge_updates\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d807dd11-5bf0-4cfc-926d-d246cdc6d9a0",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merge_updates\": [\n    {\n      \"identifier_to_merge\": {\n        \"external_id\": \"old-user1\"\n      },\n      \"identifier_to_keep\": {\n        \"external_id\": \"current-user1\"\n      }\n    },\n    {\n      \"identifier_to_merge\": {\n        \"user_alias\": {\n          \"alias_name\": \"old-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      },\n      \"identifier_to_keep\": {\n        \"user_alias\": {\n          \"alias_name\": \"current-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41f48e09-e034-42e4-a903-109afe15364a",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merge_updates\": [\n    {\n      \"identifier_to_merge\": {\n        \"external_id\": \"old-user1\"\n      },\n      \"identifier_to_keep\": {\n        \"external_id\": \"current-user1\"\n      }\n    },\n    {\n      \"identifier_to_merge\": {\n        \"user_alias\": {\n          \"alias_name\": \"old-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      },\n      \"identifier_to_keep\": {\n        \"user_alias\": {\n          \"alias_name\": \"current-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3511efd-b818-42e7-9472-7d78db88ed95",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merge_updates\": [\n    {\n      \"identifier_to_merge\": {\n        \"external_id\": \"old-user1\"\n      },\n      \"identifier_to_keep\": {\n        \"external_id\": \"current-user1\"\n      }\n    },\n    {\n      \"identifier_to_merge\": {\n        \"user_alias\": {\n          \"alias_name\": \"old-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      },\n      \"identifier_to_keep\": {\n        \"user_alias\": {\n          \"alias_name\": \"current-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bc3473a-1165-47ed-80ac-1c77190949f6",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merge_updates\": [\n    {\n      \"identifier_to_merge\": {\n        \"external_id\": \"old-user1\"\n      },\n      \"identifier_to_keep\": {\n        \"external_id\": \"current-user1\"\n      }\n    },\n    {\n      \"identifier_to_merge\": {\n        \"user_alias\": {\n          \"alias_name\": \"old-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      },\n      \"identifier_to_keep\": {\n        \"user_alias\": {\n          \"alias_name\": \"current-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be5136ad-d058-496c-b7cf-1f94399d1142",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merge_updates\": [\n    {\n      \"identifier_to_merge\": {\n        \"external_id\": \"old-user1\"\n      },\n      \"identifier_to_keep\": {\n        \"external_id\": \"current-user1\"\n      }\n    },\n    {\n      \"identifier_to_merge\": {\n        \"user_alias\": {\n          \"alias_name\": \"old-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      },\n      \"identifier_to_keep\": {\n        \"user_alias\": {\n          \"alias_name\": \"current-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "923e0109-a2fe-4d76-9c2a-501cc9f20058",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merge_updates\": [\n    {\n      \"identifier_to_merge\": {\n        \"external_id\": \"old-user1\"\n      },\n      \"identifier_to_keep\": {\n        \"external_id\": \"current-user1\"\n      }\n    },\n    {\n      \"identifier_to_merge\": {\n        \"user_alias\": {\n          \"alias_name\": \"old-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      },\n      \"identifier_to_keep\": {\n        \"user_alias\": {\n          \"alias_name\": \"current-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed933ae8-e506-469e-9537-74b569c40357",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merge_updates\": [\n    {\n      \"identifier_to_merge\": {\n        \"external_id\": \"old-user1\"\n      },\n      \"identifier_to_keep\": {\n        \"external_id\": \"current-user1\"\n      }\n    },\n    {\n      \"identifier_to_merge\": {\n        \"user_alias\": {\n          \"alias_name\": \"old-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      },\n      \"identifier_to_keep\": {\n        \"user_alias\": {\n          \"alias_name\": \"current-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d350368-d8ff-4da0-ad4a-ba0112767bda",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merge_updates\": [\n    {\n      \"identifier_to_merge\": {\n        \"external_id\": \"old-user1\"\n      },\n      \"identifier_to_keep\": {\n        \"external_id\": \"current-user1\"\n      }\n    },\n    {\n      \"identifier_to_merge\": {\n        \"user_alias\": {\n          \"alias_name\": \"old-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      },\n      \"identifier_to_keep\": {\n        \"user_alias\": {\n          \"alias_name\": \"current-user2@example.com\",\n          \"alias_label\": \"email\"\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rest.iad-01.braze.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0e447791-8db4-459b-86c2-0812adc56780",
+    "name": "Braze User Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. ",
+      "type": "text/plain"
+    }
+  }
+}

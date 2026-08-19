@@ -1,0 +1,60 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.braze.com/docs/api/errors/
+derived_from: openapi/ — every one of the 95 operations declares 400/401/403/404/429/500
+format: custom-json
+rfc9457: false
+envelope:
+  media_type: application/json
+  shape: |
+    {"message": "success"}                                   # accepted
+    {"message": "success", "errors": [<minor error message>]} # accepted with non-fatal errors
+    {"message": <fatal error message>, "errors": [<minor error message>]}  # fatal
+  fields:
+  - name: message
+    type: string
+    note: >-
+      "success" on acceptance, otherwise the fatal error message. Braze is explicit that
+      "success" means the request was accepted and queued — NOT that any message was
+      delivered. Agents must not treat 200/success as a delivery guarantee.
+  - name: errors
+    type: array of string
+    note: Non-fatal (minor) errors; can be present alongside a successful message.
+  schema: openapi/braze-user-data-api-openapi.yml#/components/schemas/Error
+  no_error_code_field: true
+  note: >-
+    Braze returns human-readable error STRINGS, not stable machine codes and not RFC 9457
+    problem+json. There is no `type` URI, no `code`, and no `instance`. An agent has to
+    match on prose, which is the single biggest error-semantics weakness of this API.
+problems:
+- {status: 400, title: Bad Request, detail: Malformed or invalid request syntax; also returned when send_at cannot be parsed or in_local_time validation fails, retryable: false}
+- {status: 400, title: No Recipients, detail: No external IDs, segment IDs or push tokens were supplied, retryable: false}
+- {status: 400, title: Invalid Campaign ID, detail: No campaign matches the supplied campaign_id, retryable: false}
+- {status: 400, title: Message Variant Unspecified, detail: A campaign ID was given without a message variant ID, retryable: false}
+- {status: 400, title: Invalid Message Variant, detail: The variant ID does not belong to the campaign, retryable: false}
+- {status: 400, title: Mismatched Message Type, detail: Message type does not match the specified variant, retryable: false}
+- {status: 400, title: Invalid Extra Push Payload, detail: An extra key on a push message is not a dictionary, retryable: false}
+- {status: 400, title: Max Input Length Exceeded, detail: More than 75 combined objects (attributes + events + purchases) in one /users/track call, retryable: false}
+- {status: 400, title: Max number of external_ids and aliases exceeded, detail: More than 50 external IDs in the request, retryable: false}
+- {status: 400, title: Max number of ids exceeded, detail: More than 50 IDs in the request, retryable: false}
+- {status: 400, title: No message to send, detail: No message payload supplied, retryable: false}
+- {status: 400, title: Slideup Message Length Exceeded, detail: Slideup body exceeds 140 characters, retryable: false}
+- {status: 400, title: Apple Push Length Exceeded, detail: The APNs JSON payload exceeds 1912 bytes, retryable: false}
+- {status: 400, title: Android Push Length Exceeded, detail: The FCM JSON payload exceeds 4000 bytes, retryable: false}
+- {status: 401, title: Unauthorized, detail: Invalid, missing or malformed REST API key; key used against the wrong regional REST host; or the key lacks the endpoint permission, retryable: false}
+- {status: 403, title: Forbidden, detail: Account inactive or the rate plan does not include this endpoint, retryable: false}
+- {status: 403, title: Access Denied, detail: The API key does not carry the required endpoint permission, retryable: false}
+- {status: 404, title: Not Found, detail: 'Invalid URL. Observed verbatim on live probes of the REST hosts: {"message":"Invalid URL"}', retryable: false}
+- {status: 413, title: Request Entity Too Large, detail: Payload above the 4 MB endpoint limit (2 MB for /users/track/bulk), retryable: false, source: https://www.braze.com/docs/api/basics/}
+- {status: 415, title: Unsupported Media Type, detail: Missing or incorrect Content-Type header, retryable: false}
+- {status: 429, title: Rate Limited, detail: Rate limit exceeded for this endpoint or the shared workspace pool, retryable: true, retry_guidance: 'Read X-RateLimit-Reset and back off to that epoch second; see rate-limits/braze-rate-limits.yml'}
+- {status: 500, title: Internal Server Error, detail: Braze could not process the request, retryable: true, retry_guidance: Retry with exponential backoff}
+spec_coverage:
+  operations: 95
+  operations_declaring_4xx: 95
+  operations_declaring_5xx: 95
+  note: >-
+    Every operation in every harvested spec references the same six shared component
+    responses (BadRequest/Unauthorized/Forbidden/NotFound/TooManyRequests/InternalServerError)
+    bound to one Error schema. Coverage is uniform, but 413 and 415 — both documented — are
+    missing from the spec entirely.

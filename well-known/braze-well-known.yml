@@ -1,0 +1,81 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTP probe of every apis.yml host and every OpenAPI servers[] host
+note: >-
+  Only https://www.braze.com/.well-known/security.txt returned a real document. The
+  marketing host (Next.js) answers 404/500 with an HTML shell for the other paths, and the
+  REST hosts (rest.iad-01.braze.com ...) answer {"message":"Invalid URL"} with a 404 for
+  every /.well-known/ path. The MCP host does serve RFC 9728 OAuth protected-resource
+  metadata, which is a real machine-readable well-known document.
+hosts:
+- host: https://www.braze.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: braze-security.txt
+    note: RFC 9116; Contact mailto:security@braze.com, Policy https://hackerone.com/braze_inc
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 500
+    note: HTML error shell, not a document
+  - path: /.well-known/agent-card.json
+    status: 500
+    note: HTML error shell, not a document
+  - path: /.well-known/agent.json
+    status: 500
+    note: HTML error shell, not a document
+- host: https://mcp.braze.com
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: braze-mcp-oauth-protected-resource.json
+    note: RFC 9728; resource https://mcp.braze.com/mcp, scopes mcp:tools mcp:resources
+  - path: /.well-known/oauth-protected-resource/mcp
+    status: 200
+    note: same document, resource-scoped path advertised in the 401 WWW-Authenticate header
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    note: delegated to https://dashboard.braze.com
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://mcp.braze.eu
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    note: EU twin; resource https://mcp.braze.eu/mcp, same authorization server
+- host: https://dashboard.braze.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: braze-dashboard-oauth-authorization-server.json
+    note: RFC 8414; the authorization server for the Braze MCP server
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: HTML login shell, NOT an OIDC discovery document — treated as a miss
+  - path: /.well-known/agent-card.json
+    status: 401
+- host: https://rest.iad-01.braze.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: https://www.braze.com/docs
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404

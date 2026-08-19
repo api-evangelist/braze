@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze User Data API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Track Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/users/track",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to record custom events, purchases, and update user profile attributes. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.track` permission.\n\n**Note:** Braze processes the data passed via API at face value and customers should only pass deltas (changing data) to minimize unnecessary data point consumption. To read more, refer to [Data points](https://www.braze.com/docs/user_guide/onboarding_with_braze/data_points#data-points).\n\nCustomers using the A"
+        },
+        {
+          "info": {
+            "name": "Update User Alias",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/users/alias/update",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to update existing user aliases. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.alias.update` permission.\n\nUp to 50 user aliases may be specified per request.\n\nThis endpoint does not guarantee the sequence of `alias_updates` objects being updated.\n\nUpdating a user alias requires `alias_label`, `old_alias_name`, and `new_alias_name` to be included in the update user alias object. If there is no user alias associated with the `alias_label` and `old"
+        },
+        {
+          "info": {
+            "name": "Create New User Aliases",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/users/alias/new",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to add new user aliases for existing identified users, or to create new unidentified users. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.alias.new` permission.\n\nUp to 50 user aliases may be specified per request.\n\n**Adding a user alias for an existing user** requires an `external_id` to be included in the new user alias object. If the `external_id` is present in the object but there is no user with that `external_id`, the alias will not be adde"
+        },
+        {
+          "info": {
+            "name": "Delete Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/users/delete",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to delete any user profile by specifying a known user identifier. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.delete` permission.\n\nUp to 50 `external_ids`, `user_aliases`, or `braze_ids` can be included in a single request. Only one of `external_ids`, `user_aliases`, or `braze_ids` can be included in a single request.\n\n> **Important:** Deleting user profiles cannot be undone. It will permanently remove users which may cause discrepancies in yo"
+        },
+        {
+          "info": {
+            "name": "Identify Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/users/identify",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to identify an unidentified (alias-only) user. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.identify` permission.\n\nCalling `/users/identify` combines the alias-only profile with the identified profile and removes the alias-only profile.\n\nIdentifying a user requires an `external_id` to be included in the `aliases_to_identify` object. If there is no user with that `external_id`, the `external_id` will simply be added to the aliased user's record,"
+        },
+        {
+          "info": {
+            "name": "Merge Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/users/merge",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to merge one user into another user. \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.merge` permission.\n\nUp to 50 merges may be specified per request. This endpoint is asynchronous.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 20,000 requests per minute to this endpoint. This rate limit is shared with the `/users/delete`, `/users/alias/new`, `/users/identify`, and `/users/al"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,155 @@
+# Braze
+
+> Rewrite the rules of customer engagement with AI
+> From cross-channel messaging and journey orchestration to Al-powered decisioning and optimization, Braze is a customer engagement platform that empowers brands to Be Absolutely Engaging.™
+
+# Pages
+
+- [Braze Learning Resource](https://www.braze.com/braze-learning-resource)
+- [Home](https://www.braze.com/)
+- [Value of Braze](https://www.braze.com/value-of-braze)
+- [The Braze Platform](https://www.braze.com/product)
+- [Get Started](https://www.braze.com/get-started)
+- [About](https://www.braze.com/company)
+- [Partners](https://www.braze.com/partners)
+
+## Product
+
+- [Trust at Braze](https://www.braze.com/product/trust)
+- [BrazeAI™ Agents](https://www.braze.com/product/ai-agents)
+- [LINE](https://www.braze.com/product/line)
+- [Product Overview](https://www.braze.com/product/overview)
+- [In-app Messaging Platform (SEO)](https://www.braze.com/product/mobile-app-messaging/in-app-messaging-platform)
+- [BrazeAI™ Decisioning Studio](https://www.braze.com/product/brazeai-decisioning-studio)
+- [Creative Studio](https://www.braze.com/product/creative-studio)
+- [BrazeAI™](https://www.braze.com/product/brazeai)
+- [Omnichannel Marketing Platform (SEO)](https://www.braze.com/product/cross-channel-messaging/omnichannel-marketing-platform)
+- [WhatsApp](https://www.braze.com/product/whatsapp)
+- [Braze Content Cards](https://www.braze.com/product/content-cards)
+- [Braze Email](https://www.braze.com/product/email)
+- [Braze SMS](https://www.braze.com/product/sms)
+- [Feature Flags](https://www.braze.com/product/feature-flags)
+- [Reporting & Analytics](https://www.braze.com/product/reporting-analytics)
+- [Journey Orchestration](https://www.braze.com/product/journey-orchestration)
+- [Mobile App Messaging](https://www.braze.com/product/mobile-app-messaging)
+- [Web Messaging](https://www.braze.com/product/web-messaging)
+- [Media Audience Sync](https://www.braze.com/product/audience-sync)
+- [Cross-channel Messaging](https://www.braze.com/product/cross-channel-messaging)
+- [Braze Data Platform](https://www.braze.com/product/braze-data-platform)
+
+## Industries
+
+- [Gaming](https://www.braze.com/solutions/gaming)
+- [Restaurants](https://www.braze.com/solutions/qsr)
+- [Luxury](https://www.braze.com/solutions/luxury)
+- [Sports](https://www.braze.com/solutions/sports)
+- [Media & Entertainment](https://www.braze.com/solutions/media-entertainment)
+- [Financial Services](https://www.braze.com/solutions/financial-services)
+- [Travel & Hospitality](https://www.braze.com/solutions/travel-hospitality)
+- [On-Demand](https://www.braze.com/solutions/on-demand)
+
+## Use Cases
+
+- [Boost Productivity](https://www.braze.com/solutions/boost-productivity)
+- [Optimize Onboarding](https://www.braze.com/solutions/optimize-onboarding)
+- [Increase Engagement](https://www.braze.com/solutions/increase-engagement)
+- [Reduce Churn](https://www.braze.com/solutions/reduce-churn)
+- [Improve Acquisition](https://www.braze.com/solutions/improve-acquisition)
+
+## Personas
+
+- [Braze For Startups](https://www.braze.com/braze-for-startups)
+
+## Blog Posts
+
+- [Braze Learning Supports Laid-Off Community With Free Certifications](https://www.braze.com/resources/articles/braze-learning-supports-laid-off-community-with-free-certifications)
+- [Braze vs Salesforce: Which customer engagement platform is right for your business?](https://www.braze.com/resources/articles/braze-vs-salesforce-comparison)
+- [Braze vs Adobe: Which customer engagement platform is right for your brand?](https://www.braze.com/resources/articles/braze-vs-adobe-comparison)
+
+## Frequently Asked Questions
+
+[What are BrazeAI™ Agents?](https://www.braze.com/product/ai-agents): BrazeAI™ Agents are autonomous AI assistants built into the Braze platform that help marketers work faster and smarter. They are highly configurable and can be deployed across the Braze platform, using your data and real-time context to automate tasks, personalize campaigns at scale, and help improve results across channels like email, push, in-app, and more.
+
+[What types of agents does Braze offer?](https://www.braze.com/product/ai-agents): Braze offers three complementary types of agents. Pre-built agents are ready to use for common marketing tasks like content optimization and campaign QA. Custom agents are created in the BrazeAI Agent Console™, and let you design task-specific, LLM-powered assistants that plug in directly in your Braze workflows. AI decisioning agents, available through BrazeAI Decisioning Studio™, make decisions at the individual customer level to optimize any business KPI. These agents can personalize channel, offer, message, creative, timing, frequency and more. They autonomously experiment and continuously learn from every customer interaction.
+
+[How does the BrazeAI Agent Console™ work?](https://www.braze.com/product/ai-agents): The Agent Console is an intuitive dashboard where marketers can create and manage custom agents without coding. You define the task, choose an AI model, and provide instructions (in the form of a prompt) for the agent. Agents are then invoked in either catalogs or canvases, to enrich data or personalize experiences, respectively. Currently, we are seeing customers use BrazeAI™ Agents to score leads, translate and localize content, and adapt communications based on customer behavior, and we are excited to see how else you put BrazeAI™ Agents to work for you!
+
+[How are custom agents different from conventional marketing automation?](https://www.braze.com/product/ai-agents): While traditional marketing automation runs on fixed rules and workflows defined in advance, custom agents bring AI models directly into Braze to generate outputs and route customers dynamically through canvases. Instead of just following if/then logic, agents can enrich data, personalize content, and adapt to customer behavior in real time, giving marketers more flexibility and intelligence than conventional automation alone.
+
+[What are common use cases for BrazeAI™ Agents?](https://www.braze.com/product/ai-agents): Brands can use BrazeAI™ Agents to tackle a range of marketing challenges, from driving conversions with personalized recommendations to reducing churn through timely offers, while also improving efficiency with tasks like scaling localization, enriching customer profiles, and automating campaign QA checks. Because agents can be shaped to fit each brand’s needs, they make it possible to scale everyday tasks and complex personalization in ways never before possible with Braze.
+
+[Which AI models power BrazeAI™ Agents?](https://www.braze.com/product/ai-agents): BrazeAI™ Agents support leading large language models from providers like OpenAI, Anthropic, and Google Gemini, giving marketers flexibility to choose their preferred LLM. AI decisioning agents rely on reinforcement learning, a type of AI best-fit for marketing personalization that optimizes customer and business value. With the Braze Model Context Protocol (MCP), you can also securely connect external AI tools to your Braze data for more advanced use cases.
+
+[What learning and development benefit opportunities does Braze offer to employees?](https://www.braze.com/company/careers/how-we-hire): We have many different learning and development initiatives and programs in place to ensure that employees can boost their skills and advance their careers, including our global learning stipend—check out the benefits section below for more details.
+
+[Does Braze use AI in the recruitment process?](https://www.braze.com/company/careers/how-we-hire): At Braze, we’re committed to a fair and transparent candidate experience. To help our recruitment teams focus on what matters most — the person behind each application — we use AI-assisted tools at certain stages of our recruitment process. This includes using AI to analyze the experience, skills and qualifications in your application materials to help with screening and prioritizing candidates. Such screening may amount to a form of solely automated decision-making. We also use AI for administrative support, like scheduling and recording interviews and summarizing interview notes. Our recruiting teams remain responsible for all hiring decisions and are involved throughout the process. Depending on where you are located, you may have the right to request further information about how AI is used in our recruitment process, to opt out of AI-assisted review, to request a manual review of any decision made or to contest a decision. Please contact us at talentdata.privacy@braze.com for any requests or questions.
+
+[How do I know if a Braze recruiter is real?](https://www.braze.com/company/careers/how-we-hire): Braze is aware of fraudulent recruitment activity in which bad actors may impersonate Braze recruiters and employees to deceive job seekers. These schemes are designed to obtain personal information or money, and are not affiliated with Braze in any way. BRAZE WILL NEVER Initiate contact via WhatsApp, Telegram, text message, or unsolicited phone calls as part of a recruiting process. Request payment, gift cards, banking details, or sensitive personal information (e.g. Social Security numbers or government IDs) during the interview process. Only once you receive and accept a job offer, you'll get requests for ID and personal details. For certain roles, you may be asked to verify your identity during the interview process, but that will specifically be requested through our Applicant Tracking System, Greenhouse. Ask you to purchase equipment or make any upfront payments. Contact you from a personal email address — all legitimate Braze recruiter communications come from a @braze.com email address. Use Crypto Currency to transact in forms of payment or purchases KNOWN FRAUD TACTICS Fake LinkedIn profiles WhatsApp outreach Telegram outreach Unsolicited texts & calls Fake Braze Website While you'll find our roles posted on many platforms (e.g., LinkedIn, Glassdoor, Indeed, etc.), you'll always be able to verify the legitimacy of Braze roles on our official careers website. If you believe you have been targeted by recruitment fraud, please report it to talentfraud@braze.com.
+
+[Who is Braze built for?](https://www.braze.com/pricing): Braze supports companies at every stage of growth including startups launching their first engagement programs, to scaling companies meeting expansive growth, to large global enterprises looking for the leading customer engagement platform.
+
+[What will my contract with Braze look like?](https://www.braze.com/pricing): Your Braze contract will be comprised of a Platform Edition tailored to your business needs, Monthly Active Users and Profiles, an allotment of Action Credits to power messaging and AI features, and CX Services to support your use of the platform. We also offer a variety of add-on SKUs across our Braze Data Platform and BrazeAITM product suite so you can customize your contract and unlock other valuable features within Braze.
+
+[What is a Monthly Active User? What is a Profile? Why are they important?](https://www.braze.com/pricing): A Monthly Active User (MAU) is any unique person who records a session on your Braze-connected app or website during a calendar month. You decide who counts: you can track every visitor if you value anonymous traffic, or limit tracking to only logged-in users. A Profile is the digital record of that person. It stores the user traits and behaviors that allow you to send truly personalized messages. Because your total user base is typically larger than your active monthly audience, every MAU in your plan includes a large allotment of User Profiles. This allows you to store data and re-engage customers with the right message, even if they haven't visited your app or website in a while.
+
+[What products and channels does Action Credits give me access to?](https://www.braze.com/pricing): Braze Action Credits unlock the flexible use of any of the following features throughout your contract: Email, SMS/MMS, RCS, WhatsApp, LINE, KakaoTalk, Content Cards, Banners, Message Archiving, Audience Sync, Webhooks, and BrazeAI Agent Console™. New and exciting features may be added to Action Credits in the future, giving you instant access to use them upon release.
+
+[How do Action Credits work?](https://www.braze.com/pricing): Think of Action Credits as a single, flexible currency for your Braze account. Instead of purchasing fixed quantities for individual products, you buy one pool of credits as part of your contract. You can then use those credits across different channels and features based on your engagement strategy. Each action consumes a different number of credits—for example, sending an SMS may cost 1 credit, while a WhatsApp message may cost 5. Because all usage draws from the same pool, you can easily shift spend (e.g., from Email to Agent Console) without needing to contract a new product. Credits give you the flexibility to adapt your strategy as your customer needs change and your business strategy evolves.
+
+[How will I be able to track my usage?](https://www.braze.com/pricing): Braze has comprehensive reporting and billing dashboards to help you monitor performance throughout your contract.
+
+[What kind of support will I get?](https://www.braze.com/pricing): Braze offers a variety of Support and Service plans to fit customer needs including 24x7x365 Customer support for the world's leading brands. From initial implementation to long-term strategy, we deliver support and partnership, wherever you need it, when you need it. Check out our Support & Services to learn more: https://www.braze.com/customer-support-services
+
+[Does Braze offer a free plan?](https://www.braze.com/pricing): Braze does not offer a free plan at this time. Companies can still explore the platform through trials, startup programs, and other tailored entry plans. Speak to your account manager or contact us for more details.
+
+[What is the Braze Creative Studio?](https://www.braze.com/product/creative-studio): The Creative Studio is a built-in hub for creative tools designed to help you move from idea to execution faster. It serves as a single, centralized place for your media library, templates, content blocks, brand guidelines, calendar, and dynamic content feeds. The Creative Studio is designed to be flexible, so you can pull in creative assets and content from a wide variety of sources and only use the specific features you need.
+
+[How do the Figma and Canva integrations work?](https://www.braze.com/product/creative-studio): These integrations bridge the gap between design and delivery by connecting your creative tools directly to Braze. With the Figma integration, you can send designs to your Braze Media Library in minutes. The Canva integration lets you sync finished visuals and full emails to your Media Library in seconds. Both integrations ensure your marketing team is always working with the latest approved assets—no manual downloads, re-uploads, or developer tickets required.
+
+[How does the Creative Studio speed up creative execution?](https://www.braze.com/product/creative-studio): The Creative Studio eliminates the "asset wrangling" bottleneck by streamlining the path from design to deployment. Instead of manual handoffs, a designer can update a banner in Figma or Canva and sync it directly to the Media Library, ensuring the latest creative is ready for use without any reworks. Marketing managers can then make quick brand updates to cross-channel templates and content blocks simultaneously, accelerating production for the entire team. The Creative Studio also provides a single place to manage connected content, catalogs, and promotion codes, ensuring that enriching campaigns with dynamic content is seamless and accurate.
+
+[What resources and experts does Braze have to help brands with creativity?](https://www.braze.com/product/creative-studio): At 427° Celsius, metals melt and transform. At Braze, our Innovation Lab is where data and creativity combine to forge something extraordinary. In 2023, we launched the 427° Innovation Lab, a dedicated space where data and creativity collide to forge truly extraordinary brand moments. To inspire your next big move, we offer a curated library of creative case studies, deep-dive blogs, and exclusive playbooks—like our latest guide, Locking in Loyalty. The Lab helps you move beyond basic executions to build ambitious, high-performing experiences that fully leverage the power of the Creative Studio. Visit: https://www.braze.com/427-innovation-lab
+
+[What is the Braze Creative Studio?](https://www.braze.com/product/loc-testing-email): The Creative Studio is a built-in hub for creative tools designed to help you move from idea to execution faster. It serves as a single, centralized place for your media library, templates, content blocks, brand guidelines, calendar, and dynamic content feeds. The Creative Studio is designed to be flexible, so you can pull in creative assets and content from a wide variety of sources and only use the specific features you need.
+
+[How do the Figma and Canva integrations work?](https://www.braze.com/product/loc-testing-email): These integrations bridge the gap between design and delivery by connecting your creative tools directly to Braze. With the Figma integration, you can send designs to your Braze Media Library in minutes. The Canva integration lets you sync finished visuals and full emails to your Media Library in seconds. Both integrations ensure your marketing team is always working with the latest approved assets—no manual downloads, re-uploads, or developer tickets required.
+
+[How does the Creative Studio speed up creative execution?](https://www.braze.com/product/loc-testing-email): The Creative Studio eliminates the "asset wrangling" bottleneck by streamlining the path from design to deployment. Instead of manual handoffs, a designer can update a banner in Figma or Canva and sync it directly to the Media Library, ensuring the latest creative is ready for use without any reworks. Marketing managers can then make quick brand updates to cross-channel templates and content blocks simultaneously, accelerating production for the entire team. The Creative Studio also provides a single place to manage connected content, catalogs, and promotion codes, ensuring that enriching campaigns with dynamic content is seamless and accurate.
+
+[What resources and experts does Braze have to help brands with creativity?](https://www.braze.com/product/loc-testing-email): At 427° Celsius, metals melt and transform. At Braze, our Innovation Lab is where data and creativity combine to forge something extraordinary. In 2023, we launched the 427° Innovation Lab, a dedicated space where data and creativity collide to forge truly extraordinary brand moments. To inspire your next big move, we offer a curated library of creative case studies, deep-dive blogs, and exclusive playbooks—like our latest guide, Locking in Loyalty. The Lab helps you move beyond basic executions to build ambitious, high-performing experiences that fully leverage the power of the Creative Studio.
+
+[What makes Braze the best option for startups and small teams?](https://www.braze.com/braze-for-startups): Braze works well for startups because it delivers enterprise-level customer engagement in a platform that is easy for small teams to use. Braze lets you launch campaigns fast, personalize with real-time data, and drive ROI without adding complexity, ideal for lean marketing teams moving quickly.
+
+[Is Braze affordable for early-stage, VC-backed startups?](https://www.braze.com/braze-for-startups): Braze is used by hundreds of startups globally that leverage our friendly pricing model to get started quickly and grow with increasing efficiency over time. Our VC program takes it one step further by offering free access for Startups backed by our partners. Contact us using the form below to learn more!
+
+[How does Braze help small businesses drive ROI?](https://www.braze.com/braze-for-startups): Startups typically see higher ROI with Braze because the platform can increase conversions, retention, and engagement through real-time personalization and AI optimization. It delivers enterprise outcomes in a pricing model that works for growing companies.
+
+[Is Braze too complex for an early-stage company?](https://www.braze.com/braze-for-startups): Braze is not too complex for early-stage companies; it’s designed to be simple to start and powerful as you scale. Most teams use Braze without engineering support, thanks to intuitive, no-code tools and real-time triggers.
+
+[How much technical work is required to get started?](https://www.braze.com/braze-for-startups): Braze offers lightweight SDKs, modern APIs, and turnkey integrations, making the setup process simple. Startups can get up and running with a few hours or days of work.
+
+[How does Braze support small businesses during onboarding?](https://www.braze.com/braze-for-startups): Braze supports small teams with guided onboarding, dedicated experts, and hands-on help to launch quickly. This ensures early-stage companies can move fast, build campaigns confidently, and get value from the platform right away.
+
+[How is Braze different from other messaging and customer engagement platforms?](https://www.braze.com/braze-for-startups): Braze excels at speed, real-time personalization, and cross-channel orchestration powered by BrazeAI, making it the best platform for fast growing startups that prioritize rapid execution, high ROI, and an agile marketing stack. Backed by our award-winning Success and Support teams and the Bonfire Community, Braze gives startups the foundation to scale with confidence.
+
+[How can Braze help us keep fans engaged during the off season?](https://www.braze.com/solutions/sports): The off-season is where fan loyalty is either quietly built or quietly lost. Braze helps sports organizations run personalized, cross-channel fan journeys year-round: exclusive content drops, player updates, merchandise recommendations, and early ticket access, so the relationship holds whether the season just ended in a championship or a rebuild. The organizations that show up in the quiet months don't have to work as hard to win fans back when the schedule resumes.
+
+[How does BrazeAI™ support journey orchestration?](https://www.braze.com/product/journey-orchestration): BrazeAI™ helps marketers move faster and deliver more relevant journeys across the customer lifecycle. Our AI features handle the heavy lifting—predictive segmentation, personalized content creation, and AI decisioning—so you can optimize message timing, offers, channels, frequency, and more at a 1:1 level.
+
+[Can you experiment with customer journeys in Braze?](https://www.braze.com/product/journey-orchestration): Yes, Braze enables flexible A/B/n testing at the journey, path, or message level. Marketers can toggle experiments on and off to compare variants and automatically optimize for the best outcomes using BrazeAI™.
+
+[What types of real-time triggers can be used in Braze journeys?](https://www.braze.com/product/journey-orchestration): Journeys are triggered based on customer behaviors (such as purchases or sign-ups), cross-channel interactions, and real-time data updates via API. Braze processes these events with sub-second latency to ensure your engagement hits in the exact moment at scale.
+
+[How does Braze ensure consistency across channels?](https://www.braze.com/product/journey-orchestration): Braze maintains cross-channel consistency through a vertically integrated stack that unifies data, segmentation, personalization, and analytics. Because every channel operates from the same real-time foundation, you can eliminate silos and launch new channels faster while ensuring a connected experience for every customer.
+
+[How does Braze help consolidate messaging channels?](https://www.braze.com/product/cross-channel-messaging): Braze eliminates siloed point solutions by centralizing campaign management, reducing redundancy, and unifying workflows for greater efficiency, agility, and cost savings.
+
+[What channels can be managed with Braze Cross-Channel Messaging?](https://www.braze.com/product/cross-channel-messaging): Marketers can run campaigns across email, SMS, mobile push, in-app, WhatsApp, web, and connect owned channels with paid media platforms like Google, Meta, TikTok, and more.
+
+[How does Braze optimize channel delivery?](https://www.braze.com/product/cross-channel-messaging): Braze uses AI and engagement history to deliver messages on the channel where each customer is most likely to respond, improving open rates, conversions, and ROI.
+
+[How does Braze help with channel frequency management?](https://www.braze.com/product/cross-channel-messaging): Braze provides channel frequency capping, allowing marketers to set custom rules that prevent over-messaging and ensure a better customer experience.
+
+[Can Braze integrate paid media into cross-channel campaigns?](https://www.braze.com/product/cross-channel-messaging): Absolutely. Braze dynamically syncs first-party customer data to suppress wasted spend and optimize paid media retargeting, acquisition, and lookalike campaigns.
+
+[What role does BrazeAI™ play in cross-channel messaging?](https://www.braze.com/product/cross-channel-messaging): BrazeAI™ assists in creating and personalizing content, generating copy and creative, and determining the best channel and timing for each customer interaction.

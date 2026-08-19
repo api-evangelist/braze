@@ -1,0 +1,172 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Export > KPI API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Export > KPI",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export Daily New Users by Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/kpi/new_users/data_series",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "length",
+                "value": "14",
+                "type": "query",
+                "description": "(Required) Integer\n\nMaximum number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive)."
+              },
+              {
+                "name": "ending_at",
+                "value": "2018-06-28T23:59:59-5:00",
+                "type": "query",
+                "description": "(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data series should end. Defaults to time of the request."
+              },
+              {
+                "name": "app_id",
+                "value": "{{app_identifier}}",
+                "type": "query",
+                "description": "(Optional) String\n\nApp API identifier retrieved from **Settings > Setup and Testing > API Keys**. If excluded, results for all apps in workspace will be returned."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve a daily series of the total number of new users on each date. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `app_id` can be found at **Developer Console** > **API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `kpi.new_users.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https:"
+        },
+        {
+          "info": {
+            "name": "Export Daily Active Users by Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/kpi/dau/data_series",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "length",
+                "value": "10",
+                "type": "query",
+                "description": "(Required) Integer\n\nMaximum number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive)."
+              },
+              {
+                "name": "ending_at",
+                "value": "2018-06-28T23:59:59-5:00",
+                "type": "query",
+                "description": "(Optional)  Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\nDate on which the data series should end. Defaults to time of the request."
+              },
+              {
+                "name": "app_id",
+                "value": "{{app_identifier}}",
+                "type": "query",
+                "description": "(Optional) String\n\nApp API identifier retrieved from **Settings > Setup and Testing > API Keys**. If excluded, results for all apps in workspace will be returned."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve a daily series of the total number of unique active users on each date. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), API Keys can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `kpi.dau.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https:"
+        },
+        {
+          "info": {
+            "name": "Export Monthly Active Users for Last 30 Days",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/kpi/mau/data_series",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "length",
+                "value": "7",
+                "type": "query",
+                "description": "(Required) Integer\n\nMaximum number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive)."
+              },
+              {
+                "name": "ending_at",
+                "value": "2018-06-28T23:59:59-05:00",
+                "type": "query",
+                "description": "(Optional)  Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data series should end. Defaults to time of the request."
+              },
+              {
+                "name": "app_id",
+                "value": "{{app_identifier}}",
+                "type": "query",
+                "description": "(Optional) String\n\nApp API identifier retrieved from **Settings > Setup and Testing > API Keys**. If excluded, results for all apps in workspace will be returned."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve a daily series of the total number of unique active users over a 30-day rolling window. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), API Keys can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `kpi.mau.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rat"
+        },
+        {
+          "info": {
+            "name": "Export KPIs for Daily App Uninstalls by Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/kpi/uninstalls/data_series",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "length",
+                "value": "14",
+                "type": "query",
+                "description": "(Required) Integer\n\nMaximum number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive)."
+              },
+              {
+                "name": "ending_at",
+                "value": "2018-06-28T23:59:59-5:00",
+                "type": "query",
+                "description": "(Optional)  Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data series should end. Defaults to time of the request."
+              },
+              {
+                "name": "app_id",
+                "value": "{{app_identifier}}",
+                "type": "query",
+                "description": "(Optional) String\n\nApp API identifier retrieved from **Settings > Setup and Testing > API Keys**. If excluded, results for all apps in workspace will be returned."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve a daily series of the total number of uninstalls on each date. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), API Keys can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `kpi.uninstalls.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

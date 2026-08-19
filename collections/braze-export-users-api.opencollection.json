@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Export > Users API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Export > Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export User Profile by Identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/users/export/ids",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to export data from any user profile by specifying a user identifier. \n  \n\nUp to 50 `external_ids` or `user_aliases` can be included in a single request. Should you want to specify `device_id` or `email_address` only one of either identifier can be included per request.\n\nTo use this endpoint, youll need to generate an API key with the `users.export.ids` permission.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after August 16, 2021, we apply a rate limit of 2,5"
+        },
+        {
+          "info": {
+            "name": "Export User Profile by Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/users/export/segment",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to export all the users within a segment. \n  \n\nUser data is exported as multiple files of user JSON objects separated by new lines (i.e., one JSON object per line).\n\nData is exported to an automatically generated URL, or to an S3 bucket if this integration is already set up.\n\nThis endpoint is currently not supported by Google Cloud Storage.\n\nNote that a company may run at most one export per segment using this endpoint at a given time. Wait for your export to complete before "
+        },
+        {
+          "info": {
+            "name": "Export User Profile by Global Control Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/users/export/global_control_group",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to export all users within a Global Control Group. \n  \n\nUser data is exported as multiple files of user JSON objects separated by new lines (i.e., one JSON object per line).\n\n> Warning: Individual custom attributes cannot be exported. However, all custom attributes can be exported by including custom_attributes in the fields_to_export array (e.g.,\\[first_name, email, custom_attributes\\]). \n  \n\nTo use this endpoint, youll need to generate an API key with the `users.export.glob"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

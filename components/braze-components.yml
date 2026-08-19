@@ -1,0 +1,59 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.braze.com/docs/developer_guide/ (in-app messages, content cards, banners),
+  https://www.braze.com/docs/user_guide/message_building_by_channel/email/preference_center/,
+  and the braze-inc GitHub organization
+note: >-
+  Braze's client-side surface is unusual: the "components" are message-rendering primitives
+  the SDK draws into the host app or page, not a widget/element library a developer composes
+  from. Every family below is loaded by the Braze SDK recorded in packages/, and each can be
+  either fully prebuilt (Braze renders it) or headless (the app renders from the data).
+loaders:
+- {name: '@braze/web-sdk', registry: npm, version: 6.10.2, note: 'the loader for every web-side component below'}
+- {name: 'com.braze:android-sdk-ui', registry: maven-central, version: 43.0.0}
+- {name: braze-swift-sdk, registry: swift-package-manager, version: 18.1.0}
+families:
+- name: In-app messages
+  kind: prebuilt-and-headless
+  docs: https://www.braze.com/docs/developer_guide/in_app_messages/
+  surfaces: [slideup, modal, full-screen, HTML in-app message]
+  customization: >-
+    Prebuilt native templates with styling hooks, or fully custom HTML/CSS/JS in-app
+    messages that call back into the SDK through a javascript bridge.
+  templates_repo: https://github.com/braze-inc/in-app-message-templates
+- name: Content Cards
+  kind: prebuilt-and-headless
+  docs: https://www.braze.com/docs/developer_guide/content_cards/
+  surfaces: [card feed, custom-rendered cards]
+  customization: >-
+    A prebuilt feed UI on each platform, plus a data-only mode where the app subscribes to
+    the card list and renders its own components.
+- name: Banners
+  kind: placement
+  docs: https://www.braze.com/docs/developer_guide/banners/
+  user_docs: https://www.braze.com/docs/user_guide/message_building_by_channel/banners/
+  note: >-
+    A named placement the SDK fills with HTML content — the closest thing Braze ships to a
+    drop-in embeddable slot.
+- name: Preference Center
+  kind: hosted-page
+  docs: https://www.braze.com/docs/user_guide/message_building_by_channel/email/preference_center/
+  api: 'GET /preference_center_v1/{PreferenceCenterExternalID}/url/{UserID}'
+  spec: openapi/braze-preference-center-api-openapi.yml
+  note: >-
+    Braze hosts and renders the page; the API returns a per-user URL to link to. This is the
+    only Braze-hosted end-user surface with an API that mints its address.
+- name: Google Tag Manager templates
+  kind: tag-template
+  repos:
+  - https://github.com/braze-inc/braze-gtm-initialization
+  - https://github.com/braze-inc/braze-gtm-actions
+  note: >-
+    Community Template Gallery templates that initialize the Web SDK and fire Braze actions
+    without hand-written JavaScript.
+- name: Push, email, SMS/MMS, RCS, WhatsApp, LINE, KakaoTalk
+  kind: channel-renderer
+  note: >-
+    Rendered by the OS or the carrier/platform, not by a Braze component. Listed only so
+    this file is not misread as the full channel inventory.

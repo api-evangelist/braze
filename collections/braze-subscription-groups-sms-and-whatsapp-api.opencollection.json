@@ -1,0 +1,154 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Subscription Groups > SMS and WhatsApp API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscription Groups > SMS and WhatsApp",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List User's  Subscription Group Status - SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/subscription/status/get",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "subscription_group_id",
+                "value": "{{subscription_group_id}}",
+                "type": "query",
+                "description": "(Required) String\n\nThe `id` of your subscription group."
+              },
+              {
+                "name": "external_id",
+                "value": "{{external_identifier}}",
+                "type": "query",
+                "description": "(Required*) String\n\nThe `external_id` of the user (must include at least one and at most 50 `external_ids`).\n\nWhen both an `external_id` and `phone` are submitted, only the external_id(s) provided will be applied to the result query.\n"
+              },
+              {
+                "name": "phone",
+                "value": "+11112223333",
+                "type": "query",
+                "description": "(Required*) String in [E.164](https://en.wikipedia.org/wiki/E.164) format\n\nThe phone number of the user (must include at least one phone number and at most 50 phone numbers)."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to get the subscription state of a user in a subscription group. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.status.get` permission.\n\nThese groups will be available on the **Subscription Group** page. The response from this endpoint will include the external ID and either subscribed, unsubscribed, or unknown for the specific subscription group requested in the API call. This can be used to update the subscription group state in subseque"
+        },
+        {
+          "info": {
+            "name": "List User's Subscription Group - SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/subscription/user/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "external_id",
+                "value": "{{external_id}}",
+                "type": "query",
+                "description": "(Required*) String\n\nThe `external_id` of the user (must include at least one and at most 50 `external_ids`)."
+              },
+              {
+                "name": "limit",
+                "value": "100",
+                "type": "query",
+                "description": "(Optional) Integer\n\nThe limit on the maximum number of results returned. Default (and max) limit is 100."
+              },
+              {
+                "name": "offset",
+                "value": "1",
+                "type": "query",
+                "description": "(Optional) Integer\n\n\tNumber of templates to skip before returning the rest of the templates that fit the search criteria."
+              },
+              {
+                "name": "phone",
+                "value": "+11112223333",
+                "type": "query",
+                "description": "(Required*) String in [E.164](https://en.wikipedia.org/wiki/E.164) format\n\nThe phone number of the user. Must include at least one phone number (with a max of 50)."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to list and get the subscription groups of a certain user. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.groups.get` permission.\n\nIf there are multiple users (multiple external IDs) who share the same email address, all users will be returned as a separate user (even if they have the same email address or subscription group).\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented"
+        },
+        {
+          "info": {
+            "name": "Update User's Subscription Group Status - SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/subscription/status/set",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to batch update the subscription state of up to 50 users on the Braze dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.status.set` permission.\n\nYou can access a subscription groups `subscription_group_id` by navigating to the **Subscription Group** page.\n\nTip: When creating new users via the [/users/track](https://www.braze.com/docs/api/endpoints/user_data/post_user_track/) endpoint, you can set subscription groups within the user"
+        },
+        {
+          "info": {
+            "name": "Update User's Subscription Group Status V2",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/v2/subscription/status/set",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to batch update the subscription state of up to 50 users on the Braze dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.status.set` permission.\n\nYou can access a subscription groups `subscription_group_id` by navigating to the **Subscriptions Group** page.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after January 6, 2022, we apply a rate limit of 5,000 requests per minute shared across the `/subscription/status/set"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Export > Session Analytics API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Export > Session Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export App Sessions by Time",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/sessions/data_series",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "length",
+                "value": "14",
+                "type": "query",
+                "description": "(Required) Integer\n\nMax number of days before `ending_at` to include in the returned series - must be between 1 and 100 (inclusive)."
+              },
+              {
+                "name": "unit",
+                "value": "day",
+                "type": "query",
+                "description": "(Optional) String\n\nUnit of time between data points. Can be `day` or `hour`, defaults to `day`. "
+              },
+              {
+                "name": "ending_at",
+                "value": "2018-06-28T23:59:59-5:00",
+                "type": "query",
+                "description": "(Optional) Datetime (ISO 8601 string)\n\nDate on which the data series should end. Defaults to time of the request."
+              },
+              {
+                "name": "app_id",
+                "value": "{{app_identifier}}",
+                "type": "query",
+                "description": "(Optional) String\n\nApp API identifier retrieved from the **Settings > Setup and Testing > API Keys** to limit analytics to a specific app."
+              },
+              {
+                "name": "segment_id",
+                "value": "{{segment_identifier}}",
+                "type": "query",
+                "description": "(Required) String\n\nSee [Segment API identifier](https://www.braze.com/docs/api/identifier_types/). Segment ID indicating the analytics-enabled segment for which sessions should be returned."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve a series of the number of sessions for your app over a designated time period. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `segment_id` can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `sessions.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate li"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

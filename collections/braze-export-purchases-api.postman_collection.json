@@ -1,0 +1,1597 @@
+{
+  "item": [
+    {
+      "id": "e3f070b5-23f2-45d0-89f4-aff89201cf7c",
+      "name": "Export > Purchases",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "56b0625d-eaf6-4405-90ce-df7a3fd5be95",
+          "name": "Export Product IDs",
+          "request": {
+            "name": "Export Product IDs",
+            "description": {
+              "content": "> Use this endpoint to return a paginated lists of product IDs. \n  \n\nTo use this endpoint, youll need to generate an API key with the `purchases.product_list` permission.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/events/list` endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"products\": [\n    \"product_name\" (string), the name of the product\n  ],\n  \"message\": \"success\"\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchases",
+                "product_list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "(Optional) Integer\n\nThe page of your product list that you would like to view."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aec41835-b258-45bc-819f-7d2801bf008a",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "product_list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8750ea08-ca08-4a73-973f-7c5de1cd9ca1",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "product_list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3a5d7a7-39d6-4752-a094-b31c97fcc38c",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "product_list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf3f708e-4343-494e-974e-e0bb29dd3ba8",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "product_list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54c1144d-b138-457b-aaa5-e7d34604fb9f",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "product_list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3328c4b2-a90e-47bc-95d1-8ecdbcd42d23",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "product_list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1f86fc9-b4f2-4286-b18a-e0ba9598e4e7",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "product_list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3fe019d3-5879-4dc6-8863-8c70eabf67e3",
+          "name": "Export Number of Purchases",
+          "request": {
+            "name": "Export Number of Purchases",
+            "description": {
+              "content": "> Use this endpoint to return the total number of purchases in your app over a time range. \n  \n\nTo use this endpoint, youll need to generate an API key with the `purchases.quantity_series` permission.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/events/list` endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Example request\n\n```\ncurl --location --request GET 'https://rest.iad-01.braze.com/purchases/quantity_series?length=100' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n  \"data\" : [\n    {\n      \"time\" : (string) the date as ISO 8601 date,\n      \"purchase_quantity\" : (int) the number of items purchased in the time period\n      },\n    ...\n  ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchases",
+                "quantity_series"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ending_at",
+                  "value": "<string>",
+                  "description": "(Optional) Datetime (ISO 8601 string)\nDate on which the data series should end. Defaults to time of the request."
+                },
+                {
+                  "disabled": false,
+                  "key": "length",
+                  "value": "<integer>",
+                  "description": "(Required) Integer\nMaximum number of days before ending_at to include in the returned series. Must be between 1 and 100 (inclusive)."
+                },
+                {
+                  "disabled": false,
+                  "key": "unit",
+                  "value": "<integer>",
+                  "description": "(Optional) String\nUnit of time between data points. Can be `day` or `hour`, defaults to `day`. "
+                },
+                {
+                  "disabled": false,
+                  "key": "app_id",
+                  "value": "<string>",
+                  "description": "(Optional) String\nApp API identifier retrieved from the Settings > Setup and Testing > API Keys to limit analytics to a specific app."
+                },
+                {
+                  "disabled": false,
+                  "key": "product",
+                  "value": "<string>",
+                  "description": "(Optional) String\nName of product to filter response by. If excluded, results for all apps will be returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30f97140-a001-47bf-8413-2b1501f97f89",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "quantity_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a00937b8-2b30-4a88-b8b9-e93f414673db",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "quantity_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5931eeaf-0d24-4ca2-af76-595426e36687",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "quantity_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58ed57ed-110d-452e-832a-eeb1db7aaec8",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "quantity_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1547522b-b14b-41a5-9761-30cc1c3562ea",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "quantity_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93b4e1a2-680c-4edf-b6c9-11bb4e1c82c9",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "quantity_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5eb15c6-0e6f-4ec4-bdf6-5f0956daf3a9",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "quantity_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "171f2937-d266-422e-8f41-d4d7e6d60163",
+          "name": "Export Revenue Data by Time",
+          "request": {
+            "name": "Export Revenue Data by Time",
+            "description": {
+              "content": "> Use this endpoint to return the total money spent in your app over a time range. \n  \n\nTo use this endpoint, youll need to generate an API key with the `purchases.revenue_series` permission.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/events/list` endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Example request\n\n```\ncurl --location --request GET 'https://rest.iad-01.braze.com/purchases/revenue_series?length=100' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n  \"data\" : [\n    {\n      \"time\" : (string) the date as ISO 8601 date,\n      \"revenue\" : (int) amount of revenue for the time period\n      },\n    ...\n  ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchases",
+                "revenue_series"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ending_at",
+                  "value": "<string>",
+                  "description": "(Optional) Datetime (ISO 8601 string)\nDate on which the data series should end. Defaults to time of the request."
+                },
+                {
+                  "disabled": false,
+                  "key": "length",
+                  "value": "<integer>",
+                  "description": "(Required) Integer\nMaximum number of days before ending_at to include in the returned series. Must be between 1 and 100 (inclusive)."
+                },
+                {
+                  "disabled": false,
+                  "key": "unit",
+                  "value": "<integer>",
+                  "description": "(Optional) String\nUnit of time between data points. Can be `day` or `hour`, defaults to `day`. "
+                },
+                {
+                  "disabled": false,
+                  "key": "app_id",
+                  "value": "<string>",
+                  "description": "(Optional) String\nApp API identifier retrieved from the Settings > Setup and Testing > API Keys to limit analytics to a specific app."
+                },
+                {
+                  "disabled": false,
+                  "key": "product",
+                  "value": "<string>",
+                  "description": "(Optional) String\nName of product to filter response by. If excluded, results for all apps will be returned."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5a972675-7b83-41c5-b1ef-c7e6f1fa0d2c",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "revenue_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72143fe7-0fb5-4cf4-99ce-8d5afa30fe0e",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "revenue_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6947268-15c0-417c-bfe1-8c1b4834de44",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "revenue_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddd3adbd-57e8-4587-9a23-b497fc901fc1",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "revenue_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9826f069-76e7-420f-a8c0-effee2980dea",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "revenue_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c7a8108-730a-486a-aedb-74f905877ed5",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "revenue_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40173487-5114-43b4-87c7-1c40ab6df30d",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchases",
+                    "revenue_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ending_at",
+                      "value": "2018-06-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "100"
+                    },
+                    {
+                      "key": "unit",
+                      "value": "14"
+                    },
+                    {
+                      "key": "app_id",
+                      "value": "{{app_identifier}}"
+                    },
+                    {
+                      "key": "product",
+                      "value": "name"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rest.iad-01.braze.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6b1ca31b-83a7-4249-a7ea-e8042ccd184b",
+    "name": "Braze Export > Purchases API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. ",
+      "type": "text/plain"
+    }
+  }
+}

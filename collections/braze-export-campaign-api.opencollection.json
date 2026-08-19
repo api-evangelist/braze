@@ -1,0 +1,172 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Export > Campaign API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Export > Campaign",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export Campaign Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/campaigns/data_series",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "{{campaign_identifier}}",
+                "type": "query",
+                "description": "(Required) String\n\nSee [campaign API identifier](https://www.braze.com/docs/api/identifier_types/).\n\nThe `campaign_id` for API campaigns can be found at **Settings > Setup and Testing > API Keys** and the **Campaign Details** page within your dashboard, or you can use the [List campaigns endpoint](https://www.braze.com/docs/api/endpoints/export/campaigns/get_campaigns/)."
+              },
+              {
+                "name": "length",
+                "value": "7",
+                "type": "query",
+                "description": "(Required) Integer\n\nMax number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive)."
+              },
+              {
+                "name": "ending_at",
+                "value": "2020-06-28T23:59:59-5:00",
+                "type": "query",
+                "description": "(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data series should end. Defaults to time of the request."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve a daily series of various stats for a campaign over time. \n  \n\nData returned includes how many messages were sent, opened, clicked, or converted by messaging channel.\n\nTo use this endpoint, youll need to generate an API key with the `campaigns.data_series` permission.\n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `campaign_id` can be found at **Developer Console > API Settings**.\n\n## Rate limit\n\nWe apply the default Braze r"
+        },
+        {
+          "info": {
+            "name": "Export Campaign Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/campaigns/details",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "{{campaign_identifier}}",
+                "type": "query",
+                "description": "(Required) String\n\nSee [campaign API identifier](https://www.braze.com/docs/api/identifier_types/).\n\nThe `campaign_id` for API campaigns can be found on the **Settings > Setup and Testing > API Keys** and the campaign details page within your dashboard, or you can use the [Campaign List Endpoint](https://www.braze.com/docs/api/endpoints/export/campaigns/get_campaign_analytics/#campaign-list-endpoint)."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve relevant information on a specified campaign, which can be identified by the `campaign_id`. \n  \n\nTo use this endpoint, youll need to generate an API key with the `campaign.details` permission.\n\nIf you want to retrieve Canvas data, refer to the [Canvas Details](https://www.braze.com/docs/api/endpoints/export/canvas/get_canvas_details/) endpoint.\n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `campaign_id` can be found at **De"
+        },
+        {
+          "info": {
+            "name": "Export Campaign List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/campaigns/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "(Optional) Integer\n\nThe page of campaigns to return, defaults to 0 (returns the first set of up to 100)."
+              },
+              {
+                "name": "include_archived",
+                "value": "",
+                "type": "query",
+                "description": "(Optional) Boolean\n\nWhether or not to include archived campaigns, defaults to false."
+              },
+              {
+                "name": "sort_direction",
+                "value": "desc",
+                "type": "query",
+                "description": "(Optional) String\n\n- Sort creation time from newest to oldest: pass in the value `desc`.\n- Sort creation time from oldest to newest: pass in the value `asc`.\n\nIf `sort_direction` is not included, the default order is oldest to newest."
+              },
+              {
+                "name": "last_edit.time[gt]",
+                "value": "2020-06-28T23:59:59-5:00",
+                "type": "query",
+                "description": "(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nFilters the results and only returns campaigns that were edited greater than the time provided till now. Format is `yyyy-MM-DDTHH:mm:ss`."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to export a list of campaigns, each of which will include its name, campaign API identifier, whether it is an API campaign, and tags associated with the campaign. \n  \n\nThe campaigns are returned in groups of 100 sorted by time of creation (oldest to newest by default).\n\nTo use this endpoint, youll need to generate an API key with the `campaigns.list` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented "
+        },
+        {
+          "info": {
+            "name": "Export Send Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/sends/data_series",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "campaign_id",
+                "value": "{{campaign_identifier}}",
+                "type": "query",
+                "description": "(Required) String\n\nSee [Campaign API identifier](https://www.braze.com/docs/api/identifier_types/)."
+              },
+              {
+                "name": "send_id",
+                "value": "{{send_identifier}}",
+                "type": "query",
+                "description": "(Required) String\n\nSee [Send API identifier](https://www.braze.com/docs/api/identifier_types/)."
+              },
+              {
+                "name": "length",
+                "value": "30",
+                "type": "query",
+                "description": "(Required) Integer\n\nMax number of days before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive)."
+              },
+              {
+                "name": "ending_at",
+                "value": "2014-12-10T23:59:59-05:00",
+                "type": "query",
+                "description": "(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data series should end. Defaults to time of the request."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve a daily series of various stats for a tracked `send_id`. \n  \n\nBraze stores send analytics for 14 days after the send.\n\nCampaign conversions will be attributed towards the most recent send id that a given user has received from the campaign.\n\nTo use this endpoint, youll need to generate an API key with the `sends.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate l"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

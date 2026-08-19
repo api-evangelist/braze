@@ -1,0 +1,148 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Templates > Content Blocks API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Templates > Content Blocks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Available Content Blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/content_blocks/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "modified_after",
+                "value": "2020-01-01T01:01:01.000000",
+                "type": "query",
+                "description": "(Optional) String in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)\n\nRetrieve only content blocks updated at or after the given time."
+              },
+              {
+                "name": "modified_before",
+                "value": "2020-02-01T01:01:01.000000",
+                "type": "query",
+                "description": "(Optional) String in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)\n\nRetrieve only content blocks updated at or before the given time."
+              },
+              {
+                "name": "limit",
+                "value": "100",
+                "type": "query",
+                "description": "(Optional) Positive Number\n\nMaximum number of content blocks to retrieve. Default to 100 if not provided, with a maximum acceptable value of 1000."
+              },
+              {
+                "name": "offset",
+                "value": "1",
+                "type": "query",
+                "description": "(Optional) Positive Number\n\nNumber of content blocks to skip before returning rest of the templates that fit the search criteria."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to list your existing [Content Blocks](https://www.braze.com/docs/user_guide/engagement_tools/templates_and_media/content_blocks/) information. \n  \n\nTo use this endpoint, youll need to generate an API key with the `content_blocks.list` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Response\n\n``` json\nContent-Type: application/"
+        },
+        {
+          "info": {
+            "name": "See Content Block Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/content_blocks/info",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "content_block_id",
+                "value": "{{content_block_id}}",
+                "type": "query",
+                "description": "(Required) String\n\nThe content block identifier. \n\nYou can find this by either listing content block information through an API call or going to **Settings > Setup and Testing > API Keys**, then scrolling to the bottom and searching for your content block API identifier."
+              },
+              {
+                "name": "include_inclusion_data",
+                "value": "",
+                "type": "query",
+                "description": "(Optional) Boolean\n\nWhen set to `true`, the API returns back the Message Variation API identifier of campaigns and Canvases where this content block is included, to be used in subsequent calls. The results exclude archived or deleted Campaigns or Canvases."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to call information for your existing [Content Blocks](https://www.braze.com/docs/user_guide/engagement_tools/templates_and_media/content_blocks/). \n  \n\nTo use this endpoint, youll need to generate an API key with the `content_blocks.info` permission.\n\n**Note:** If you are using our [older navigation](https://www.braze.com/docs/navigation), `content_block_id`can be found at ****Developer Console** > **API Settings****.\n\n### Rate limit\n\nWe apply the default Braze rate limit of"
+        },
+        {
+          "info": {
+            "name": "Create Content Block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/content_blocks/create",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to create a [Content Block](https://www.braze.com/docs/user_guide/engagement_tools/templates_and_media/content_blocks/). \n  \n\nTo use this endpoint, youll need to generate an API key with the `content_blocks.create` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Descripti"
+        },
+        {
+          "info": {
+            "name": "Update Content Block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/content_blocks/update",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to update a [Content Block](https://www.braze.com/docs/user_guide/engagement_tools/templates_and_media/content_blocks/). \n  \n\nTo use this endpoint, youll need to generate an API key with the `content_blocks.update` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/)\n\n### Request parameters\n\n| Parameter | Required | Data Type | Descriptio"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

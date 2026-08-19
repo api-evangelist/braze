@@ -1,13 +1,23 @@
-generated: '2026-07-11'
+generated: '2026-08-13'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
 - host: www.braze.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Sep 13 05:00:08 2026 GMT
+  cert_expires: Nov 11 04:49:45 2026 GMT
   hsts: true
   hsts_max_age: 63072000
+- host: rest.iad-01.braze.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 14 12:39:58 2026 GMT
+  hsts: null
+- host: rest.iad-02.braze.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 20 14:49:24 2026 GMT
+  hsts: null
 domains:
 - domain: braze.com
   dnssec: false

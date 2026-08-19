@@ -1,0 +1,72 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.braze.com/docs/user_guide/data/distribution/braze_currents/event_glossary/,
+  https://www.braze.com/docs/user_guide/message_building_by_channel/webhooks/
+spec_type: none
+asyncapi_published: false
+note: >-
+  Braze publishes NO AsyncAPI document. It does publish two distinct real event surfaces —
+  Currents (an outbound event stream with a named, versioned event glossary) and the
+  Webhook message channel (arbitrary outbound HTTP from a campaign or Canvas step). This
+  file is the captured catalog of that surface; nothing here is fabricated and no AsyncAPI
+  spec is synthesized, so only a Webhooks pointer is emitted, not an AsyncAPI one.
+surfaces:
+- name: Braze Currents
+  kind: event-stream
+  direction: outbound
+  docs: https://www.braze.com/docs/user_guide/data/distribution/braze_currents/
+  glossary: https://www.braze.com/docs/user_guide/data/distribution/braze_currents/event_glossary/
+  delivery: >-
+    Batched to a customer-owned destination (cloud object storage / data warehouse) or to a
+    partner connector — not an HTTP callback and not a subscribable topic. There is no
+    public broker an agent can connect to.
+  partners_docs: https://www.braze.com/docs/user_guide/data/distribution/braze_currents/setting_up_currents/available_partners/
+  naming: dotted namespace, e.g. users.messages.email.Delivery
+  categories:
+  - name: Message engagement events
+    docs: https://www.braze.com/docs/user_guide/data/distribution/braze_currents/event_glossary/message_engagement_events
+    events:
+      email: [users.messages.email.Send, users.messages.email.Delivery, users.messages.email.Open, users.messages.email.Click, users.messages.email.Bounce, users.messages.email.SoftBounce, users.messages.email.Deferral, users.messages.email.Retry, users.messages.email.MarkAsSpam, users.messages.email.Unsubscribe, users.messages.email.Abort]
+      push: [users.messages.pushnotification.Open, users.messages.pushnotification.Abort]
+      in_app_message: [users.messages.inappmessage.Impression, users.messages.inappmessage.Click, users.messages.inappmessage.Abort]
+      content_card: [users.messages.contentcard.Send, users.messages.contentcard.Impression, users.messages.contentcard.Click, users.messages.contentcard.Dismiss, users.messages.contentcard.Abort]
+      banner: [users.messages.banner.Impression, users.messages.banner.Click, users.messages.banner.Dismissal, users.messages.banner.Abort]
+      line: [users.messages.line.Send, users.messages.line.Delivery, users.messages.line.Open, users.messages.line.Click, users.messages.line.Abort]
+      canvas: [users.messages.canvas.Entry, users.messages.canvas.Conversion, users.messages.canvas.StepProgression, users.messages.canvas.ExitMatchAudience, users.messages.canvas.ExitPerformEvent, users.messages.canvas.ExperimentStepConversion, users.messages.canvas.ExperimentSplitEntry, users.messages.canvas.ContentOptimizerStepSend, users.messages.canvas.ContentOptimizerStepConversion]
+      campaign: [users.messages.campaign.Conversion, users.messages.campaign.ControlGroupEnrollment]
+      landing_page: [users.messages.landingpage.Impression, users.messages.landingpage.Click, users.messages.landingpage.FormSubmission]
+      subscription: [users.messages.globalsubscriptionstatechange, users.messages.subscriptiongroupstatechange]
+      feature_flags: [users.messages.featureflag.ExperimentImpression]
+      agents: [users.messages.agentexecution, users.messages.toolinvocation]
+      other: [users.messages.uninstall, users.messages.contentoptimizercomponentstoreupdate]
+  - name: Customer behavior events
+    docs: https://www.braze.com/docs/user_guide/data/distribution/braze_currents/event_glossary/customer_behavior_events
+    events: [users.behaviors.CustomEvent, users.behaviors.Purchase, users.behaviors.SessionStart, users.behaviors.FirstSession, users.behaviors.Location, users.behaviors.InstallAttribution, users.RandomBucketNumberUpdate]
+    note: >-
+      Transcribed from the glossary page; the page is long and additional events exist
+      beyond those captured here. Recorded as a partial list rather than padded out.
+  - name: User profile events
+    docs: https://www.braze.com/docs/user_guide/data/distribution/braze_currents/event_glossary/user_profiles_events
+    events: []
+    note: Category exists and is documented; individual event names not transcribed in this pass.
+- name: Webhook message channel
+  kind: outbound-http
+  direction: outbound
+  docs: https://www.braze.com/docs/user_guide/message_building_by_channel/webhooks/
+  description: >-
+    A Braze campaign or Canvas step that issues an arbitrary HTTP request to a URL the
+    customer configures, with a Liquid-templated body. Used to call CRMs, lead-scoring
+    services, direct-mail providers, and unsupported channels.
+  payload: customer-authored (Liquid template) — Braze defines no fixed event schema
+  reporting: https://www.braze.com/docs/user_guide/message_building_by_channel/webhooks/reporting/
+  note: >-
+    This is the inverse of the usual provider webhook: the SHAPE is defined by the
+    customer, not by Braze, so there is no event catalog to publish for it and it cannot be
+    modelled as AsyncAPI channels without inventing the messages.
+inbound_triggers:
+  note: >-
+    The complementary inbound path is REST, not events — POST /campaigns/trigger/send and
+    POST /canvas/trigger/send let an external system trigger a Braze journey. Those are
+    covered in openapi/braze-messaging-send-messages-api-openapi.yml.
+event_count_captured: 60

@@ -1,0 +1,2263 @@
+{
+  "item": [
+    {
+      "id": "95feb167-7ab3-478e-a6a5-b4a29a27df5a",
+      "name": "Export > Canvas",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9ef5a8b9-c227-4923-bff3-c6f7c3cef98d",
+          "name": "Export Canvas Data Series Analytics",
+          "request": {
+            "name": "Export Canvas Data Series Analytics",
+            "description": {
+              "content": "> Use this endpoint to export time series data for a Canvas. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"data\": {\n    \"name\": (string) Canvas name,\n    \"stats\": [\n      {\n        \"time\": (string) date as ISO 8601 date,\n        \"total_stats\": {\n          \"revenue\": (float),\n          \"conversions\": (int),\n          \"conversions_by_entry_time\": (int),\n          \"entries\": (int)\n        },\n        \"variant_stats\": (optional) {\n          \"00000000-0000-0000-0000-0000000000000\": (API identifier for variant) {\n            \"name\": (string) name of variant,\n            \"revenue\": (int),\n            \"conversions\": (int),\n            \"conversions_by_entry_time\": (int),\n            \"entries\": (int)\n          },\n          ... (more variants)\n        },\n        \"step_stats\": (optional) {\n          \"00000000-0000-0000-0000-0000000000000\": (API identifier for step) {\n            \"name\": (string) name of step,\n            \"revenue\": (float),\n            \"conversions\": (int),\n            \"conversions_by_entry_time\": (int),\n            \"messages\": {\n              \"email\": [\n                {\n                  \"sent\": (int),\n                  \"opens\": (int),\n                  \"unique_opens\": (int),\n                  \"clicks\": (int),\n                  ... (more stats)\n                }\n              ],\n              ... (more channels)\n            }\n          },\n          ... (more steps)\n        }\n      },\n      ... (more stats by time)\n    ]\n  },\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "canvas",
+                "data_series"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "canvas_id",
+                  "value": "<string>",
+                  "description": "(Required) String\n\nSee [Canvas API Identifier](https://www.braze.com/docs/api/identifier_types/)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_at",
+                  "value": "<string>",
+                  "description": "(Required) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data export should end. Defaults to time of the request."
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_at",
+                  "value": "<string>",
+                  "description": "(Optional*) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string) \n\nDate on which the data export should begin.\n\n*Either `length` or `starting_at` is required."
+                },
+                {
+                  "disabled": false,
+                  "key": "length",
+                  "value": "<integer>",
+                  "description": "(Optional*) String\n\nMaximum number of days before `ending_at` to include in the returned series. Must be between 1 and 14 (inclusive).\n\n*Either `length` or `starting_at` is required."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_variant_breakdown",
+                  "value": "<boolean>",
+                  "description": "(Optional) Boolean\n\nWhether or not to include variant stats (defaults to false)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_step_breakdown",
+                  "value": "<boolean>",
+                  "description": "(Optional) Boolean\n\nWhether or not to include step stats (defaults to false)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_deleted_step_data",
+                  "value": "<boolean>",
+                  "description": "(Optional) Boolean\n\nWhether or not to include step stats for deleted steps (defaults to false)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "51b5f948-264c-4745-8f07-272d2a66bb9b",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "10"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d14b163f-207e-4915-b33e-2f146a4b44c7",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "10"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17761eda-5a06-44df-a623-0ab7ca527f0c",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "10"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcab2ab2-98a0-45f8-93b8-52806e943c67",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "10"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5b4e341-66bf-48ea-9134-46bb1850c03b",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "10"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ca87e19-5c44-4561-97bd-c7e7c3e57bb9",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "10"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fbbb1ef-243c-47ba-9cab-d4357047b2bb",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_series"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "10"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55246c74-d79d-4b44-a3ec-8feaebe751c0",
+          "name": "Export Canvas Data Analytics Summary",
+          "request": {
+            "name": "Export Canvas Data Analytics Summary",
+            "description": {
+              "content": "> Use this endpoint to export rollups of time series data for a Canvas, providing a concise summary of a Canvas results. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.data_summary` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"data\": {\n    \"name\": (string) Canvas name,\n    \"total_stats\": {\n      \"revenue\": (float),\n      \"conversions\": (int),\n      \"conversions_by_entry_time\": (int),\n      \"entries\": (int)\n    },\n    \"variant_stats\": (optional) {\n      \"00000000-0000-0000-0000-0000000000000\": (API identifier for variant) {\n        \"name\": (string) name of variant,\n        \"revenue\": (float),\n        \"conversions\": (int),\n        \"entries\": (int)\n      },\n      ... (more variants)\n    },\n    \"step_stats\": (optional) {\n      \"00000000-0000-0000-0000-0000000000000\": (API identifier for step) {\n        \"name\": (string) name of step,\n        \"revenue\": (float),\n        \"conversions\": (int),\n        \"conversions_by_entry_time\": (int),\n        \"messages\": {\n          \"android_push\": (name of channel) [\n            {\n              \"sent\": (int),\n              \"opens\": (int),\n              \"influenced_opens\": (int),\n              \"bounces\": (int)\n              ... (more stats for channel)\n            }\n          ],\n          ... (more channels)\n        }\n      },\n      ... (more steps)\n    }\n  },\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://desktop.postman.com/?desktopVersion=9.19.0&userId=16580579&teamId=409325).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "canvas",
+                "data_summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "canvas_id",
+                  "value": "<string>",
+                  "description": "(Required) String \n\nSee [Canvas API identifier](https://www.braze.com/docs/api/identifier_types/)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_at",
+                  "value": "<string>",
+                  "description": "(Required) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\nDate on which the data export should end. Defaults to time of the request"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_at",
+                  "value": "<string>",
+                  "description": "(Optional*) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data export should begin.\n\n*Either `length` or `starting_at` is required."
+                },
+                {
+                  "disabled": false,
+                  "key": "length",
+                  "value": "<integer>",
+                  "description": "(Optional*) Integer\n\nMax number of days before `ending_at` to include in the returned series. Must be between 1 and 14 (inclusive).\n\n*Either `length` or `starting_at` is required."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_variant_breakdown",
+                  "value": "<boolean>",
+                  "description": "(Optional) Boolean\n\nWhether or not to include variant stats (defaults to false)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_step_breakdown",
+                  "value": "<boolean>",
+                  "description": "(Optional) Boolean\n\nWhether or not to include step stats (defaults to false)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_deleted_step_data",
+                  "value": "<boolean>",
+                  "description": "(Optional) Boolean\n\nWhether or not to include step stats for deleted steps (defaults to false)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "37630723-2b08-4389-8a37-9f7f9a965133",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "5"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "083aa6cd-d103-4e83-b480-1f7d68c30d6a",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "5"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b6cb70b-53e4-4b8f-bcaf-59b154d02c53",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "5"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30798347-ab9d-4550-9eb6-c24b3d704340",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "5"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9162de26-d7b1-44a2-a096-bb13279f4212",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "5"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e638dc97-41db-458e-bfaa-76eed5e3d545",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "5"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f05cff1-88de-4d09-b3c6-3888df31201e",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "data_summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_id}}"
+                    },
+                    {
+                      "key": "ending_at",
+                      "value": "2018-05-30T23:59:59-5:00"
+                    },
+                    {
+                      "key": "starting_at",
+                      "value": "2018-05-28T23:59:59-5:00"
+                    },
+                    {
+                      "key": "length",
+                      "value": "5"
+                    },
+                    {
+                      "key": "include_variant_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_step_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "include_deleted_step_data",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eac6ce47-8454-40e0-8a80-3cc6c253eb9c",
+          "name": "Export Canvas Details",
+          "request": {
+            "name": "Export Canvas Details",
+            "description": {
+              "content": "> Use this endpoint to export metadata about a Canvas, such as the name, time created, current status, and more. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.details` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\nNote: All Canvas steps have a next_paths field, which is an array of `{name, next_step_id}` data. For full steps and Message steps, the `next_step_ids` field will be present, but will not contain data for other Canvas Flow steps.\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"created_at\": (string) date created as ISO 8601 date,\n  \"updated_at\": (string) date updated as ISO 8601 date,\n  \"name\": (string) Canvas name,\n  \"description\": (string) Canvas description,\n  \"archived\": (boolean) whether this Canvas is archived,\n  \"draft\": (boolean) whether this Canvas is a draft,\n  \"schedule_type\": (string) type of scheduling action,\n  \"first_entry\": (string) date of first entry as ISO 8601 date,\n  \"last_entry\": (string) date of last entry as ISO 8601 date,\n  \"channels\": (array of strings) step channels used with Canvas,\n  \"variants\": [\n    {\n      \"name\": (string) name of variant,\n      \"id\": (string) API identifier of the variant,\n      \"first_step_ids\": (array of strings) API identifiers for first steps in variant,\n      \"first_step_id\": (string) API identifier of first step in variant (deprecated in November 2017, only included if the variant has only one first step)\n    },\n    ... (more variations)\n  ],\n  \"tags\": (array of strings) tag names associated with the Canvas,\n  \"steps\": [\n    {\n      \"name\": (string) name of step,\n      \"id\": (string) API identifier of the step,\n      \"next_step_ids\": (array of strings) API identifiers of steps following step,\n      \"channels\": (array of strings) channels used in step,\n      \"messages\": {\n          \"message_variation_id\": (string) {  // <=This is the actual id\n              \"channel\": (string) channel type of the message (eg., \"email\"),\n              ... channel-specific fields for this message, see Campaign Details Endpoint API Response for example message responses ...\n          }\n      }\n    },\n    ... (more steps)\n  ],\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://desktop.postman.com/?desktopVersion=9.19.0&userId=16580579&teamId=409325).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "canvas",
+                "details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "canvas_id",
+                  "value": "<string>",
+                  "description": "(Required) String\n\nSee [Canvas API Identifier](https://www.braze.com/docs/api/identifier_types/) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d91e5a4e-fa78-42d4-b620-b564bc9489d9",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13362597-faf7-42a2-9052-eaa2fee090b1",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8f35b49-f2d3-4156-936a-1211f7a5dc70",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e88952ac-e33a-4029-bbe1-db0326c1015f",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33032b11-94de-4006-8d86-687376dddf95",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19700582-6386-4f1d-9895-f2a5c1239078",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82e37022-7ff3-4fda-b34f-9aebff9a39bb",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canvas_id",
+                      "value": "{{canvas_identifier}}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8775f172-97f4-4f6d-99b5-ca8de5c5d8a6",
+          "name": "Export Canvas List",
+          "request": {
+            "name": "Export Canvas List",
+            "description": {
+              "content": "> Use this endpoint to export a list of Canvases, including the name, Canvas API identifier and associated tags. \n  \n\nCanvases are returned in groups of 100 sorted by time of creation (oldest to newest by default).\n\nArchived Canvases will not be included in the API response unless the `include_archived` field is specified. Canvases that are stopped but not archived, however, will be returned by default.\n\nTo use this endpoint, youll need to generate an API key with the `canvas.list` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"canvases\" : [\n      {\n          \"id\" : (string) Canvas API Identifier,\n          \"last_edited\": (ISO 8601 string) the last edited time for the message,\n          \"name\" : (string) Canvas name,\n          \"tags\" : (array) tag names associated with the Canvas,\n      },\n    ... (more Canvases)\n  ],\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://desktop.postman.com/?desktopVersion=9.19.0&userId=16580579&teamId=409325).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "canvas",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "(Optional) Integer\n\nThe page of Canvases to return, defaults to `0` (returns the first set of up to 100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_archived",
+                  "value": "<boolean>",
+                  "description": "(Optional) Boolean\n\nWhether or not to include archived Canvases, defaults to `false`."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_direction",
+                  "value": "<string>",
+                  "description": "(Optional) String\n\n- Sort creation time from newest to oldest: pass in the value `desc`.\n- Sort creation time from oldest to newest: pass in the value `asc`.\n\nIf `sort_direction` is not included, the default order is oldest to newest."
+                },
+                {
+                  "disabled": false,
+                  "key": "last_edit.time[gt]",
+                  "value": "<string>",
+                  "description": "(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nFilters the results and only returns Canvases that were edited greater than the time provided till now. Format is `yyyy-MM-DDTHH:mm:ss`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fcdfd6d6-5399-4ece-b8f3-178340159690",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "last_edit.time[gt]",
+                      "value": "2020-06-28T23:59:59-5:00"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1fb3f0e-9a06-4c27-a4bc-2b5285e4e873",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "last_edit.time[gt]",
+                      "value": "2020-06-28T23:59:59-5:00"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d67bb7f5-f63b-47ba-9251-212fc8db515d",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "last_edit.time[gt]",
+                      "value": "2020-06-28T23:59:59-5:00"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ac478a5-7c79-4ff7-b0a8-bb9aab0cc336",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "last_edit.time[gt]",
+                      "value": "2020-06-28T23:59:59-5:00"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d16956c5-bd0d-4dd6-95c9-88b1c124b479",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "last_edit.time[gt]",
+                      "value": "2020-06-28T23:59:59-5:00"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3232787-f038-4604-8314-829e27a6ba6a",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "last_edit.time[gt]",
+                      "value": "2020-06-28T23:59:59-5:00"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b47a442a-e3db-45ff-aa65-be0afcd9756e",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "canvas",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "last_edit.time[gt]",
+                      "value": "2020-06-28T23:59:59-5:00"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer {{api_key}}",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rest.iad-01.braze.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "eb9955cf-10b7-4afc-9431-828d4c55af46",
+    "name": "Braze Export > Canvas API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. ",
+      "type": "text/plain"
+    }
+  }
+}

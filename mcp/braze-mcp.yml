@@ -1,0 +1,110 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: https://www.braze.com/docs/user_guide/brazeai/mcp_server/
+docs:
+  overview: https://www.braze.com/docs/user_guide/brazeai/mcp_server
+  setup: https://www.braze.com/docs/user_guide/brazeai/mcp_server/setup
+  usage: https://www.braze.com/docs/user_guide/brazeai/mcp_server/usage
+  tools: https://www.braze.com/docs/user_guide/brazeai/mcp_server/available_api_functions
+  announcement: https://www.braze.com/resources/articles/introducing-braze-mcp-server
+deployment:
+  mode: remote
+  endpoint: https://mcp.braze.com/mcp
+  auth: oauth
+  verified: probed
+  note: >-
+    First-party hosted remote MCP server, GA'd in the July 23, 2026 Braze release. No
+    install step and no package — an MCP client POSTs to the URL directly. EU customers
+    use https://mcp.braze.eu/mcp; Braze documents that either endpoint can reach any
+    Braze cluster. No client ID, client secret or API key is configured by the user: the
+    client runs a browser OAuth flow against the Braze dashboard.
+server:
+  name: braze
+  transport: http
+  url: https://mcp.braze.com/mcp
+  regions:
+  - region: US
+    url: https://mcp.braze.com/mcp
+  - region: EU
+    url: https://mcp.braze.eu/mcp
+authorization:
+  spec: RFC 9728 OAuth 2.0 Protected Resource Metadata
+  protected_resource_metadata: https://mcp.braze.com/.well-known/oauth-protected-resource
+  authorization_server: https://dashboard.braze.com
+  authorization_endpoint: https://dashboard.braze.com/oauth/authorize
+  token_endpoint: https://rest.iad-01.braze.com/oauth/token
+  registration_endpoint: https://rest.iad-01.braze.com/oauth/register
+  scopes: [mcp:tools, mcp:resources]
+  pkce: [S256]
+  grant_types: [authorization_code, refresh_token]
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://mcp.braze.com/mcp
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 401
+    response: '{"error_description": "Missing bearer token"}'
+    www_authenticate: >-
+      Bearer resource_metadata="https://mcp.braze.com/.well-known/oauth-protected-resource/mcp",
+      scope="mcp:tools mcp:resources"
+  - url: https://mcp.braze.com/.well-known/oauth-protected-resource
+    http_status: 200
+  - url: https://mcp.braze.eu/.well-known/oauth-protected-resource
+    http_status: 200
+  - url: https://dashboard.braze.com/.well-known/oauth-authorization-server
+    http_status: 200
+tools_source: >-
+  Live tools/list is OAuth-gated (401 above), so the tool set below is transcribed from
+  Braze's published "Available API functions in the Braze MCP server" page. Names are
+  verbatim; input schemas require authenticated introspection and are NOT recorded here.
+tools:
+- {name: get_workspaces, category: workspaces, rest_endpoint: null}
+- {name: get_campaign_list, category: campaigns, rest_endpoint: /campaigns/list}
+- {name: get_campaign_details, category: campaigns, rest_endpoint: /campaigns/details}
+- {name: get_campaign_dataseries, category: campaigns, rest_endpoint: /campaigns/data_series}
+- {name: get_canvas_list, category: canvases, rest_endpoint: /canvas/list}
+- {name: get_canvas_details, category: canvases, rest_endpoint: /canvas/details}
+- {name: get_canvas_data_series, category: canvases, rest_endpoint: /canvas/data_series}
+- {name: get_canvas_data_summary, category: canvases, rest_endpoint: /canvas/data_summary}
+- {name: get_catalogs, category: catalogs, rest_endpoint: /catalogs}
+- {name: get_catalog_items, category: catalogs, rest_endpoint: '/catalogs/{catalog_name}/items'}
+- {name: get_catalog_item, category: catalogs, rest_endpoint: '/catalogs/{catalog_name}/items/{item_id}'}
+- {name: get_custom_attributes, category: custom-data, rest_endpoint: /custom_attributes}
+- {name: get_events, category: custom-data, rest_endpoint: /events}
+- {name: get_events_list, category: custom-data, rest_endpoint: /events/list}
+- {name: get_events_data_series, category: custom-data, rest_endpoint: /events/data_series}
+- {name: list_integrations, category: cdi, rest_endpoint: /cdi/integrations}
+- {name: get_integration_job_sync_status, category: cdi, rest_endpoint: '/cdi/integrations/{integration_id}/job_sync_status'}
+- {name: get_dau_data_series, category: kpi, rest_endpoint: /kpi/dau/data_series}
+- {name: get_mau_data_series, category: kpi, rest_endpoint: /kpi/mau/data_series}
+- {name: get_new_users_data_series, category: kpi, rest_endpoint: /kpi/new_users/data_series}
+- {name: get_uninstalls_data_series, category: kpi, rest_endpoint: /kpi/uninstalls/data_series}
+- {name: create_media_library_asset, category: media-library, rest_endpoint: /media_library/create}
+- {name: get_product_list, category: purchases, rest_endpoint: /purchases/product_list}
+- {name: get_quantity_series, category: purchases, rest_endpoint: /purchases/quantity_series}
+- {name: get_revenue_series, category: purchases, rest_endpoint: /purchases/revenue_series}
+- {name: get_segment_list, category: segments, rest_endpoint: /segments/list}
+- {name: get_segment_details, category: segments, rest_endpoint: /segments/details}
+- {name: get_segment_data_series, category: segments, rest_endpoint: /segments/data_series}
+- {name: get_send_data_series, category: sends, rest_endpoint: /sends/data_series}
+- {name: get_session_data_series, category: sessions, rest_endpoint: /sessions/data_series}
+- {name: get_subscription_group_status, category: subscription-groups, rest_endpoint: /subscription/status/get}
+- {name: get_user_subscription_groups, category: subscription-groups, rest_endpoint: /subscription/user/status}
+- {name: get_email_templates, category: templates, rest_endpoint: /templates/email/list}
+- {name: get_email_template_info, category: templates, rest_endpoint: /templates/email/info}
+- {name: create_email_template, category: templates, rest_endpoint: /templates/email/create}
+- {name: update_email_template, category: templates, rest_endpoint: /templates/email/update}
+- {name: get_content_blocks, category: content-blocks, rest_endpoint: /content_blocks/list}
+- {name: get_content_block_info, category: content-blocks, rest_endpoint: /content_blocks/info}
+- {name: create_content_block, category: content-blocks, rest_endpoint: /content_blocks/create}
+- {name: update_content_block, category: content-blocks, rest_endpoint: /content_blocks/update}
+tool_count: 40
+posture:
+  read_only: false
+  note: >-
+    Braze describes the server as read-first for non-PII analytics, but the published tool
+    list includes six write tools (create/update email templates, create/update content
+    blocks, create media library asset). No user-data, messaging-send or user-delete tool
+    is exposed, so the destructive surface of the REST API is deliberately absent from MCP.

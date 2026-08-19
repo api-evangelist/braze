@@ -1,0 +1,185 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze SCIM API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SCIM",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Look Up an Existing Dashboard User Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/scim/v2/Users/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "X-Request-Origin",
+                "value": "YOUR-REQUEST-ORIGIN-HERE"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer YOUR-SCIM-TOKEN-HERE"
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> This endpoint allows you to look up an existing dashboard user account by specifying the resource `id` returned by the SCIM [`POST`](https://www.braze.com/docs/scim/post_create_user_account/) method.  \n \n  \n\nFor information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` PUT, "
+        },
+        {
+          "info": {
+            "name": "Update Dashboard User Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://rest.iad-01.braze.com/scim/v2/Users/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "X-Request-Origin",
+                "value": "YOUR-REQUEST-ORIGIN-HERE"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer YOUR-SCIM-TOKEN-HERE"
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> This endpoint allows you to update an existing dashboard user account by specifying the resource `id` returned by the SCIM [`POST`](https://www.braze.com/docs/scim/post_create_user_account/) method.  \n \n  \n\nIt allows you to update of given and family names, permissions (for setting permissions at the company, app group, and team level) and department. For information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/)"
+        },
+        {
+          "info": {
+            "name": "Remove Dashboard User Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://rest.iad-01.braze.com/scim/v2/Users/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "X-Request-Origin",
+                "value": "YOUR-REQUEST-ORIGIN-HERE"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer YOUR-SCIM-TOKEN-HERE"
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> This endpoint allows you to permanently delete an existing dashboard user by specifying the resource `id` returned by the SCIM [`POST`](https://www.braze.com/docs/scim/post_create_user_account/) method.  \n \n  \n\nThis is similar to deleting a user in the **Manage Users** section of the Braze dashboard. For information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of "
+        },
+        {
+          "info": {
+            "name": "Search Existing Dashboard User by Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/scim/v2/Users",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "X-Request-Origin",
+                "value": "YOUR-REQUEST-ORIGIN-HERE"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer YOUR-SCIM-TOKEN-HERE"
+              }
+            ],
+            "params": [
+              {
+                "name": "filter",
+                "value": "{userName@example.com}",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "> This endpoint allows you to look up an existing dashboard user account by specifying their email in the filter query parameter.  \n \n  \n\nNote that when the query parameter is URL encoded it will read like this:\n\n`/scim/v2/Users?filter=userName eq \"user@test.com\"`\n\nFor information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. Th"
+        },
+        {
+          "info": {
+            "name": "Create New Dashboard User Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/scim/v2/Users",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "X-Request-Origin",
+                "value": "YOUR-REQUEST-ORIGIN-HERE"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer YOUR-SCIM-TOKEN-HERE"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> This endpoint allows you to create a new dashboard user account by specifying email, given and family names, permissions (for setting permissions at the company, app group, and team level).  \n \n  \n\nFor information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` PUT, GET, and D"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,45 @@
+generated: '2026-08-13'
+method: probed
+source: https://mcp.braze.com/.well-known/oauth-protected-resource
+docs: https://www.braze.com/docs/user_guide/brazeai/mcp_server/setup
+note: >-
+  Braze's REST API has no OAuth surface and therefore no scopes — it authorizes with a
+  static workspace REST API key whose permissions are set per key in the dashboard and are
+  not exposed anywhere machine-readable. The only OAuth scopes Braze publishes belong to
+  the Braze MCP server, and they were read from live RFC 9728 / RFC 8414 metadata rather
+  than from a docs page. derive-oauth-scopes.py found zero oauth2 schemes in openapi/,
+  which is correct.
+schemes:
+- name: BrazeMcpOAuth
+  source: https://dashboard.braze.com/.well-known/oauth-authorization-server
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://dashboard.braze.com/oauth/authorize
+    tokenUrl: https://rest.iad-01.braze.com/oauth/token
+    pkce: S256
+scopes:
+- scope: mcp:tools
+  description: >-
+    Invoke the tools exposed by the Braze MCP server. Advertised in the 401
+    WWW-Authenticate challenge from https://mcp.braze.com/mcp and in both the
+    protected-resource and authorization-server metadata documents.
+  flows: [authorizationCode]
+  sources: [https://mcp.braze.com/.well-known/oauth-protected-resource]
+- scope: mcp:resources
+  description: Read the resources exposed by the Braze MCP server.
+  flows: [authorizationCode]
+  sources: [https://mcp.braze.com/.well-known/oauth-protected-resource]
+rest_permission_model:
+  kind: per-key endpoint permissions
+  granted_in: Braze dashboard, Settings > API Keys
+  machine_readable: false
+  docs: https://www.braze.com/docs/api/api_key/
+  note: >-
+    Recorded so this file is not read as "Braze has no authorization model". It has one;
+    it simply is not a scope surface an agent can discover.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - {url: 'https://mcp.braze.com/.well-known/oauth-protected-resource', http_status: 200}
+  - {url: 'https://mcp.braze.eu/.well-known/oauth-protected-resource', http_status: 200}
+  - {url: 'https://dashboard.braze.com/.well-known/oauth-authorization-server', http_status: 200}

@@ -1,0 +1,2927 @@
+{
+  "item": [
+    {
+      "id": "715eb453-9fe5-46f7-a306-cdd7d696b4fa",
+      "name": "SCIM",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5d6acc03-e16a-45cb-915e-79f9da25e18a",
+          "name": "Remove Dashboard User Account",
+          "request": {
+            "name": "Remove Dashboard User Account",
+            "description": {
+              "content": "> This endpoint allows you to permanently delete an existing dashboard user by specifying the resource `id` returned by the SCIM [`POST`](https://www.braze.com/docs/scim/post_create_user_account/) method.  \n \n  \n\nThis is similar to deleting a user in the **Manage Users** section of the Braze dashboard. For information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` PUT, GET, and POST endpoints as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data type | Description |\n| --- | --- | --- | --- |\n| `id` | Required | String | The users resource ID. This parameter is returned by the `POST` `/scim/v2/Users/` or `GET` `/scim/v2/Users?filter=userName eq \"[user@test.com](mailto:user@test.com)\"` methods. |\n\n## Request parameters\n\nThere is no request body for this endpoint.\n\n## Response\n\n### Example error response\n\n``` json\nHTTP/1.1 204 Not Found\nContent-Type: text/html; charset=UTF-8\n\n```\n\nIf a developer with this ID doesnt exist in Braze, the endpoint will respond with:\n\n``` json\nHTTP/1.1 404 Not Found Content-Type: text/html; charset=UTF-8\n{ \"schemas\": [\"urn:ietf:params:scim:api:messages:2.0:Error\"], \"detail\": \"User not found\", \"status\": 404 }\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scim",
+                "v2",
+                "Users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Request-Origin",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1e4ec02e-4c67-4e5e-bca2-122fd88415fa",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1aea0657-9f94-4589-b481-6dd22d242c4d",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2aaa695-048e-4517-887f-c17afd5c1604",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b583b13-895a-46be-afa0-9141dfb939d9",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b742434f-34c1-409f-9313-eabf54caef99",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62ed068b-bb60-4049-9e2d-6e364d1a52e8",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d45e741c-8e2e-46ed-b799-dffe17646a71",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1caffedf-efa9-41d6-8c49-15b5e7fcc362",
+          "name": "Look Up an Existing Dashboard User Account",
+          "request": {
+            "name": "Look Up an Existing Dashboard User Account",
+            "description": {
+              "content": "> This endpoint allows you to look up an existing dashboard user account by specifying the resource `id` returned by the SCIM [`POST`](https://www.braze.com/docs/scim/post_create_user_account/) method.  \n \n  \n\nFor information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` PUT, GET, DELETE, and POST endpoints as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `id` | Required | String | The user's resource ID. This parameter is returned by the `POST` `/scim/v2/Users/` or `GET` `/scim/v2/Users?filter=userName eq \"user@test.com\"` methods. |\n\n## Request parameters\n\nThere is no request body for this endpoint.\n\n## Response\n\n``` json\n{\n    \"schemas\": [\"urn:ietf:params:scim:schemas:core:2.0:User\"],\n    \"id\": \"dfa245b7-24195aec-887bb3ad-602b3340\",\n    \"userName\": \"user@test.com\",\n    \"name\": {\n        \"givenName\": \"Test\",\n        \"familyName\": \"User\"\n    },\n    \"department\": \"finance\",\n    \"lastSignInAt\": \"Thursday, January 1, 1970 12:00:00 AM\",\n    \"permissions\": {\n        \"companyPermissions\": [\"manage_company_settings\"],\n        \"appGroup\": [\n            {\n                \"appGroupId\": \"241adcd25789fabcded\",\n                \"appGroupName\": \"Test App Group\",\n                \"appGroupPermissions\": [\"basic_access\",\"send_campaigns_canvases\"],\n                \"team\": [\n                    {\n                         \"teamId\": \"241adcd25789fabcded\",\n                         \"teamName\": \"Test Team\",                  \n                         \"teamPermissions\": [\"admin\"]\n                    }\n                ]\n            } \n        ]\n    }\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scim",
+                "v2",
+                "Users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Request-Origin",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "01fbb519-66df-4860-90b6-dc81aeef3fbc",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34a18287-562c-4fbc-affb-5254473b1b5d",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab8bba9d-de26-47dd-adbc-2eba367f8a67",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84f65674-db8f-46dd-b77c-2728b9ba6b0e",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "513a80d6-6bbd-4c67-a94c-a7b42c7ab5e1",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a292c4f-4c8e-4ecb-9c79-f28b5232a61b",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0a7150d-2061-47f9-9e0c-f6f2280e851c",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dac98af6-d29b-44ac-a87c-adf671fc19a9",
+          "name": "Update Dashboard User Account",
+          "request": {
+            "name": "Update Dashboard User Account",
+            "description": {
+              "content": "> This endpoint allows you to update an existing dashboard user account by specifying the resource `id` returned by the SCIM [`POST`](https://www.braze.com/docs/scim/post_create_user_account/) method.  \n \n  \n\nIt allows you to update of given and family names, permissions (for setting permissions at the company, app group, and team level) and department. For information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\nFor security reasons, `userName` (email address) cannot be updated through this endpoint. If you would like to change the `userName` (email address) for a user, contact [Support](https://www.braze.com/docs/support_contact/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` GET, DELETE, and POST endpoints as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `id` | Required | String | The user's resource ID. This parameter is returned by the `POST` `/scim/v2/Users/` or `GET` `/scim/v2/Users?filter=userName eq \"user@test.com\"` methods. |\n\n## Request parameters\n\n| Parameter | Required | Data type | Description |\n| --- | --- | --- | --- |\n| `schemas` | Required | Array of strings | Expected SCIM 2.0 schema name for user object. |\n| `name` | Required | JSON object | This object contains the user's given name and family name. |\n| `department` | Required | String | Valid department string from the [department string documentation]({{site.baseurl}}/scim_api_appendix/#department-strings). |\n| `permissions` | Required | JSON object | Permissions object as described in the [permissions object documentation]({{site.baseurl}}/scim_api_appendix/#permissions-object). |\n\n## Response\n\n``` json\n{\n    \"schemas\": [\"urn:ietf:params:scim:schemas:core:2.0:User\"],\n    \"id\": \"dfa245b7-24195aec-887bb3ad-602b3340\",\n    \"userName\": \"user@test.com\",\n    \"name\": {\n        \"givenName\": \"Test\",\n        \"familyName\": \"User\"\n    },\n    \"department\": \"finance\",\n    \"lastSignInAt\": \"Thursday, January 1, 1970 12:00:00 AM\",\n    \"permissions\": {\n        \"companyPermissions\": [\"manage_company_settings\"],\n        \"appGroup\": [\n            {\n                \"appGroupId\": \"241adcd25789fabcded\",\n                \"appGroupName\": \"Test App Group\",\n                \"appGroupPermissions\": [\"basic_access\",\"send_campaigns_canvases\"],\n                \"team\": [\n                    {\n                         \"teamId\": \"2519dafcdba238ae7\",\n                         \"teamName\": \"Test Team\",                  \n                         \"teamPermissions\": [\"admin\"]\n                    }\n                ]\n            } \n        ]\n    }\n}\n\n```\n\n### Error states\n\nIf a user with this ID doesnt exist in Braze, the endpoint will respond with:\n\n``` json\nHTTP/1.1 404 Not Found\nContent-Type: text/html; charset=UTF-8\n{\n    \"schemas\": [\"urn:ietf:params:scim:api:messages:2.0:Error\"],\n    \"detail\": \"User not found\",\n    \"status\": 404\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scim",
+                "v2",
+                "Users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Request-Origin",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4957e2b8-d8e5-4967-b8a0-4eb63cce31c2",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1620d7ad-5008-43e8-b240-5b4109a1bc17",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c17c9702-a675-4683-9761-837322997b1d",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48a33bb8-7b4d-4f79-8624-5da6c6957157",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09503011-5317-4d13-8a75-6e2e44aa18bb",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ec1eb3c-5958-4ae8-b3ef-3c2d7aa6e00d",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "323d2250-db99-479c-9acb-a04379b50b1e",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3e4b2a1-935c-436b-bbfe-c4839b29d14a",
+          "name": "Search Existing Dashboard User by Email",
+          "request": {
+            "name": "Search Existing Dashboard User by Email",
+            "description": {
+              "content": "> This endpoint allows you to look up an existing dashboard user account by specifying their email in the filter query parameter.  \n \n  \n\nNote that when the query parameter is URL encoded it will read like this:\n\n`/scim/v2/Users?filter=userName eq \"user@test.com\"`\n\nFor information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` PUT, GET, DELETE, and POST endpoints as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `userName@example.com` | Required | String | The user's email. |\n\n## Request parameters\n\nThere is no request body for this endpoint.\n\n## Response\n\n``` json\nContent-Type: application/json\nX-Request-Origin: YOUR-REQUEST-ORIGIN-HERE\nAuthorization: Bearer YOUR-SCIM-TOKEN-HERE\n{\n    \"schemas\": [\"urn:ietf:params:scim:api:messages:2.0:ListResponse\"],\n    \"totalResults\": 1,\n    \"Resources\": [\n        {\n            \"userName\": \"user@test.com\",\n            \"id\": \"dfa245b7-24195aec-887bb3ad-602b3340\",\n            \"name\": {\n                \"givenName\": \"Test\",\n                \"familyName\": \"User\"\n            },\n            \"department\": \"finance\",\n            \"lastSignInAt\": \"Thursday, January 1, 1970 12:00:00 AM\",\n            \"permissions\": {\n                \"companyPermissions\": [\"manage_company_settings\"],\n                \"appGroup\": [\n                    {\n                        \"appGroupId\": \"241adcd25789fabcded\",\n                        \"appGroupName\": \"Test App Group\",\n                        \"appGroupPermissions\": [\"basic_access\",\"send_campaigns_canvases\"],\n                        \"team\": [\n                            {\n                                \"teamId\": \"241adcd25789fabcded\",\n                                \"teamName\": \"Test Team\",                  \n                                \"teamPermissions\": [\"admin\"]\n                            }\n                        ]\n                    } \n                ]\n            }\n        }\n    ]\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scim",
+                "v2",
+                "Users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Request-Origin",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69f4018d-b46b-48ef-8ab9-a9d9c78bb716",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "{userName@example.com}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72b08eaa-3ea5-4030-8fc5-2fc5edb5e801",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "{userName@example.com}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e40b7f50-6612-437c-be84-9f027bf39925",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "{userName@example.com}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a65303ad-147f-439d-824e-37a81c94f967",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "{userName@example.com}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0071b524-29b7-4715-89d6-d48256a920d4",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "{userName@example.com}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcbaeb44-ec5d-4f51-96e1-a960451b9b86",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "{userName@example.com}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2bee227-551e-476b-8d96-0273962ea63c",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "{userName@example.com}"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af5c1491-eb69-48ca-b2fb-07e8d67ddaf9",
+          "name": "Create New Dashboard User Account",
+          "request": {
+            "name": "Create New Dashboard User Account",
+            "description": {
+              "content": "> This endpoint allows you to create a new dashboard user account by specifying email, given and family names, permissions (for setting permissions at the company, app group, and team level).  \n \n  \n\nFor information on how to obtain a SCIM token, visit [Automated user provisioning](https://www.braze.com/docs/scim/automated_user_provisioning/).\n\n## Rate limit\n\nThis endpoint has a rate limit of 5000 requests per day, per company. This rate limit is shared with the `/scim/v2/Users/` PUT, GET, and DELETE endpoints as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data type | Description |\n| --- | --- | --- | --- |\n| `schemas` | Required | Array of strings | Expected SCIM 2.0 schema name for user object. |\n| `userName` | Required | String | The users email address. |\n| `name` | Required | JSON object | This object contains the user's given name and family name. |\n| `department` | Required | String | Valid department string from the [department string documentation]({{site.baseurl}}/scim_api_appendix/#department-strings). |\n| `permissions` | Required | JSON object | Permissions object as described in the [permissions object documentation]({{site.baseurl}}/scim_api_appendix/#permissions-object). |\n\n## Response\n\n``` json\n{\n    \"schemas\": [\"urn:ietf:params:scim:schemas:core:2.0:User\"],\n    \"id\": \"dfa245b7-24195aec-887bb3ad-602b3340\",\n    \"userName\": \"user@test.com\",\n    \"name\": {\n        \"givenName\": \"Test\",\n        \"familyName\": \"User\"\n    },\n    \"department\": \"finance\",\n    \"lastSignInAt\": \"Thursday, January 1, 1970 12:00:00 AM\",\n    \"permissions\": {\n        \"companyPermissions\": [\"manage_company_settings\"],\n        \"appGroup\": [\n            {\n                \"appGroupId\": \"241adcd25789fabcded\",\n                \"appGroupName\": \"Test App Group\",\n                \"appGroupPermissions\": [\"basic_access\",\"send_campaigns_canvases\"],\n                \"team\": [\n                    {\n                         \"teamId\": \"2519dafcdba238ae7\",\n                         \"teamName\": \"Test Team\",                  \n                         \"teamPermissions\": [\"basic_access\",\"export_user_data\"]\n                    }\n                ]\n            } \n        ]\n    }\n}\n\n```\n\n### Error states\n\nIf a user with this email address already exists in Braze, the endpoint will respond with:\n\n``` json\nHTTP/1.1 409 Conflict\nDate: Tue, 10 Sep 2019 02:22:30 GMT\nContent-Type: text/json;charset=UTF-8\n{\n  \"schemas\": [\"urn:ietf:params:scim:api:messages:2.0:Error\"],\n  \"detail\": \"User already exists in the database.\",\n  \"status\": 409\n}\n\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scim",
+                "v2",
+                "Users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-Request-Origin",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<email>\",\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c21a7bcf-f852-405f-b117-50f279bc2f77",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<email>\",\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31558f2c-fbb0-4905-91e6-2d4fb5c75287",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<email>\",\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b1e5f2a-de46-43f5-bee0-7371622873c7",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<email>\",\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30feaf5e-5505-4966-a589-2cae4ae95fb0",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<email>\",\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e964ec2-5b0f-4268-a52f-758a40e5d74b",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<email>\",\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f914b086-7120-4bff-a88a-3a99644b066b",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<email>\",\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69ba07e6-7920-4422-8196-8875e5d1a3d5",
+              "name": "429 Rate Limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<email>\",\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5d668b6-8efb-4a8f-89d9-4f8ac1814faa",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scim",
+                    "v2",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-Request-Origin",
+                    "value": "YOUR-REQUEST-ORIGIN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Authorization",
+                    "value": "Bearer YOUR-SCIM-TOKEN-HERE",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"userName\": \"<email>\",\n  \"name\": {\n    \"givenName\": \"<string>\",\n    \"familyName\": \"<string>\"\n  },\n  \"department\": \"<string>\",\n  \"permissions\": {\n    \"companyPermissions\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"appGroup\": [\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      },\n      {\n        \"appGroupName\": \"<string>\",\n        \"appGroupPermissions\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"team\": [\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          },\n          {\n            \"teamName\": \"<string>\",\n            \"teamPermissions\": [\n              \"<string>\",\n              \"<string>\"\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rest.iad-01.braze.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "db437e2d-42e7-42ba-9583-8aea747aee21",
+    "name": "Braze SCIM API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. ",
+      "type": "text/plain"
+    }
+  }
+}

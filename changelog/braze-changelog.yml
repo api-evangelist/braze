@@ -1,0 +1,69 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.braze.com/docs/help/release_notes
+scheme: date-based
+cadence: bi-weekly
+current_version: '2026-07-23'
+source_repo: https://github.com/braze-inc/release-notes
+note: >-
+  Braze publishes platform release notes on a dated bi-weekly cadence rather than an API
+  version log. There is no separate API changelog: REST changes, dashboard changes and SDK
+  releases all land in the same entry, and SDK breaking changes are the only items marked
+  as breaking. Recent window only — the live page is the source of truth.
+entries:
+- date: '2026-07-23'
+  highlights:
+  - Remote Braze MCP server (the hosted server recorded in mcp/braze-mcp.yml)
+  - Messaging Diagnostics dashboard GA
+  - CSV custom events mapper
+  - Catalog storage expanded to 500 MB
+  - Operator role can update Settings pages
+  - Survey rating scales for forms
+  breaking:
+  - 'SDK majors: Android 43.0.0, Swift 17.0.0, Web 6.10.1 — eCommerce event additions'
+- date: '2026-06-25'
+  highlights:
+  - User deletion GA
+  - eCommerce events excluded from billable data points
+  - Event History tab on user profiles
+  - Unified BrazeAI assistants in Operator
+  - Content Block creation and editing support
+  breaking:
+  - 'SDK majors: Swift 15.0.0, React Native 21.0.0 — minimum OS requirements raised'
+- date: '2026-05-28'
+  highlights:
+  - Push Performance dashboard
+  - Geolocation fields in catalog selections
+  - Content Optimizer for SMS/MMS/RCS (beta)
+  - Workspace time zones GA
+  breaking:
+  - Flutter SDK 19.0.0 updates native bindings
+  - Unity SDK 11.0.0 requires Unity 6 and removes News Feed
+- date: '2026-04-30'
+  highlights:
+  - Quick User Add for profile creation
+  - Zero-copy CDI syncs for Canvas triggers
+  - Multi-language translations GA
+  - Send to Destination Canvas component
+  breaking:
+  - Braze Segment Android 17.0.0 is the final release; migrate to Segment Kotlin
+- date: '2026-04-02'
+  highlights:
+  - KakaoTalk messaging channel GA
+  - Banners in Canvas
+  - WhatsApp Template Builder (early access)
+  - Shopify product metadata sync
+  breaking:
+  - Cordova 15.0.0 updates native bridges
+  - Flutter 18.0.0 streamlines iOS integration
+  - Web SDK 6.6.0 adds cookie expiry configuration
+- date: '2026-03-05'
+  highlights:
+  - New JP-01 data center
+  - Context variables GA
+  - Cloud Data Ingestion sources (early access)
+  - Braze Agents GA
+  - Granular permissions (early access)
+  breaking:
+  - Xamarin SDK 9.0.0 removes News Feed and adds new NuGet dependencies
+  - React Native 19.0.0 updates native SDK bindings

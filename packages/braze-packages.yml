@@ -1,0 +1,187 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org, pub.dev, repo1.maven.org/maven2/com/braze, api.nuget.org,
+  trunk.cocoapods.org, api.github.com/repos/braze-inc/* releases, and
+  https://www.braze.com/docs/developer_guide/sdk_integration/
+note: >-
+  Braze ships client-side (device/browser) SDKs, not server-side REST clients. Every
+  first-party library below is published from the braze-inc GitHub organization. Braze
+  publishes NO official server-side SDK for the REST API in any language — the only
+  Node client on npm (braze-api) is community-maintained by braze-community and is
+  recorded here with official: false.
+packages:
+- language: javascript
+  registry: npm
+  name: "@braze/web-sdk"
+  url: https://www.npmjs.com/package/@braze/web-sdk
+  install: npm install @braze/web-sdk
+  repository: https://github.com/braze-inc/braze-web-sdk
+  official: true
+  version: 6.10.2
+  published: '2026-07-24'
+- language: javascript
+  registry: npm
+  name: "@braze/web-sdk-core"
+  url: https://www.npmjs.com/package/@braze/web-sdk-core
+  install: npm install @braze/web-sdk-core
+  repository: https://github.com/Appboy/appboy-web-sdk
+  official: true
+  version: 3.5.1
+  published: '2022-03-24'
+  note: >-
+    Superseded by @braze/web-sdk; last publish 2022-03-24, more than four years before
+    the current Web SDK 6.10.2. Recorded as a decay signal, not a recommended dependency.
+- language: javascript
+  registry: npm
+  name: "@braze/react-native-sdk"
+  url: https://www.npmjs.com/package/@braze/react-native-sdk
+  install: npm install @braze/react-native-sdk
+  repository: https://github.com/braze-inc/braze-react-native-sdk
+  official: true
+  version: 22.0.0
+  published: '2026-06-29'
+- language: javascript
+  registry: npm
+  name: "@braze/expo-plugin"
+  url: https://www.npmjs.com/package/@braze/expo-plugin
+  install: npm install @braze/expo-plugin
+  repository: https://github.com/braze-inc/braze-expo-plugin
+  official: true
+  version: 5.2.0
+  published: '2026-07-15'
+- language: javascript
+  registry: github
+  name: braze-cordova-sdk
+  url: https://github.com/braze-inc/braze-cordova-sdk
+  install: cordova plugin add https://github.com/braze-inc/braze-cordova-sdk.git
+  official: true
+  version: 16.0.1
+  published: '2026-05-13'
+  note: >-
+    Distributed from the git repo, not npm. The npm name braze-cordova-sdk exists but its
+    only publish is a 0.0.0 placeholder (2025-05-12), so the registry version is not the
+    shipping version; the GitHub release tag is.
+- language: dart
+  registry: pub.dev
+  name: braze_plugin
+  url: https://pub.dev/packages/braze_plugin
+  install: flutter pub add braze_plugin
+  repository: https://github.com/braze-inc/braze-flutter-sdk
+  official: true
+  version: 22.0.0
+  published: '2026-08-07'
+- language: kotlin
+  registry: maven-central
+  name: com.braze:android-sdk-ui
+  url: https://central.sonatype.com/artifact/com.braze/android-sdk-ui
+  install: implementation "com.braze:android-sdk-ui:43.0.0"
+  repository: https://github.com/braze-inc/braze-android-sdk
+  official: true
+  version: 43.0.0
+  published: '2026-07-15'
+- language: kotlin
+  registry: maven-central
+  name: com.braze:android-sdk-base
+  url: https://central.sonatype.com/artifact/com.braze/android-sdk-base
+  install: implementation "com.braze:android-sdk-base:43.0.0"
+  repository: https://github.com/braze-inc/braze-android-sdk
+  official: true
+  version: 43.0.0
+  published: '2026-07-15'
+- language: kotlin
+  registry: maven-central
+  name: com.braze:android-sdk-location
+  url: https://central.sonatype.com/artifact/com.braze/android-sdk-location
+  install: implementation "com.braze:android-sdk-location:43.0.0"
+  official: true
+  version: 43.0.0
+  published: '2026-07-15'
+- language: kotlin
+  registry: maven-central
+  name: com.braze:android-sdk-jetpack-compose
+  url: https://central.sonatype.com/artifact/com.braze/android-sdk-jetpack-compose
+  install: implementation "com.braze:android-sdk-jetpack-compose:43.0.0"
+  official: true
+  version: 43.0.0
+  published: '2026-07-15'
+- language: swift
+  registry: swift-package-manager
+  name: braze-swift-sdk
+  url: https://github.com/braze-inc/braze-swift-sdk
+  install: .package(url:"https://github.com/braze-inc/braze-swift-sdk", from:"18.1.0")
+  official: true
+  version: 18.1.0
+  published: '2026-08-11'
+  note: >-
+    iOS/macOS/iPadOS/visionOS/tvOS. Also on CocoaPods as BrazeKit, but the CocoaPods trunk
+    API only returns the first 100 versions (max visible 9.3.1, 2024-06-27), so the GitHub
+    release tag is the authoritative current version.
+- language: csharp
+  registry: nuget
+  name: Braze.iOS.BrazeKit
+  url: https://www.nuget.org/packages/Braze.iOS.BrazeKit
+  install: dotnet add package Braze.iOS.BrazeKit
+  repository: https://github.com/braze-inc/braze-xamarin-sdk
+  official: true
+  version: 9.0.0
+  published: '2026-02-18'
+- language: csharp
+  registry: nuget
+  name: BrazePlatform.BrazeAndroidBinding
+  url: https://www.nuget.org/packages/BrazePlatform.BrazeAndroidBinding
+  install: dotnet add package BrazePlatform.BrazeAndroidBinding
+  repository: https://github.com/braze-inc/braze-xamarin-sdk
+  official: true
+  version: 9.0.0
+  published: '2026-02-18'
+- language: csharp
+  registry: github
+  name: braze-unity-sdk
+  url: https://github.com/braze-inc/braze-unity-sdk
+  install: Import the .unitypackage from the GitHub release
+  official: true
+  version: 12.0.0
+  published: '2026-08-07'
+- language: brightscript
+  registry: github
+  name: braze-roku-sdk
+  url: https://github.com/braze-inc/braze-roku-sdk
+  install: Copy the SDK component into your Roku channel source
+  official: true
+  version: 2.2.1
+  published: '2026-03-05'
+- language: cpp
+  registry: github
+  name: braze-unreal-sdk
+  url: https://github.com/braze-inc/braze-unreal-sdk
+  install: Add the plugin to your Unreal project Plugins directory
+  official: true
+  version: 2.5.0
+  published: '2023-05-09'
+  note: >-
+    Last release 2023-05-09 — over three years stale against every other Braze SDK line,
+    the strongest abandonment signal in this set.
+- language: javascript
+  registry: npm
+  name: braze-api
+  url: https://www.npmjs.com/package/braze-api
+  install: npm install braze-api
+  repository: https://github.com/braze-community/braze-node
+  official: false
+  version: 2.13.4
+  published: '2026-08-05'
+  note: >-
+    Community-maintained Node.js client for the Braze REST API (braze-community org), not
+    endorsed by Braze. Listed because it is the only maintained server-side REST client.
+- language: python
+  registry: pypi
+  name: braze-mcp-server
+  url: https://pypi.org/project/braze-mcp-server/
+  install: pip install braze-mcp-server
+  official: false
+  version: 1.2.0
+  published: '2026-05-14'
+  note: >-
+    Third-party stdio MCP wrapper, not published by Braze — Braze's own MCP server is a
+    remote OAuth endpoint (mcp.braze.com) with no install step. Do not confuse the two.

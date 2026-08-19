@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Catalogs > Catalog Management > Synchronous API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Catalogs > Catalog Management > Synchronous",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete Catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to delete a catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.delete` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 5 requests per minute between all synchronous catalog endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog."
+        },
+        {
+          "info": {
+            "name": "List Catalogs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/catalogs",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to return a list of catalogs in a workspace. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.get` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 5 requests per minute between all synchronous catalog endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path and request parameters\n\nThere are no path or request parameters for this endpoint.\n\n## Example request\n\n```\ncurl --location --r"
+        },
+        {
+          "info": {
+            "name": "Create Catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/catalogs",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to create a catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.create` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 5 requests per minute between all synchronous catalog endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalogs` | Required | Array | An array that contains"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

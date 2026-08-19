@@ -1,0 +1,229 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Catalogs > Catalog Items > Synchronous API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Catalogs > Catalog Items > Synchronous",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Multiple Catalog Item Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name/items",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to return multiple catalog items and their content. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.get_items` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | "
+        },
+        {
+          "info": {
+            "name": "List Catalog Item Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name/items/:item_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to return a catalog item and its content. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.get_item` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | "
+        },
+        {
+          "info": {
+            "name": "Create Catalog Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name/items/:item_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to create an item in your catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.create_item` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | Stri"
+        },
+        {
+          "info": {
+            "name": "Update Catalog Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name/items/:item_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to update an item in your catalog. \n  \n\nTo use this endpoint, you'll need to generate an API key with the `catalogs.replace_item` permission.\n\nIf the `item_id` isn't found, this endpoint will create the item. This endpoint is synchronous.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter "
+        },
+        {
+          "info": {
+            "name": "Edit Catalog Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name/items/:item_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to edit an item in your catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.update_item` permission.\n\n## Rate Limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String"
+        },
+        {
+          "info": {
+            "name": "Delete a Catalog Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name/items/:item_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to delete an item in your catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.delete_item` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 50 requests per minute between all synchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | Stri"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

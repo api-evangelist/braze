@@ -1,0 +1,148 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Catalogs > Catalog Items > Asynchronous API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Catalogs > Catalog Items > Asynchronous",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Multiple Catalog Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name/items",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to create multiple items in your catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.add_items` permission.\n\nEach request can support up to 50 items. This endpoint is asynchronous.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 100 requests per minute between all asynchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data T"
+        },
+        {
+          "info": {
+            "name": "Update Catalog Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name/items",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to send Canvas messages via API-triggered delivery. \n  \n\nTo use this endpoint, you'll need to generate an API key with the `catalogs.replace_item` permission.\n\nAPI-triggered Delivery allows you to store message content in the Braze dashboard while dictating when a message is sent, and to whom via your API.\n\nNote that to send messages with this endpoint, you must have a [Canvas ID](https://www.braze.com/docs/api/identifier_types/#canvas-api-identifier), created when you build "
+        },
+        {
+          "info": {
+            "name": "Edit Multiple Catalog Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name/items",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to delete multiple items in your catalog. \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.delete_items` permission.\n\nEach request can support up to 50 items. This endpoint is asynchronous.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 100 requests per minute between all asynchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data T"
+        },
+        {
+          "info": {
+            "name": "Delete Multiple Catalog Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://rest.iad-01.braze.com/catalogs/:catalog_name/items",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to delete multiple items in your catalog. \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.delete_items` permission.\n\nEach request can support up to 50 items. This endpoint is asynchronous.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 100 requests per minute between all asynchronous catalog item endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data T"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

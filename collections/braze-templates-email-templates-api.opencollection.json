@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Templates > Email Templates API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Templates > Email Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update Email Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/templates/email/update",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to update email templates on the Braze dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `templates.email.update` permission.\n\nYou can access an email templates `email_template_id` by navigating to it on the **Templates & Media** page. The [Create email template endpoint](https://www.braze.com/docs/api/endpoints/templates/email_templates/post_create_email_template/) will also return an `email_template_id` reference.\n\nAll fields other than the `e"
+        },
+        {
+          "info": {
+            "name": "List Available Email Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/templates/email/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "modified_after",
+                "value": "2020-01-01T01:01:01.000000",
+                "type": "query",
+                "description": "(Optional) String in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)\n\nRetrieve only templates updated at or after the given time."
+              },
+              {
+                "name": "modified_before",
+                "value": "2020-02-01T01:01:01.000000",
+                "type": "query",
+                "description": "(Optional) String in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)\n\nRetrieve only templates updated at or before the given time."
+              },
+              {
+                "name": "limit",
+                "value": "1",
+                "type": "query",
+                "description": "(Optional) Positive Number\n\nMaximum number of templates to retrieve. Default to 100 if not provided, with a maximum acceptable value of 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "(Optional) Positive Number\n\nNumber of templates to skip before returning rest of the templates that fit the search criteria."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to get a list of available templates in your Braze account. \n  \n\nTo use this endpoint, youll need to generate an API key with the `templates.email.list` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Response\n\n> **Important:** Templates built using the Drag & Drop Editor for email are not provided in this response. \n  \n\n``` js"
+        },
+        {
+          "info": {
+            "name": "See Email Template Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/templates/email/info",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "email_template_id",
+                "value": "{{email_template_id}}",
+                "type": "query",
+                "description": "(Required) String\n\nSee [email template's API identifier](https://www.braze.com/docs/api/identifier_types/)."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to get information on your email templates. \n  \n\nTo use this endpoint, youll need to generate an API key with the `templates.email.info` permission.\n\n> **Important:** Templates built using the drag-and-drop editor for email are not accepted. \n  \n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n### Response\n\n``` json\nContent-Type: application/js"
+        },
+        {
+          "info": {
+            "name": "Create Email Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/templates/email/create",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to create email templates on the Braze dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `templates.email.create` permission.\n\nThese templates will be available on the **Templates & Media** page. The response from this endpoint will include a field for `email_template_id`, which can be used to update the template in subsequent API calls.\n\nUsers email subscription status can be updated and retrieved via Braze using a RESTful API. You can use the "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

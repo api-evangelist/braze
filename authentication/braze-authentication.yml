@@ -1,0 +1,92 @@
+generated: '2026-08-13'
+method: searched
+source: openapi/ (24 specs, 95 operations) + the Braze docs auth pages
+docs:
+  api_basics: https://www.braze.com/docs/api/basics/
+  api_keys: https://www.braze.com/docs/api/api_key/
+  mcp_setup: https://www.braze.com/docs/user_guide/brazeai/mcp_server/setup
+  scim: https://www.braze.com/docs/api/endpoints/scim/
+summary:
+  types: [http, oauth2]
+  http_schemes: [bearer]
+  api_key_in: [header]
+  oauth2_flows: [authorizationCode]
+  note: >-
+    Two distinct authentication models. The REST API uses a workspace-scoped REST API key
+    presented as an HTTP Bearer token — a static key, not an OAuth token, despite the
+    Bearer framing. The Braze MCP server uses real OAuth 2.0 with PKCE against the Braze
+    dashboard. Nothing in the REST surface uses OAuth, and nothing in MCP uses an API key.
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  surface: rest
+  credential: Braze REST API key
+  header: 'Authorization: Bearer YOUR_REST_API_KEY'
+  scope_model: >-
+    Per-key endpoint permissions granted in the Braze dashboard (Settings > API Keys), plus
+    optional IP allowlisting. A key that lacks a permission returns 401/403 rather than a
+    scope error, so permissions are not discoverable from the API.
+  host_binding: >-
+    Keys are bound to one workspace on one Braze instance; calling the wrong regional REST
+    host with a valid key returns 401 Unauthorized.
+  sources:
+  - openapi/braze-catalogs-catalog-items-asynchronous-api-openapi.yml
+  - openapi/braze-catalogs-catalog-items-synchronous-api-openapi.yml
+  - openapi/braze-catalogs-catalog-management-synchronous-api-openapi.yml
+  - openapi/braze-email-lists-addresses-api-openapi.yml
+  - openapi/braze-export-campaign-api-openapi.yml
+  - openapi/braze-export-canvas-api-openapi.yml
+  - openapi/braze-export-custom-events-api-openapi.yml
+  - openapi/braze-export-kpi-api-openapi.yml
+  - openapi/braze-export-news-feed-api-openapi.yml
+  - openapi/braze-export-purchases-api-openapi.yml
+  - openapi/braze-export-segment-api-openapi.yml
+  - openapi/braze-export-session-analytics-api-openapi.yml
+  - openapi/braze-export-users-api-openapi.yml
+  - openapi/braze-messaging-live-activities-api-openapi.yml
+  - openapi/braze-messaging-schedule-mesages-api-openapi.yml
+  - openapi/braze-messaging-send-messages-api-openapi.yml
+  - openapi/braze-preference-center-api-openapi.yml
+  - openapi/braze-scim-api-openapi.yml
+  - openapi/braze-sms-api-openapi.yml
+  - openapi/braze-subscription-groups-sms-and-whatsapp-api-openapi.yml
+  - openapi/braze-templates-content-blocks-api-openapi.yml
+  - openapi/braze-templates-email-templates-api-openapi.yml
+  - openapi/braze-user-data-api-openapi.yml
+  - openapi/braze-user-data-external-id-migration-api-openapi.yml
+- name: ScimBearer
+  type: http
+  scheme: bearer
+  surface: rest-scim
+  credential: SCIM token (separate from the REST API key)
+  note: >-
+    /scim/v2/Users is authorized by a dedicated SCIM token generated in the dashboard, not
+    by a REST API key. The harvested spec models it with the same BearerAuth scheme, which
+    understates the separation.
+  sources: [openapi/braze-scim-api-openapi.yml]
+- name: BrazeMcpOAuth
+  type: oauth2
+  surface: mcp
+  flow: authorizationCode
+  authorizationUrl: https://dashboard.braze.com/oauth/authorize
+  tokenUrl: https://rest.iad-01.braze.com/oauth/token
+  registrationUrl: https://rest.iad-01.braze.com/oauth/register
+  pkce: [S256]
+  grant_types: [authorization_code, refresh_token]
+  token_endpoint_auth_methods: [none]
+  scopes: [mcp:tools, mcp:resources]
+  discovery:
+    protected_resource: https://mcp.braze.com/.well-known/oauth-protected-resource
+    authorization_server: https://dashboard.braze.com/.well-known/oauth-authorization-server
+  note: >-
+    Public client with dynamic registration (RFC 7591) and no client secret; the user
+    authorizes in a browser against their Braze dashboard session. Probed 2026-08-13.
+  sources: [scopes/braze-scopes.yml, mcp/braze-mcp.yml]
+sdk_auth:
+  note: >-
+    The client-side SDKs (web/iOS/Android/etc.) authenticate with a public API key plus an
+    optional SDK Authentication JWT signed with a key pair configured in the dashboard —
+    a third credential type distinct from both models above.
+  docs: https://www.braze.com/docs/developer_guide/sdk_integration/authentication
+  key_management_api: https://www.braze.com/docs/api/endpoints/sdk_authentication/post_create_sdk_authentication_key

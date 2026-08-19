@@ -1,0 +1,55 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Braze messaging-schedule-mesages
+  version: 1.0.0
+extends: openapi/braze-messaging-schedule-mesages-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: openapi/braze-messaging-schedule-mesages-api-openapi.yml
+x-note: The harvested Braze specs declare no operationId on any operation. This overlay proposes one per
+  operation, derived deterministically from the operation's own summary, plus provider-wide metadata.
+  It is an API Evangelist enhancement, NOT a Braze-published identifier — do not treat these ids as canonical
+  Braze operation names. The original spec is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: braze
+    x-apievangelist-artifacts:
+      authentication: authentication/braze-authentication.yml
+      conventions: conventions/braze-conventions.yml
+      errors: errors/braze-problem-types.yml
+      rate-limits: rate-limits/braze-rate-limits.yml
+      lifecycle: lifecycle/braze-lifecycle.yml
+      data-model: data-model/braze-data-model.yml
+      mcp: mcp/braze-mcp.yml
+    x-apievangelist-operation-ids: proposed by overlay; absent from the source spec
+- target: $.paths['/messages/scheduled_broadcasts'].get
+  update:
+    operationId: listUpcomingScheduledCampaignsAndCanvases
+- target: $.paths['/messages/schedule/delete'].post
+  update:
+    operationId: deleteScheduledMessages
+- target: $.paths['/canvas/trigger/schedule/delete'].post
+  update:
+    operationId: deleteScheduledAPITriggeredCanvases
+- target: $.paths['/campaigns/trigger/schedule/delete'].post
+  update:
+    operationId: deleteScheduledAPITriggeredCampaigns
+- target: $.paths['/messages/schedule/create'].post
+  update:
+    operationId: createScheduledMessages
+- target: $.paths['/campaigns/trigger/schedule/create'].post
+  update:
+    operationId: scheduleAPITriggeredCampaigns
+- target: $.paths['/canvas/trigger/schedule/create'].post
+  update:
+    operationId: scheduleAPITriggeredCanvases
+- target: $.paths['/messages/schedule/update'].post
+  update:
+    operationId: updateScheduledMessages
+- target: $.paths['/campaigns/trigger/schedule/update'].post
+  update:
+    operationId: updateScheduledAPITriggeredCampaigns
+- target: $.paths['/canvas/trigger/schedule/update'].post
+  update:
+    operationId: updateScheduledAPITriggeredCanvases

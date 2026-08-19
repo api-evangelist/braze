@@ -1,0 +1,114 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.braze.com/docs/api/basics/, https://www.braze.com/docs/api/errors/,
+  https://www.braze.com/docs/api/api_limits/, https://www.braze.com/docs/api/objects_filters/,
+  plus openapi/ (24 specs, 95 operations)
+authentication:
+  style: http-bearer
+  header: 'Authorization: Bearer YOUR_REST_API_KEY'
+  credential: workspace-scoped REST API key with per-key endpoint permissions
+  host_bound: true
+  detail: authentication/braze-authentication.yml
+base_urls:
+  model: per-instance regional hosts; the workspace determines which one is valid
+  default_in_docs: https://rest.iad-01.braze.com
+  hosts:
+  - {instance: US-01, url: 'https://rest.iad-01.braze.com'}
+  - {instance: US-02, url: 'https://rest.iad-02.braze.com'}
+  - {instance: US-03, url: 'https://rest.iad-03.braze.com'}
+  - {instance: US-04, url: 'https://rest.iad-04.braze.com'}
+  - {instance: US-05, url: 'https://rest.iad-05.braze.com'}
+  - {instance: US-06, url: 'https://rest.iad-06.braze.com'}
+  - {instance: US-08, url: 'https://rest.iad-08.braze.com'}
+  - {instance: US-10, url: 'https://rest.us-10.braze.com'}
+  - {instance: EU-01, url: 'https://rest.fra-01.braze.eu'}
+  - {instance: EU-02, url: 'https://rest.fra-02.braze.eu'}
+  - {instance: AU-01, url: 'https://rest.au-01.braze.com'}
+  - {instance: ID-01, url: 'https://rest.id-01.braze.com'}
+  - {instance: JP-01, url: 'https://rest.jp-01.braze.com'}
+  - {instance: KR-01, url: 'https://rest.kr-01.braze.com'}
+  note: >-
+    A correct key against the wrong host returns 401. Any agent integration must carry the
+    instance as configuration; there is no discovery endpoint that resolves it.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Braze documents no idempotency key on any endpoint, and no spec declares one. Retrying
+    POST /users/track or POST /messages/send after a timeout can double-log events or
+    double-send. The closest thing to a safety mechanism is send-level tracking via
+    POST /sends/id/create, which lets a caller attach a send_id it generated — that is
+    reporting correlation, not request deduplication. Recorded as a genuine absence: no
+    Idempotency pointer is emitted for this provider.
+pagination:
+  style: mixed
+  patterns:
+  - form: page-number
+    params: [page]
+    example: 'GET /campaigns/list?page=0'
+    note: 'zero-indexed, up to 100 per page (verbatim from the spec). Used by GET /campaigns/list, /canvas/list, /events/list, /feed/list, /purchases/product_list, /segments/list.'
+  - form: limit-offset
+    params: [limit, offset]
+    note: 'Used by GET /email/hard_bounces, /email/unsubscribes, /sms/invalid_phone_numbers, /subscription/user/status, /content_blocks/list, /templates/email/list.'
+  - form: date-range
+    params: [length, ending_at, starting_at]
+    note: 'The analytics *_data_series endpoints page by time window, not by record — `length` counts days/hours back from `ending_at`.'
+  response_fields: [message, and the resource-specific array]
+  note: >-
+    Two incompatible pagination idioms across one API, split roughly along export-vs-list
+    lines, with no cursor anywhere. No Link header and no total-count field; a caller
+    detects the end of a collection by an empty array. Verified against all 95 operations.
+batching:
+  users_track_max_objects: 75
+  ids_per_request_max: 50
+  payload_max: 4 MB (2 MB for /users/track/bulk)
+  note: Batch limits are enforced as 400 errors, not truncation — see errors/braze-problem-types.yml.
+versioning:
+  style: per-endpoint path segment where a breaking change occurred
+  examples: ['/v2/subscription/status/set', '/preference_center/v1/*', '/scim/v2/*', '/transactional/v1/*']
+  global_version: none
+  detail: lifecycle/braze-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  shape: '{"message": <"success"|fatal error string>, "errors": [<minor error strings>]}'
+  machine_codes: false
+  rfc9457: false
+  critical_note: >-
+    A 200 with {"message":"success"} means ACCEPTED AND QUEUED, not delivered. This is the
+    single most important runtime semantic of the Braze API for an agent to internalize.
+  detail: errors/braze-problem-types.yml
+rate_limiting:
+  headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset]
+  reset_semantics: UTC epoch seconds; windows reset on the clock hour, not rolling
+  exhaustion_status: 429
+  retry_after: not documented
+  shared_pool: 250,000 requests/hour across most endpoints, per workspace
+  detail: rate-limits/braze-rate-limits.yml
+request_tracing:
+  request_id_header: null
+  note: >-
+    Braze publishes no request-id / correlation header. Support escalation relies on
+    timestamps and workspace identifiers, which makes agent-side failure attribution hard.
+field_semantics:
+  identity: >-
+    Users are addressed by external_id, by user_alias (alias_label + alias_name), by
+    braze_id, or by email/phone on some endpoints. Most write endpoints accept a mix and
+    apply the 50-id cap across the union.
+  custom_attributes: arbitrary key/value on the user profile; reserved attribute names are documented
+  expansion: not supported — no expand/include parameter anywhere in the API
+  metadata: no generic metadata bag; custom attributes serve that role on user objects
+  filters_reference: https://www.braze.com/docs/api/objects_filters/
+async_semantics:
+  note: >-
+    Several catalog endpoints are explicitly asynchronous (the "Catalog Items Asynchronous"
+    API returns immediately and processes in the background) while the parallel synchronous
+    endpoints on the same paths return results inline. The distinction lives in the docs
+    and in the API title, not in a response field, so callers must know which base they hit.
+cross_links:
+  authentication: authentication/braze-authentication.yml
+  scopes: scopes/braze-scopes.yml
+  errors: errors/braze-problem-types.yml
+  rate_limits: rate-limits/braze-rate-limits.yml
+  lifecycle: lifecycle/braze-lifecycle.yml
+  events: asyncapi/braze-webhooks.yml

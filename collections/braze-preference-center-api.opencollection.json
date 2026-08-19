@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Preference Center API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Preference Center",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Preference Center URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/preference_center_v1/:PreferenceCenterExternalID/url/:UserID",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "preference_center_api_id",
+                "value": "{{preference_center_api_id}}",
+                "type": "query"
+              },
+              {
+                "name": "external_id",
+                "value": "{{external_id}}",
+                "type": "query",
+                "description": "(Required) String"
+              },
+              {
+                "name": "PreferenceCenterExternalID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "UserID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to generate a URL for a preference center. \n  \n\nTo use this endpoint, youll need to generate an API key with the `preference_center.user.get` permission.\n\nEach preference center URL is unique to each user.\n\n## Rate limit\n\nThis endpoint has a rate limit of 1,000 requests per minute, per workspace.\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `preferenceCenterExternalID` | Required | String | The ID for your preference cent"
+        },
+        {
+          "info": {
+            "name": "List Preference Centers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/preference_center/v1/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to list your available preference centers. \n  \n\nTo use this endpoint, youll need to generate an API key with the `preference_center.list` permission.\n\n## Rate limit\n\nThis endpoint has a rate limit of 1,000 requests per minute, per workspace.\n\n## Path and request parameters\n\nThere are no path or request parameters for this endpoint.\n\n## Example request\n\n```\ncurl --location -g --request GET https://rest.iad-01.braze.com/preference_center/v1/list \\\n--header 'Authorization: Beare"
+        },
+        {
+          "info": {
+            "name": "View Details for Preference Center",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/preference_center/v1/:PreferenceCenterExternalID",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "PreferenceCenterExternalID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to view the details for your preference centers, including when it was created and updated. \n  \n\nTo use this endpoint, youll need to generate an API key with the `preference_center.get` permission.\n\n## Rate limit\n\nThis endpoint has a rate limit of 1,000 requests per minute, per workspace.\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `preferenceCenterExternalID` | Required | String | The ID for your preference center. |\n\n#"
+        },
+        {
+          "info": {
+            "name": "Update Preference Center",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://rest.iad-01.braze.com/preference_center/v1/:PreferenceCenterExternalID",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "PreferenceCenterExternalID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to update a preference center. \n  \n\nTo use this endpoint, youll need to generate an API key with the `preference_center.update` permission.\n\n## Rate limit\n\nThis endpoint has a rate limit of 10 requests per minute, per workspace.\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `preferenceCenterExternalID` | Required | String | The ID for your preference center. |\n\n## Request parameters\n\n| Parameter | Required | Data Type | De"
+        },
+        {
+          "info": {
+            "name": "Create Preference Center",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://rest.iad-01.braze.com/preference_center/v1",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> Use this endpoint to create a preference center to allow users to manage their notification preferences for email campaigns. \n  \n\nTo use this endpoint, youll need to generate an API key with the `preference_center.update` permission.\n\nCheck out [Creating a preference center via API](https://www.braze.com/docs/user_guide/message_building_by_channel/email/preference_center/) for details on how to include this in your email campaigns.\n\n## Rate limit\n\nThis endpoint has a rate limit of 10 requests "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

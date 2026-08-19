@@ -1,0 +1,34 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Braze export-users
+  version: 1.0.0
+extends: openapi/braze-export-users-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: openapi/braze-export-users-api-openapi.yml
+x-note: The harvested Braze specs declare no operationId on any operation. This overlay proposes one per
+  operation, derived deterministically from the operation's own summary, plus provider-wide metadata.
+  It is an API Evangelist enhancement, NOT a Braze-published identifier — do not treat these ids as canonical
+  Braze operation names. The original spec is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: braze
+    x-apievangelist-artifacts:
+      authentication: authentication/braze-authentication.yml
+      conventions: conventions/braze-conventions.yml
+      errors: errors/braze-problem-types.yml
+      rate-limits: rate-limits/braze-rate-limits.yml
+      lifecycle: lifecycle/braze-lifecycle.yml
+      data-model: data-model/braze-data-model.yml
+      mcp: mcp/braze-mcp.yml
+    x-apievangelist-operation-ids: proposed by overlay; absent from the source spec
+- target: $.paths['/users/export/ids'].post
+  update:
+    operationId: exportUserProfileByIdentifier
+- target: $.paths['/users/export/segment'].post
+  update:
+    operationId: exportUserProfileBySegment
+- target: $.paths['/users/export/global_control_group'].post
+  update:
+    operationId: exportUserProfileByGlobalControlGroup

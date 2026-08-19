@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Export > Custom Events API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Export > Custom Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export Custom Events List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/events/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "3",
+                "type": "query",
+                "description": "(Optional) Integer\n\nThe page of event names to return, defaults to 0 (returns the first set of up to 250)."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to export a list of custom events that have been recorded for your app. The event names are returned in groups of 250, sorted alphabetically. \n  \n\nTo use this endpoint, youll need to generate an API key with the `events.list` permission.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/purchases/product_list` endpoint, as documen"
+        },
+        {
+          "info": {
+            "name": "Export Custom Events Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/events/data_series",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "event",
+                "value": "event_name",
+                "type": "query",
+                "description": "(Required) String\n\nThe name of the custom event for which to return analytics. "
+              },
+              {
+                "name": "length",
+                "value": "24",
+                "type": "query",
+                "description": "(Required) Integer\n\nMaximum number of units (days or hours) before `ending_at` to include in the returned series. Must be between 1 and 100 (inclusive)."
+              },
+              {
+                "name": "unit",
+                "value": "hour",
+                "type": "query",
+                "description": "(Optional) String\n\nUnit of time between data points - can be `day` or `hour`, defaults to `day`."
+              },
+              {
+                "name": "ending_at",
+                "value": "2014-12-10T23:59:59-05:00",
+                "type": "query",
+                "description": "(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data series should end. Defaults to time of the request."
+              },
+              {
+                "name": "app_id",
+                "value": "{{app_identifier}}",
+                "type": "query",
+                "description": "(Optional) String\n\nApp API identifier retrieved from **Settings > Setup and Testing > API Keys** to limit analytics to a specific app."
+              },
+              {
+                "name": "segment_id",
+                "value": "{{segment_identifier}}",
+                "type": "query",
+                "description": "(Optional) String\n\nSee [Segment API identifier](https://www.braze.com/docs/api/identifier_types/). Segment ID indicating the analytics-enabled segment for which event analytics should be returned."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to retrieve a series of the number of occurrences of a custom event in your app over a designated time period. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `app_id` can be found at**Developer Console** > **API Settings**\n\nTo use this endpoint, youll need to generate an API key with the `events.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

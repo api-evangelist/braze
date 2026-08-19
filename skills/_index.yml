@@ -1,0 +1,28 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  openapi/ (24 specs, 95 operations) + conventions/braze-conventions.yml +
+  errors/braze-problem-types.yml + rate-limits/braze-rate-limits.yml
+note: >-
+  Braze publishes no AGENTS.md and no first-party agent skills; these are API Evangelist
+  generated operating instructions. Every step is grounded in a path that exists verbatim in
+  the harvested specs. Because those specs declare ZERO operationIds across all 95
+  operations, the `operations:` lists reference METHOD + path rather than operation ids.
+skills:
+- file: braze-track-user-and-trigger-campaign.md
+  name: Track a user and trigger an API campaign in Braze
+  api: openapi/braze-user-data-api-openapi.yml
+  operations: ['POST /users/track', 'POST /sends/id/create', 'POST /campaigns/trigger/send', 'POST /canvas/trigger/send']
+- file: braze-export-campaign-performance.md
+  name: Export Braze campaign and Canvas performance
+  api: openapi/braze-export-campaign-api-openapi.yml
+  operations: ['GET /campaigns/list', 'GET /campaigns/details', 'GET /campaigns/data_series', 'GET /canvas/list', 'GET /canvas/details', 'GET /canvas/data_series', 'GET /canvas/data_summary', 'GET /sends/data_series']
+- file: braze-manage-subscriptions-and-preference-center.md
+  name: Manage Braze subscriptions and the preference center
+  api: openapi/braze-subscription-groups-sms-and-whatsapp-api-openapi.yml
+  operations: ['GET /subscription/status/get', 'GET /subscription/user/status', 'POST /v2/subscription/status/set', 'POST /email/status', 'GET /email/unsubscribes', 'GET /email/hard_bounces', 'POST /email/blocklist', 'GET /preference_center/v1/list', 'GET /preference_center_v1/{PreferenceCenterExternalID}/url/{UserID}']
+- file: braze-sync-catalog-for-personalization.md
+  name: Sync a Braze catalog for personalization
+  api: openapi/braze-catalogs-catalog-items-asynchronous-api-openapi.yml
+  operations: ['GET /catalogs', 'POST /catalogs', 'DELETE /catalogs/{catalog_name}', 'GET /catalogs/{catalog_name}/items', 'POST /catalogs/{catalog_name}/items', 'PUT /catalogs/{catalog_name}/items', 'PATCH /catalogs/{catalog_name}/items', 'GET /catalogs/{catalog_name}/items/{item_id}']
+skill_count: 4

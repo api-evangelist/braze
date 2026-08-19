@@ -4,78 +4,84 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Braze
 providerId: braze
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+sources:
+  - https://www.braze.com/pricing
+  - https://www.braze.com/llms.txt
 reconciled: true
 tags:
   - Customer Engagement
   - CDP
   - Marketing Automation
-description: Braze pricing is custom (non-public), based on MAU + channels + AI usage.
-sources:
-  - https://www.braze.com/pricing
+description: >-
+  Braze publishes four named platform editions and NO prices. Every tier is quote-only
+  ("Get pricing" / "Talk to an expert"). Cost is a function of monthly active users (MAUs)
+  plus Action Credits — a single pooled currency spent across channels and AI features,
+  where each action consumes a different number of credits (Braze's own example: an SMS
+  costs 1 credit, a WhatsApp message 5). There is no free tier, no self-serve signup, and
+  no published overage rate.
+note: >-
+  Supersedes the 2026-05-04 bulk-sweep version of this file, which carried tier names
+  (Core/Pro/Enterprise) and dollar ranges ($60K-$200K, $1M+) that Braze does not publish.
+  Those figures were not on the pricing page and have been removed. The tier names below are
+  verbatim from https://www.braze.com/pricing as read 2026-08-13.
+plan_count: 4
+pricing_model:
+  basis: [monthly active users, action credits]
+  published_prices: false
+  free_tier: false
+  trial: false
+  self_serve: false
+  currency: null
+  action_credits:
+    description: >-
+      One pooled credit balance purchased in the contract and spent across Email, SMS/MMS,
+      RCS, WhatsApp, LINE, KakaoTalk, Content Cards, Banners, Message Archiving, Audience
+      Sync, Webhooks and BrazeAI Agent Console. Spend can be shifted between channels
+      without contracting a new product.
+    published_rate_card: false
+    examples:
+      - {action: SMS send, credits: 1}
+      - {action: WhatsApp message, credits: 5}
 plans:
-  - id: braze-core
-    name: Core (Platform Edition)
+  - id: braze-go
+    name: Braze Go
     type: enterprise
-    description: Mid-market deployments typically $60K-$200K/year.
-    entries:
-      - label: Annual base
-        name: annual
-        type: subscription
-        metric: year
-        limit: -1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: 60000.00-200000.00
-        userMultiplied: false
+    price: contact-sales
+    description: Core Braze features and functionality.
     elements:
-      - name: Email channel
-      - name: Push notifications
-      - name: In-app messages
-      - name: Content Cards
-      - name: Baseline MAU threshold
-      - name: Audience Sync
+      - name: Core Braze features & functionality
+  - id: braze-select
+    name: Braze Select
+    type: enterprise
+    price: contact-sales
+    description: Everything in Go, plus increased orchestration and enhanced security.
+    elements:
+      - name: Everything in Braze Go
+      - name: Increased orchestration capabilities
+      - name: Enhanced security features and user provisioning
   - id: braze-pro
-    name: Pro (Platform Edition)
+    name: Braze Pro
     type: enterprise
-    description: Custom; adds advanced orchestration and AI.
-    entries:
-      - label: Annual (custom)
-        name: annual
-        type: subscription
-        metric: year
-        limit: -1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: custom
-        userMultiplied: false
+    price: contact-sales
+    description: Everything in Select, plus predictive AI and personalized recommendations.
     elements:
-      - name: All Core channels
-      - name: SMS, WhatsApp, Webhooks
-      - name: Advanced orchestration (Canvas Flow)
-      - name: Predictive AI
-      - name: Sage AI Copilot
+      - name: Everything in Braze Select
+      - name: Predictive AI capabilities
+      - name: AI personalized recommendations
+      - name: Expanded dashboard user group administration
   - id: braze-enterprise
-    name: Enterprise (Platform Edition)
+    name: Braze Enterprise
     type: enterprise
-    description: Custom; $1M+/year for large deployments.
-    entries:
-      - label: Annual (custom)
-        name: annual
-        type: subscription
-        metric: year
-        limit: -1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: 1000000.00+
-        userMultiplied: false
+    price: contact-sales
+    description: Everything in Pro, plus enterprise orchestration, infrastructure and governance.
     elements:
-      - name: All Pro features
-      - name: Dedicated CSM
-      - name: Custom data residency
-      - name: Enterprise SLAs
-      - name: Audit logs
-      - name: SCIM/SSO
+      - name: Everything in Braze Pro
+      - name: Enterprise-grade orchestration, infrastructure, and governance
+      - name: Advanced experimentation with BrazeAI Agent Console
+programs:
+  - name: Braze for Startups
+    url: https://www.braze.com/braze-for-startups
+    note: A separate startup program referenced in Braze's llms.txt; terms are not published.

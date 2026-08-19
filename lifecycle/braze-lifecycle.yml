@@ -1,0 +1,69 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.braze.com/docs/help/release_notes,
+  https://www.braze.com/docs/releases/deprecations,
+  https://status.braze.com/api/v2/status.json (probed 2026-08-13)
+versioning:
+  scheme: date-based-releases
+  api_versioning: none
+  current: n/a
+  docs: https://www.braze.com/docs/help/release_notes
+  note: >-
+    Braze does not version the REST API as a whole — there is no /v1 prefix, no version
+    header and no version date. Versioning appears only per-endpoint where a breaking
+    change forced a parallel path (/subscription/status/set alongside
+    /v2/subscription/status/set; /preference_center/v1/*; /scim/v2/*; /transactional/v1/*).
+    The platform itself ships bi-weekly dated releases, and the SDKs are independently
+    semver'd, so "the current version of Braze" is a release date, not an API version.
+release_cadence:
+  frequency: bi-weekly
+  format: dated (e.g. "July 23, 2026")
+  url: https://www.braze.com/docs/help/release_notes
+  source_repo: https://github.com/braze-inc/release-notes
+deprecation:
+  policy_url: https://www.braze.com/docs/releases/deprecations
+  formal_policy: false
+  notice_period: not published
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Braze maintains a public deprecations page and announces end-of-support dates per
+    feature, but publishes no guaranteed notice period and emits no RFC 8594 Sunset or
+    Deprecation response headers. Historic notice has ranged from ~10 months (Windows SDK,
+    Baidu Push: announced 2022-03-24, EOL 2024-01-11) to a year (Shopify checkout.liquid:
+    phase 1 August 2024, full withdrawal August 2025).
+  recent:
+  - {feature: Shopify checkout.liquid, announced: '2024-08', end_of_support: '2025-08'}
+  - {feature: Braze Windows SDK, announced: '2022-03-24', end_of_support: '2024-01-11'}
+  - {feature: Baidu Push integration, announced: '2022-03-24', end_of_support: '2024-01-11'}
+  - {feature: Braze Segment Android SDK, note: '17.0.0 (April 2026 release) is the final version; migrate to Segment Kotlin'}
+  - {feature: News Feed, note: 'Removed from Unity SDK 11.0.0 and Xamarin SDK 9.0.0; the /feed/* export endpoints in openapi/braze-export-news-feed-api-openapi.yml describe a sunsetting product'}
+deprecated_operations:
+- ref: openapi/braze-export-news-feed-api-openapi.yml
+  operations: ['GET /feed/list', 'GET /feed/details', 'GET /feed/data_series']
+  basis: docs — News Feed is being removed across the SDK lines; the specs themselves carry no deprecated flag
+- ref: openapi/braze-email-lists-addresses-api-openapi.yml
+  operations: ['POST /email/blacklist']
+  basis: superseded by POST /email/blocklist, which is the same operation under the current name
+- ref: openapi/braze-subscription-groups-sms-and-whatsapp-api-openapi.yml
+  operations: ['POST /subscription/status/set']
+  basis: superseded by POST /v2/subscription/status/set
+  note: >-
+    0 of 95 operations in the harvested specs carry `deprecated: true`. Every entry above is
+    derived from the docs, not from the contract — an agent reading only the OpenAPI has no
+    way to know these are on the way out.
+status_page:
+  url: https://status.braze.com
+  provider: Statuspage
+  api: https://status.braze.com/api/v2/status.json
+  probed: '2026-08-13'
+  http_status: 200
+  observed: 'All Systems Operational (indicator: none)'
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA document. Uptime commitments are contractual and appear in the Braze MSA
+    / order form rather than on a published page; Enterprise editions advertise
+    "Enterprise SLAs" on the pricing page without stating a number.

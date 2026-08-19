@@ -1,0 +1,214 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Braze Export > Canvas API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Export > Canvas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export Canvas Data Series Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/canvas/data_series",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "canvas_id",
+                "value": "{{canvas_id}}",
+                "type": "query",
+                "description": "(Required) String\n\nSee [Canvas API Identifier](https://www.braze.com/docs/api/identifier_types/)."
+              },
+              {
+                "name": "ending_at",
+                "value": "2018-05-30T23:59:59-5:00",
+                "type": "query",
+                "description": "(Required) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data export should end. Defaults to time of the request."
+              },
+              {
+                "name": "starting_at",
+                "value": "2018-05-28T23:59:59-5:00",
+                "type": "query",
+                "description": "(Optional*) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string) \n\nDate on which the data export should begin.\n\n*Either `length` or `starting_at` is required."
+              },
+              {
+                "name": "length",
+                "value": "10",
+                "type": "query",
+                "description": "(Optional*) String\n\nMaximum number of days before `ending_at` to include in the returned series. Must be between 1 and 14 (inclusive).\n\n*Either `length` or `starting_at` is required."
+              },
+              {
+                "name": "include_variant_breakdown",
+                "value": "true",
+                "type": "query",
+                "description": "(Optional) Boolean\n\nWhether or not to include variant stats (defaults to false)."
+              },
+              {
+                "name": "include_step_breakdown",
+                "value": "true",
+                "type": "query",
+                "description": "(Optional) Boolean\n\nWhether or not to include step stats (defaults to false)."
+              },
+              {
+                "name": "include_deleted_step_data",
+                "value": "true",
+                "type": "query",
+                "description": "(Optional) Boolean\n\nWhether or not to include step stats for deleted steps (defaults to false)."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to export time series data for a Canvas. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.data_series` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"data\": {\n    \"name\": (string) Canvas name,\n    \"stats\": "
+        },
+        {
+          "info": {
+            "name": "Export Canvas Data Analytics Summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/canvas/data_summary",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "canvas_id",
+                "value": "{{canvas_id}}",
+                "type": "query",
+                "description": "(Required) String \n\nSee [Canvas API identifier](https://www.braze.com/docs/api/identifier_types/)."
+              },
+              {
+                "name": "ending_at",
+                "value": "2018-05-30T23:59:59-5:00",
+                "type": "query",
+                "description": "(Required) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\nDate on which the data export should end. Defaults to time of the request"
+              },
+              {
+                "name": "starting_at",
+                "value": "2018-05-28T23:59:59-5:00",
+                "type": "query",
+                "description": "(Optional*) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nDate on which the data export should begin.\n\n*Either `length` or `starting_at` is required."
+              },
+              {
+                "name": "length",
+                "value": "5",
+                "type": "query",
+                "description": "(Optional*) Integer\n\nMax number of days before `ending_at` to include in the returned series. Must be between 1 and 14 (inclusive).\n\n*Either `length` or `starting_at` is required."
+              },
+              {
+                "name": "include_variant_breakdown",
+                "value": "true",
+                "type": "query",
+                "description": "(Optional) Boolean\n\nWhether or not to include variant stats (defaults to false)."
+              },
+              {
+                "name": "include_step_breakdown",
+                "value": "true",
+                "type": "query",
+                "description": "(Optional) Boolean\n\nWhether or not to include step stats (defaults to false)."
+              },
+              {
+                "name": "include_deleted_step_data",
+                "value": "true",
+                "type": "query",
+                "description": "(Optional) Boolean\n\nWhether or not to include step stats for deleted steps (defaults to false)."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to export rollups of time series data for a Canvas, providing a concise summary of a Canvas results. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.data_summary` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n"
+        },
+        {
+          "info": {
+            "name": "Export Canvas Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/canvas/details",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "canvas_id",
+                "value": "{{canvas_identifier}}",
+                "type": "query",
+                "description": "(Required) String\n\nSee [Canvas API Identifier](https://www.braze.com/docs/api/identifier_types/) "
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to export metadata about a Canvas, such as the name, time created, current status, and more. \n  \n\nTo use this endpoint, youll need to generate an API key with the `canvas.details` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\nNote: All Canvas steps have a next_paths field, which is an array of `{name, next_step_id}` d"
+        },
+        {
+          "info": {
+            "name": "Export Canvas List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rest.iad-01.braze.com/canvas/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "(Optional) Integer\n\nThe page of Canvases to return, defaults to `0` (returns the first set of up to 100)."
+              },
+              {
+                "name": "include_archived",
+                "value": "",
+                "type": "query",
+                "description": "(Optional) Boolean\n\nWhether or not to include archived Canvases, defaults to `false`."
+              },
+              {
+                "name": "sort_direction",
+                "value": "desc",
+                "type": "query",
+                "description": "(Optional) String\n\n- Sort creation time from newest to oldest: pass in the value `desc`.\n- Sort creation time from oldest to newest: pass in the value `asc`.\n\nIf `sort_direction` is not included, the default order is oldest to newest."
+              },
+              {
+                "name": "last_edit.time[gt]",
+                "value": "2020-06-28T23:59:59-5:00",
+                "type": "query",
+                "description": "(Optional) Datetime ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string)\n\nFilters the results and only returns Canvases that were edited greater than the time provided till now. Format is `yyyy-MM-DDTHH:mm:ss`."
+              }
+            ]
+          },
+          "docs": "> Use this endpoint to export a list of Canvases, including the name, Canvas API identifier and associated tags. \n  \n\nCanvases are returned in groups of 100 sorted by time of creation (oldest to newest by default).\n\nArchived Canvases will not be included in the API response unless the `include_archived` field is specified. Canvases that are stopped but not archived, however, will be returned by default.\n\nTo use this endpoint, youll need to generate an API key with the `canvas.list` permission.\n\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

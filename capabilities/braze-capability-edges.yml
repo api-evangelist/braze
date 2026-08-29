@@ -1,0 +1,106 @@
+slug: braze
+provider: Braze
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Telecommunications
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 9
+edges:
+- tag: User Data
+  spec_file: braze-user-data-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.82
+  evidence: POST /users/merge Merge Users; POST /users/identify Identify Users; POST /users/alias/new
+    Create New User Aliases
+  reason: Identify, alias, merge and delete operations on customer profiles are identity resolution and
+    golden-record maintenance — Customer Data Management.
+- tag: Export > Segment
+  spec_file: braze-export-segment-api-openapi.yml
+  capability_id: BC-420.20
+  capability_id_l1: BC-420
+  capability_name: Customer Segmentation Management
+  confidence: 0.8
+  evidence: GET /segments/list Export Segment List; GET /segments/details Export Segment Details
+  reason: Operations expose customer segment definitions, membership size and analytics — directly the
+    Customer Segmentation Management capability of a customer engagement platform.
+- tag: SCIM
+  spec_file: braze-scim-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /scim/v2/Users Create New Dashboard User Account; DELETE /scim/v2/Users/{id} Remove Dashboard
+    User Account
+  reason: SCIM provisioning of dashboard (internal platform) user accounts is joiner-mover-leaver identity
+    lifecycle, i.e. Identity & Access Management. Not end-customer data despite the 'Users' noun.
+- tag: Export > Users
+  spec_file: braze-export-users-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.78
+  evidence: POST /users/export/ids Export User Profile by Identifier; POST /users/export/segment Export
+    User Profile by Segment
+  reason: Exports customer/user profile records by identifier or segment, i.e. access to the customer
+    profile data store — Customer Data Management. It is export-only, which slightly limits the fit to
+    full master-record stewardship.
+- tag: Email Lists & Addresses
+  spec_file: braze-email-lists-addresses-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.75
+  evidence: GET /email/unsubscribes Query List of Unsubscribed Email Addresses; POST /email/status Change
+    Email Subscription Status; POST /email/blocklist Blocklist Email Addresses
+  reason: Operations manage email subscription status, unsubscribes, bounces and blocklists — email deliverability
+    and consent list hygiene, a core digital/email marketing operations capability on this customer engagement
+    platform.
+- tag: Messaging > Schedule Mesages
+  spec_file: braze-messaging-schedule-mesages-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.72
+  evidence: POST /messages/schedule/create Create Scheduled Messages; POST /campaigns/trigger/schedule/create
+    Schedule API Triggered Campaigns
+  reason: 'Operations schedule, update and delete outbound marketing campaign/canvas messages across push,
+    email and SMS — this is marketing automation execution, i.e. Digital Marketing Management. Not a telecom
+    messaging/network capability: Braze is a campaign orchestration platform, not a carrier.'
+- tag: Messaging > Send Messages
+  spec_file: braze-messaging-send-messages-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.72
+  evidence: POST /campaigns/trigger/send Send Campaign Messages via API Triggered Delivery
+  reason: Immediate and API-triggered dispatch of campaign and transactional messages across channels
+    — marketing automation delivery. Mapped to Digital Marketing Management rather than any telecom messaging
+    capability since the vendor orchestrates campaigns, not network services.
+- tag: Export > Campaign
+  spec_file: braze-export-campaign-api-openapi.yml
+  capability_id: BC-400.50
+  capability_id_l1: BC-400
+  capability_name: Marketing Operations Management
+  confidence: 0.7
+  evidence: GET /campaigns/data_series Export Campaign Analytics; GET /sends/data_series Export Send Analytics
+  reason: Read-only export of marketing campaign and send performance analytics, i.e. marketing measurement
+    and reporting rather than campaign authoring; Marketing Operations Management explicitly covers marketing
+    measurement.
+- tag: User Data > External ID Migration
+  spec_file: braze-user-data-external-id-migration-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.7
+  evidence: POST /users/external_ids/rename Rename External ID
+  reason: Renaming and removing external identifiers on customer profiles is customer master identifier
+    stewardship, a Customer Data Management activity.

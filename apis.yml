@@ -468,6 +468,9 @@ apis:
   - type: GraphQL
     url: graphql/braze-graphql.md
 common:
+- type: CapabilityMap
+  url: capabilities/braze-capability-edges.yml
+  name: Braze Business Capability Map
 - type: Authentication
   url: authentication/braze-authentication.yml
 - type: VulnerabilityDisclosure

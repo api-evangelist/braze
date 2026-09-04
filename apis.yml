@@ -39,7 +39,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/braze.png
 access: 3rd-Party
 created: '2025-02-06'
 modified: '2026-08-13'
-position: Consumer
+position: Consuming
 description: Braze is a leading customer engagement platform providing REST APIs for
   managing user profiles, orchestrating multi-channel messaging campaigns, and exporting
   analytics. The platform supports email, SMS, push notifications, in-app messages,

@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Braze SMS API
-  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  description: The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data.
   version: 1.0.0
 servers:
 - url: https://rest.iad-01.braze.com
@@ -35,7 +35,71 @@ paths:
       tags:
       - SMS
       summary: Query Invalid Phone Numbers
-      description: "> Use this endpoint to pull a list of phone numbers that have been deemed invalid within a certain time frame. \n  \n\nTo use this endpoint, youll need to generate an API key with the `sms.invalid_phone_numbers` permission.\n\n- If you provide a `start_date`, an `end_date`, and `phone_numbers`, we prioritize the given phone numbers and disregard the date range.\n- If your date range has more than the `limit` number of invalid phone numbers, you will need to make multiple API calls with increasing the `offset` each time until a call returns either fewer than `limit` or zero results.\n    \n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\nEntries are listed in descending order.\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"sms\": [\n    {\n      \"phone\": \"12345678900\",\n      \"invalid_detected_at\": \"2016-08-25 15:24:32 +0000\"\n    },\n    {\n      \"phone\": \"12345678901\",\n      \"invalid_detected_at\": \"2016-08-24 17:41:58 +0000\"\n    },\n    {\n      \"phone\": \"12345678902\",\n      \"invalid_detected_at\": \"2016-08-24 12:01:13 +0000\"\n    }\n  ],\n  \"message\": \"success\"\n}\n\n```"
+      description: '> Use this endpoint to pull a list of phone numbers that have been deemed invalid within a certain time frame.
+
+
+        To use this endpoint, youll need to generate an API key with the `sms.invalid_phone_numbers` permission.
+
+
+        - If you provide a `start_date`, an `end_date`, and `phone_numbers`, we prioritize the given phone numbers and disregard the date range.
+
+        - If your date range has more than the `limit` number of invalid phone numbers, you will need to make multiple API calls with increasing the `offset` each time until a call returns either fewer than `limit` or zero results.
+
+
+        ## Rate limit
+
+
+        We apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in API rate limits.
+
+
+        ## Response
+
+
+        Entries are listed in descending order.
+
+
+        ``` json
+
+        Content-Type: application/json
+
+        Authorization: Bearer YOUR-REST-API-KEY
+
+        {
+
+        "sms": [
+
+        {
+
+        "phone": "12345678900",
+
+        "invalid_detected_at": "2016-08-25 15:24:32 +0000"
+
+        },
+
+        {
+
+        "phone": "12345678901",
+
+        "invalid_detected_at": "2016-08-24 17:41:58 +0000"
+
+        },
+
+        {
+
+        "phone": "12345678902",
+
+        "invalid_detected_at": "2016-08-24 12:01:13 +0000"
+
+        }
+
+        ],
+
+        "message": "success"
+
+        }
+
+
+        ```'
       parameters:
       - name: Authorization
         in: header
@@ -99,12 +163,36 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getSmsInvalidPhoneNumbers
+      x-operation-id-source: derived
   /sms/invalid_phone_numbers/remove:
     post:
       tags:
       - SMS
       summary: Remove Invalid Phone Numbers
-      description: "> Use this endpoint to remove invalid phone numbers from Brazes invalid list. \n  \n\nTo use this endpoint, youll need to generate an API key with the `sms.invalid_phone_numbers.remove` permission.\n\nThis can be used to re-validate phone numbers after they have been marked as invalid.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `phone_number` | Required | Array of strings in e.164 format | An array of up to 50 phone numbers to modify. |"
+      description: '> Use this endpoint to remove invalid phone numbers from Brazes invalid list.
+
+
+        To use this endpoint, youll need to generate an API key with the `sms.invalid_phone_numbers.remove` permission.
+
+
+        This can be used to re-validate phone numbers after they have been marked as invalid.
+
+
+        ## Rate limit
+
+
+        We apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in API rate limits.
+
+
+        ## Request parameters
+
+
+        | Parameter | Required | Data Type | Description |
+
+        | --- | --- | --- | --- |
+
+        | `phone_number` | Required | Array of strings in e.164 format | An array of up to 50 phone numbers to modify. |'
       requestBody:
         content:
           application/json:
@@ -155,28 +243,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: postSmsInvalidPhoneNumbersRemove
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: 403 Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: 401 Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: 429 Rate Limited
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: 404 Not Found
       content:
         application/json:
           schema:
@@ -187,8 +259,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalServerError:
       description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
       content:
         application/json:
           schema:

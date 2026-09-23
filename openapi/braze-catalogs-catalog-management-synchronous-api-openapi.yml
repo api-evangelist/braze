@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Braze Catalogs > Catalog Management > Synchronous API
-  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  description: The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data.
   version: 1.0.0
 servers:
 - url: https://rest.iad-01.braze.com
@@ -34,7 +34,105 @@ paths:
       tags:
       - Catalogs > Catalog Management > Synchronous
       summary: Delete Catalog
-      description: "> Use this endpoint to delete a catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.delete` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 5 requests per minute between all synchronous catalog endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalog_name` | Required | String | Name of the catalog. |\n\n## Response\n\nThere are two status code responses for this endpoint: `200` and `404`.\n\n### Example success response\n\nThe status code `200` could return the following response body.\n\n``` json\n{\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `404` could return the following response body. Refer to [Troubleshooting](https://www.braze.com/docs/api/endpoints/catalogs/catalog_management/synchronous/delete_catalog/#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"catalog-not-found\",\n      \"message\": \"Could not find catalog\",\n      \"parameters\": [\n        \"catalog_name\"\n      ],\n      \"parameter_values\": [\n        \"restaurants\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `catalog-not-found` | Check that the catalog name is valid. |"
+      description: '> Use this endpoint to delete a catalog.
+
+
+        To use this endpoint, youll need to generate an API key with the `catalogs.delete` permission.
+
+
+        ## Rate limit
+
+
+        This endpoint has a shared rate limit of 5 requests per minute between all synchronous catalog endpoints, as documented in API rate limits.
+
+
+        ## Path parameters
+
+
+        | Parameter | Required | Data Type | Description |
+
+        | --- | --- | --- | --- |
+
+        | `catalog_name` | Required | String | Name of the catalog. |
+
+
+        ## Response
+
+
+        There are two status code responses for this endpoint: `200` and `404`.
+
+
+        ### Example success response
+
+
+        The status code `200` could return the following response body.
+
+
+        ``` json
+
+        {
+
+        "message": "success"
+
+        }
+
+
+        ```
+
+
+        ### Example error response
+
+
+        The status code `404` could return the following response body. Refer to Troubleshooting for more information about errors you may encounter.
+
+
+        ``` json
+
+        {
+
+        "errors": [
+
+        {
+
+        "id": "catalog-not-found",
+
+        "message": "Could not find catalog",
+
+        "parameters": [
+
+        "catalog_name"
+
+        ],
+
+        "parameter_values": [
+
+        "restaurants"
+
+        ]
+
+        }
+
+        ],
+
+        "message": "Invalid Request"
+
+        }
+
+
+        ```
+
+
+        ## Troubleshooting
+
+
+        The following table lists possible returned errors and their associated troubleshooting steps.
+
+
+        | Error | Troubleshooting |
+
+        | --- | --- |
+
+        | `catalog-not-found` | Check that the catalog name is valid. |'
       parameters:
       - name: Content-Type
         in: header
@@ -70,12 +168,197 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: deleteCatalogsByCatalogName
+      x-operation-id-source: derived
   /catalogs:
     get:
       tags:
       - Catalogs > Catalog Management > Synchronous
       summary: List Catalogs
-      description: "> Use this endpoint to return a list of catalogs in a workspace. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.get` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 5 requests per minute between all synchronous catalog endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Path and request parameters\n\nThere are no path or request parameters for this endpoint.\n\n## Example request\n\n```\ncurl --location --request GET 'https://rest.iad-03.braze.com/catalogs' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\n### Example success response\n\nThe status code `200` could return the following response body.\n\n``` json\n{\n  \"catalogs\": [\n    {\n      \"description\": \"My Restaurants\",\n      \"fields\": [\n        {\n          \"name\": \"id\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"Name\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"City\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"Cuisine\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"Rating\",\n          \"type\": \"number\"\n        },\n        {\n          \"name\": \"Loyalty_Program\",\n          \"type\": \"boolean\"\n        },\n        {\n          \"name\": \"Created_At\",\n          \"type\": \"time\"\n        }\n      ],\n      \"name\": \"restaurants\",\n      \"num_items\": 10,\n      \"updated_at\": \"2022-11-02T20:04:06.879+00:00\"\n    },\n    {\n      \"description\": \"My Catalog\",\n      \"fields\": [\n        {\n          \"name\": \"id\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"string_field\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"number_field\",\n          \"type\": \"number\"\n        },\n        {\n          \"name\": \"boolean_field\",\n          \"type\": \"boolean\"\n        },\n        {\n          \"name\": \"time_field\",\n          \"type\": \"time\"\n        },\n      ],\n      \"name\": \"my_catalog\",\n      \"num_items\": 3,\n      \"updated_at\": \"2022-11-02T09:03:19.967+00:00\"\n    },\n  ],\n  \"message\": \"success\"\n}\n\n```"
+      description: '> Use this endpoint to return a list of catalogs in a workspace.
+
+
+        To use this endpoint, youll need to generate an API key with the `catalogs.get` permission.
+
+
+        ## Rate limit
+
+
+        This endpoint has a shared rate limit of 5 requests per minute between all synchronous catalog endpoints, as documented in API rate limits.
+
+
+        ## Path and request parameters
+
+
+        There are no path or request parameters for this endpoint.
+
+
+        ## Example request
+
+
+        ```
+
+        curl --location --request GET ''https://rest.iad-03.braze.com/catalogs'' \
+
+        --header ''Content-Type: application/json'' \
+
+        --header ''Authorization: Bearer YOUR-REST-API-KEY''
+
+
+        ```
+
+
+        ## Response
+
+
+        ### Example success response
+
+
+        The status code `200` could return the following response body.
+
+
+        ``` json
+
+        {
+
+        "catalogs": [
+
+        {
+
+        "description": "My Restaurants",
+
+        "fields": [
+
+        {
+
+        "name": "id",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "Name",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "City",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "Cuisine",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "Rating",
+
+        "type": "number"
+
+        },
+
+        {
+
+        "name": "Loyalty_Program",
+
+        "type": "boolean"
+
+        },
+
+        {
+
+        "name": "Created_At",
+
+        "type": "time"
+
+        }
+
+        ],
+
+        "name": "restaurants",
+
+        "num_items": 10,
+
+        "updated_at": "2022-11-02T20:04:06.879+00:00"
+
+        },
+
+        {
+
+        "description": "My Catalog",
+
+        "fields": [
+
+        {
+
+        "name": "id",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "string_field",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "number_field",
+
+        "type": "number"
+
+        },
+
+        {
+
+        "name": "boolean_field",
+
+        "type": "boolean"
+
+        },
+
+        {
+
+        "name": "time_field",
+
+        "type": "time"
+
+        },
+
+        ],
+
+        "name": "my_catalog",
+
+        "num_items": 3,
+
+        "updated_at": "2022-11-02T09:03:19.967+00:00"
+
+        },
+
+        ],
+
+        "message": "success"
+
+        }
+
+
+        ```'
       parameters:
       - name: Content-Type
         in: header
@@ -106,11 +389,318 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getCatalogs
+      x-operation-id-source: derived
     post:
       tags:
       - Catalogs > Catalog Management > Synchronous
       summary: Create Catalog
-      description: "> Use this endpoint to create a catalog. \n  \n\nTo use this endpoint, youll need to generate an API key with the `catalogs.create` permission.\n\n## Rate limit\n\nThis endpoint has a shared rate limit of 5 requests per minute between all synchronous catalog endpoints, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `catalogs` | Required | Array | An array that contains catalog objects. Only one catalog object is allowed for this request. |\n\n### Catalog object parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `name` | Required | String | The name of the catalog that you want to create. |\n| `description` | Required | String | The description of the catalog that you want to create. |\n| `fields` | Required | Array | An array of objects where the object contains keys `name` and `type`. |\n\n## Example request\n\n```\ncurl --location --request POST 'https://rest.iad-03.braze.com/catalogs' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY' \\\n--data-raw '{\n  \"catalogs\": [\n    {\n      \"name\": \"restaurants\",\n      \"description\": \"My Restaurants\",\n      \"fields\": [\n        {\n          \"name\": \"id\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"Name\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"City\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"Cuisine\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"Rating\",\n          \"type\": \"number\"\n        },\n        {\n          \"name\": \"Loyalty_Program\",\n          \"type\": \"boolean\"\n        },\n        {\n          \"name\": \"Created_At\",\n          \"type\": \"time\"\n        }\n      ]\n    }\n  ]\n}'\n\n```\n\n## Response\n\nThere are two status code responses for this endpoint: `201` and `400`.\n\n### Example success response\n\nThe status code `201` could return the following response body.\n\n``` json\n{\n  \"catalogs\": [\n    {\n      \"description\": \"My Restaurants\",\n      \"fields\": [\n        {\n          \"name\": \"id\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"Name\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"City\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"Cuisine\",\n          \"type\": \"string\"\n        },\n        {\n          \"name\": \"Rating\",\n          \"type\": \"number\"\n        },\n        {\n          \"name\": \"Loyalty_Program\",\n          \"type\": \"boolean\"\n        },\n        {\n          \"name\": \"Created_At\",\n          \"type\": \"time\"\n        }\n      ],\n      \"name\": \"restaurants\",\n      \"num_items\": 0,\n      \"updated_at\": \"2022-11-02T20:04:06.879+00:00\"\n    }\n  ],\n  \"message\": \"success\"\n}\n\n```\n\n### Example error response\n\nThe status code `400` could return the following response body. Refer to [Troubleshooting](#troubleshooting) for more information about errors you may encounter.\n\n``` json\n{\n  \"errors\": [\n    {\n      \"id\": \"catalog-name-already-exists\",\n      \"message\": \"A catalog with that name already exists\",\n      \"parameters\": [\n        \"name\"\n      ],\n      \"parameter_values\": [\n        \"restaurants\"\n      ]\n    }\n  ],\n  \"message\": \"Invalid Request\"\n}\n\n```\n\n## Troubleshooting\n\nThe following table lists possible returned errors and their associated troubleshooting steps.\n\n| Error | Troubleshooting |\n| --- | --- |\n| `catalog-array-invalid` | `catalogs` must be an array of objects. |\n| `catalog-name-already-exists` | Catalog with that name already exists. |\n| `catalog-name-too-large` | Character limit for a catalog name is 250. |\n| `description-too-long` | Character limit for description is 250. |\n| `field-names-not-unique` | The same field name is referenced twice. |\n| `field-names-too-large` | Character limit for a field name is 250. |\n| `id-not-first-column` | The `id` must be the first field in the array. Check that the type is a string. |\n| `invalid_catalog_name` | Catalog name can only include letters, numbers, hyphens, and underscores. |\n| `invalid-field-names` | Fields can only include letters, numbers, hyphens, and underscores. |\n| `invalid-field-types` | Make sure the field types are valid. |\n| `invalid-fields` | `fields` is not formatted correctly. |\n| `reached-company-catalogs-limit` | Maximum number of catalogs reached. Contact your Braze account manager for more information. |\n| `too-many-catalog-atoms` | You can only create one catalog per request. |\n| `too-many-fields` | Number of fields limit is 30. |"
+      description: '> Use this endpoint to create a catalog.
+
+
+        To use this endpoint, youll need to generate an API key with the `catalogs.create` permission.
+
+
+        ## Rate limit
+
+
+        This endpoint has a shared rate limit of 5 requests per minute between all synchronous catalog endpoints, as documented in API rate limits.
+
+
+        ## Request parameters
+
+
+        | Parameter | Required | Data Type | Description |
+
+        | --- | --- | --- | --- |
+
+        | `catalogs` | Required | Array | An array that contains catalog objects. Only one catalog object is allowed for this request. |
+
+
+        ### Catalog object parameters
+
+
+        | Parameter | Required | Data Type | Description |
+
+        | --- | --- | --- | --- |
+
+        | `name` | Required | String | The name of the catalog that you want to create. |
+
+        | `description` | Required | String | The description of the catalog that you want to create. |
+
+        | `fields` | Required | Array | An array of objects where the object contains keys `name` and `type`. |
+
+
+        ## Example request
+
+
+        ```
+
+        curl --location --request POST ''https://rest.iad-03.braze.com/catalogs'' \
+
+        --header ''Content-Type: application/json'' \
+
+        --header ''Authorization: Bearer YOUR-REST-API-KEY'' \
+
+        --data-raw ''{
+
+        "catalogs": [
+
+        {
+
+        "name": "restaurants",
+
+        "description": "My Restaurants",
+
+        "fields": [
+
+        {
+
+        "name": "id",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "Name",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "City",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "Cuisine",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "Rating",
+
+        "type": "number"
+
+        },
+
+        {
+
+        "name": "Loyalty_Program",
+
+        "type": "boolean"
+
+        },
+
+        {
+
+        "name": "Created_At",
+
+        "type": "time"
+
+        }
+
+        ]
+
+        }
+
+        ]
+
+        }''
+
+
+        ```
+
+
+        ## Response
+
+
+        There are two status code responses for this endpoint: `201` and `400`.
+
+
+        ### Example success response
+
+
+        The status code `201` could return the following response body.
+
+
+        ``` json
+
+        {
+
+        "catalogs": [
+
+        {
+
+        "description": "My Restaurants",
+
+        "fields": [
+
+        {
+
+        "name": "id",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "Name",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "City",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "Cuisine",
+
+        "type": "string"
+
+        },
+
+        {
+
+        "name": "Rating",
+
+        "type": "number"
+
+        },
+
+        {
+
+        "name": "Loyalty_Program",
+
+        "type": "boolean"
+
+        },
+
+        {
+
+        "name": "Created_At",
+
+        "type": "time"
+
+        }
+
+        ],
+
+        "name": "restaurants",
+
+        "num_items": 0,
+
+        "updated_at": "2022-11-02T20:04:06.879+00:00"
+
+        }
+
+        ],
+
+        "message": "success"
+
+        }
+
+
+        ```
+
+
+        ### Example error response
+
+
+        The status code `400` could return the following response body. Refer to Troubleshooting for more information about errors you may encounter.
+
+
+        ``` json
+
+        {
+
+        "errors": [
+
+        {
+
+        "id": "catalog-name-already-exists",
+
+        "message": "A catalog with that name already exists",
+
+        "parameters": [
+
+        "name"
+
+        ],
+
+        "parameter_values": [
+
+        "restaurants"
+
+        ]
+
+        }
+
+        ],
+
+        "message": "Invalid Request"
+
+        }
+
+
+        ```
+
+
+        ## Troubleshooting
+
+
+        The following table lists possible returned errors and their associated troubleshooting steps.
+
+
+        | Error | Troubleshooting |
+
+        | --- | --- |
+
+        | `catalog-array-invalid` | `catalogs` must be an array of objects. |
+
+        | `catalog-name-already-exists` | Catalog with that name already exists. |
+
+        | `catalog-name-too-large` | Character limit for a catalog name is 250. |
+
+        | `description-too-long` | Character limit for description is 250. |
+
+        | `field-names-not-unique` | The same field name is referenced twice. |
+
+        | `field-names-too-large` | Character limit for a field name is 250. |
+
+        | `id-not-first-column` | The `id` must be the first field in the array. Check that the type is a string. |
+
+        | `invalid_catalog_name` | Catalog name can only include letters, numbers, hyphens, and underscores. |
+
+        | `invalid-field-names` | Fields can only include letters, numbers, hyphens, and underscores. |
+
+        | `invalid-field-types` | Make sure the field types are valid. |
+
+        | `invalid-fields` | `fields` is not formatted correctly. |
+
+        | `reached-company-catalogs-limit` | Maximum number of catalogs reached. Contact your Braze account manager for more information. |
+
+        | `too-many-catalog-atoms` | You can only create one catalog per request. |
+
+        | `too-many-fields` | Number of fields limit is 30. |'
       requestBody:
         content:
           application/json:
@@ -178,28 +768,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: postCatalogs
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: 403 Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: 401 Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: 429 Rate Limited
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: 404 Not Found
       content:
         application/json:
           schema:
@@ -210,8 +784,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalServerError:
       description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
       content:
         application/json:
           schema:

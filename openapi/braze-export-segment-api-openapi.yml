@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Braze Export > Segment API
-  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  description: The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data.
   version: 1.0.0
 servers:
 - url: https://rest.iad-01.braze.com
@@ -34,7 +34,59 @@ paths:
       tags:
       - Export > Segment
       summary: Export Segment List
-      description: "> Use this endpoint to export a list of segments, each of which will include its name, Segment API identifier, and whether it has analytics tracking enabled. \n  \n\nThe segments are returned in groups of 100 sorted by time of creation (oldest to newest by default). Archived segments are not included.\n\nTo use this endpoint, youll need to generate an API key with the `segments.list` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"segments\" : [\n        {\n            \"id\" : (string) Segment API Identifier,\n            \"name\" : (string) segment name,\n            \"analytics_tracking_enabled\" : (boolean) whether the segment has analytics tracking enabled,\n            \"tags\" : (array) tag names associated with the segment\n        },\n        ...\n    ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      description: '> Use this endpoint to export a list of segments, each of which will include its name, Segment API identifier, and whether it has analytics tracking enabled.
+
+
+        The segments are returned in groups of 100 sorted by time of creation (oldest to newest by default). Archived segments are not included.
+
+
+        To use this endpoint, youll need to generate an API key with the `segments.list` permission.
+
+
+        ### Rate limit
+
+
+        We apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in API rate limits.
+
+
+        ## Response
+
+
+        ``` json
+
+        Content-Type: application/json
+
+        Authorization: Bearer YOUR-REST-API-KEY
+
+        {
+
+        "message": (required, string) the status of the export, returns ''success'' when completed without errors,
+
+        "segments" : [
+
+        {
+
+        "id" : (string) Segment API Identifier,
+
+        "name" : (string) segment name,
+
+        "analytics_tracking_enabled" : (boolean) whether the segment has analytics tracking enabled,
+
+        "tags" : (array) tag names associated with the segment
+
+        },
+
+        ...
+
+        ]
+
+        }
+
+
+        ```
+
+
+        > **Tip:** For help with CSV and API exports, visit Export troubleshooting.'
       parameters:
       - name: Authorization
         in: header
@@ -83,12 +135,62 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getSegmentsList
+      x-operation-id-source: derived
   /segments/data_series:
     get:
       tags:
       - Export > Segment
       summary: Export Segment Analytics
-      description: "> Use this endpoint to retrieve a daily series of the estimated size of a segment over time. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `segment_id` can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `segments.data_series` permission.\n\n### Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n    \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n    \"data\" : [\n        {\n            \"time\" : (string) date as ISO 8601 date,\n            \"size\" : (int) size of the segment on that date\n        },\n        ...\n    ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      description: '> Use this endpoint to retrieve a daily series of the estimated size of a segment over time.
+
+
+        Note: If you are using our older navigation, `segment_id` can be found at **Developer Console > API Settings**.
+
+
+        To use this endpoint, youll need to generate an API key with the `segments.data_series` permission.
+
+
+        ### Rate limit
+
+
+        We apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in API rate limits.
+
+
+        ## Response
+
+
+        ``` json
+
+        Content-Type: application/json
+
+        Authorization: Bearer YOUR-REST-API-KEY
+
+        {
+
+        "message": (required, string) the status of the export, returns ''success'' when completed without errors,
+
+        "data" : [
+
+        {
+
+        "time" : (string) date as ISO 8601 date,
+
+        "size" : (int) size of the segment on that date
+
+        },
+
+        ...
+
+        ]
+
+        }
+
+
+        ```
+
+
+        > **Tip:** For help with CSV and API exports, visit Export troubleshooting.'
       parameters:
       - name: Authorization
         in: header
@@ -144,12 +246,60 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getSegmentsDataSeries
+      x-operation-id-source: derived
   /segments/details:
     get:
       tags:
       - Export > Segment
       summary: Export Segment Details
-      description: "> Use this endpoint to retrieve relevant information on a segment, which can be identified by the `segment_id`. \n  \n\nNote: If you are using our [older navigation](https://www.braze.com/docs/navigation), `segment_id` can be found at **Developer Console > API Settings**.\n\nTo use this endpoint, youll need to generate an API key with the `segments.details` permission.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n      \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n      \"created_at\" : (string) date created as ISO 8601 date,\n      \"updated_at\" : (string) date last updated as ISO 8601 date,\n      \"name\" : (string) segment name,\n      \"description\" : (string) human-readable description of filters,\n      \"text_description\" : (string) segment description, \n      \"tags\" : (array) tag names associated with the segment\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      description: '> Use this endpoint to retrieve relevant information on a segment, which can be identified by the `segment_id`.
+
+
+        Note: If you are using our older navigation, `segment_id` can be found at **Developer Console > API Settings**.
+
+
+        To use this endpoint, youll need to generate an API key with the `segments.details` permission.
+
+
+        ## Rate limit
+
+
+        We apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in API rate limits.
+
+
+        ## Response
+
+
+        ``` json
+
+        Content-Type: application/json
+
+        Authorization: Bearer YOUR-REST-API-KEY
+
+        {
+
+        "message": (required, string) the status of the export, returns ''success'' when completed without errors,
+
+        "created_at" : (string) date created as ISO 8601 date,
+
+        "updated_at" : (string) date last updated as ISO 8601 date,
+
+        "name" : (string) segment name,
+
+        "description" : (string) human-readable description of filters,
+
+        "text_description" : (string) segment description,
+
+        "tags" : (array) tag names associated with the segment
+
+        }
+
+
+        ```
+
+
+        > **Tip:** For help with CSV and API exports, visit Export troubleshooting.'
       parameters:
       - name: Authorization
         in: header
@@ -187,28 +337,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getSegmentsDetails
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: 403 Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: 401 Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: 429 Rate Limited
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: 404 Not Found
       content:
         application/json:
           schema:
@@ -219,8 +353,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalServerError:
       description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
       content:
         application/json:
           schema:

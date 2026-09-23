@@ -1,7 +1,7 @@
 {
   "provider": "braze",
   "sources": [
-    "braze-openapi.yml"
+    "_original/braze-openapi.yml"
   ],
   "outputs": [
     "braze-catalogs-catalog-items-asynchronous-api-openapi.yml",
@@ -29,11 +29,38 @@
     "braze-user-data-api-openapi.yml",
     "braze-user-data-external-id-migration-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/braze-openapi.yml"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "braze-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "braze-catalogs-catalog-items-asynchronous-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-catalogs-catalog-items-synchronous-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-catalogs-catalog-management-synchronous-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-email-lists-addresses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-export-campaign-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-export-canvas-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-export-custom-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-export-kpi-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-export-news-feed-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-export-purchases-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-export-segment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-export-session-analytics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-export-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-messaging-live-activities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-messaging-schedule-mesages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-messaging-send-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-preference-center-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-scim-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-sms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-subscription-groups-sms-and-whatsapp-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-templates-content-blocks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-templates-email-templates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-user-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "braze-user-data-external-id-migration-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

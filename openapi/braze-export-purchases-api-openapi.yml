@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Braze Export > Purchases API
-  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  description: The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data.
   version: 1.0.0
 servers:
 - url: https://rest.iad-01.braze.com
@@ -34,7 +34,44 @@ paths:
       tags:
       - Export > Purchases
       summary: Export Product IDs
-      description: "> Use this endpoint to return a paginated lists of product IDs. \n  \n\nTo use this endpoint, youll need to generate an API key with the `purchases.product_list` permission.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/events/list` endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"products\": [\n    \"product_name\" (string), the name of the product\n  ],\n  \"message\": \"success\"\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      description: '> Use this endpoint to return a paginated lists of product IDs.
+
+
+        To use this endpoint, youll need to generate an API key with the `purchases.product_list` permission.
+
+
+        ## Rate limit
+
+
+        For customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/events/list` endpoint, as documented in API rate limits.
+
+
+        ## Response
+
+
+        ``` json
+
+        Content-Type: application/json
+
+        Authorization: Bearer YOUR-REST-API-KEY
+
+        {
+
+        "products": [
+
+        "product_name" (string), the name of the product
+
+        ],
+
+        "message": "success"
+
+        }
+
+
+        ```
+
+
+        > **Tip:** For help with CSV and API exports, visit Export troubleshooting.'
       parameters:
       - name: Authorization
         in: header
@@ -69,12 +106,72 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getPurchasesProductList
+      x-operation-id-source: derived
   /purchases/quantity_series:
     get:
       tags:
       - Export > Purchases
       summary: Export Number of Purchases
-      description: "> Use this endpoint to return the total number of purchases in your app over a time range. \n  \n\nTo use this endpoint, youll need to generate an API key with the `purchases.quantity_series` permission.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/events/list` endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Example request\n\n```\ncurl --location --request GET 'https://rest.iad-01.braze.com/purchases/quantity_series?length=100' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n  \"data\" : [\n    {\n      \"time\" : (string) the date as ISO 8601 date,\n      \"purchase_quantity\" : (int) the number of items purchased in the time period\n      },\n    ...\n  ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      description: '> Use this endpoint to return the total number of purchases in your app over a time range.
+
+
+        To use this endpoint, youll need to generate an API key with the `purchases.quantity_series` permission.
+
+
+        ## Rate limit
+
+
+        For customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/events/list` endpoint, as documented in API rate limits.
+
+
+        ## Example request
+
+
+        ```
+
+        curl --location --request GET ''https://rest.iad-01.braze.com/purchases/quantity_series?length=100'' \
+
+        --header ''Authorization: Bearer YOUR-REST-API-KEY''
+
+
+        ```
+
+
+        ## Response
+
+
+        ``` json
+
+        Content-Type: application/json
+
+        Authorization: Bearer YOUR-REST-API-KEY
+
+        {
+
+        "message": (required, string) the status of the export, returns ''success'' when completed without errors,
+
+        "data" : [
+
+        {
+
+        "time" : (string) the date as ISO 8601 date,
+
+        "purchase_quantity" : (int) the number of items purchased in the time period
+
+        },
+
+        ...
+
+        ]
+
+        }
+
+
+        ```
+
+
+        > **Tip:** For help with CSV and API exports, visit Export troubleshooting.'
       parameters:
       - name: Authorization
         in: header
@@ -140,12 +237,72 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getPurchasesQuantitySeries
+      x-operation-id-source: derived
   /purchases/revenue_series:
     get:
       tags:
       - Export > Purchases
       summary: Export Revenue Data by Time
-      description: "> Use this endpoint to return the total money spent in your app over a time range. \n  \n\nTo use this endpoint, youll need to generate an API key with the `purchases.revenue_series` permission.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/events/list` endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Example request\n\n```\ncurl --location --request GET 'https://rest.iad-01.braze.com/purchases/revenue_series?length=100' \\\n--header 'Authorization: Bearer YOUR-REST-API-KEY'\n\n```\n\n## Response\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"message\": (required, string) the status of the export, returns 'success' when completed without errors,\n  \"data\" : [\n    {\n      \"time\" : (string) the date as ISO 8601 date,\n      \"revenue\" : (int) amount of revenue for the time period\n      },\n    ...\n  ]\n}\n\n```\n\n> **Tip:** For help with CSV and API exports, visit [Export troubleshooting](https://www.braze.com/docs/user_guide/data_and_analytics/export_braze_data/export_troubleshooting/)."
+      description: '> Use this endpoint to return the total money spent in your app over a time range.
+
+
+        To use this endpoint, youll need to generate an API key with the `purchases.revenue_series` permission.
+
+
+        ## Rate limit
+
+
+        For customers who onboarded with Braze on or after September 16, 2021, we apply a shared rate limit of 1,000 requests per hour to this endpoint. This rate limit is shared with the `/events/list` endpoint, as documented in API rate limits.
+
+
+        ## Example request
+
+
+        ```
+
+        curl --location --request GET ''https://rest.iad-01.braze.com/purchases/revenue_series?length=100'' \
+
+        --header ''Authorization: Bearer YOUR-REST-API-KEY''
+
+
+        ```
+
+
+        ## Response
+
+
+        ``` json
+
+        Content-Type: application/json
+
+        Authorization: Bearer YOUR-REST-API-KEY
+
+        {
+
+        "message": (required, string) the status of the export, returns ''success'' when completed without errors,
+
+        "data" : [
+
+        {
+
+        "time" : (string) the date as ISO 8601 date,
+
+        "revenue" : (int) amount of revenue for the time period
+
+        },
+
+        ...
+
+        ]
+
+        }
+
+
+        ```
+
+
+        > **Tip:** For help with CSV and API exports, visit Export troubleshooting.'
       parameters:
       - name: Authorization
         in: header
@@ -211,28 +368,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getPurchasesRevenueSeries
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: 403 Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: 401 Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: 429 Rate Limited
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: 404 Not Found
       content:
         application/json:
           schema:
@@ -243,8 +384,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalServerError:
       description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
       content:
         application/json:
           schema:

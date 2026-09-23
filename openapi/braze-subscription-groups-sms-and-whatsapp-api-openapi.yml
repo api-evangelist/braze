@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Braze Subscription Groups > SMS and WhatsApp API
-  description: 'The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data. When Radar geofence or trip tracking events are generated, custom events and user attributes are sent to Braze in real-time. These events and attributes can then be used to trigger location-based campaigns, power last-mile pickup and delivery operations, monitor fleet and shipping logistics, or build user segments based on location patterns. '
+  description: The Braze and Radar integration allows you to access sophisticated location-based campaign triggers and user profile enrichment with rich, first-party location data.
   version: 1.0.0
 servers:
 - url: https://rest.iad-01.braze.com
@@ -33,8 +33,53 @@ paths:
     get:
       tags:
       - Subscription Groups > SMS and WhatsApp
-      summary: List User's  Subscription Group Status - SMS
-      description: "> Use this endpoint to get the subscription state of a user in a subscription group. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.status.get` permission.\n\nThese groups will be available on the **Subscription Group** page. The response from this endpoint will include the external ID and either subscribed, unsubscribed, or unknown for the specific subscription group requested in the API call. This can be used to update the subscription group state in subsequent API calls or to be displayed on a hosted web page.\n\n\\*Either `external_id` or `phone` are required. When both are submitted, only the external_id is used for querying and the phone number is applied to that user.\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/).\n\n## Response\n\nAll successful responses will return `subscribed`, `unsubscribed`, or `unknown` depending on status and user history with the subscription group.\n\n``` json\nContent-Type: application/json\nAuthorization: Bearer YOUR-REST-API-KEY\n{\n  \"status\": {\n    \"1\": \"Unsubscribed\",\n    \"2\": \"Subscribed\"\n  },\n  \"message\": \"success\"\n}\n\n```"
+      summary: List User's Subscription Group Status - SMS
+      description: '> Use this endpoint to get the subscription state of a user in a subscription group.
+
+
+        To use this endpoint, youll need to generate an API key with the `subscription.status.get` permission.
+
+
+        These groups will be available on the **Subscription Group** page. The response from this endpoint will include the external ID and either subscribed, unsubscribed, or unknown for the specific subscription group requested in the API call. This can be used to update the subscription group state in subsequent API calls or to be displayed on a hosted web page.
+
+
+        \*Either `external_id` or `phone` are required. When both are submitted, only the external_id is used for querying and the phone number is applied to that user.
+
+
+        ## Rate limit
+
+
+        We apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in API rate limits.
+
+
+        ## Response
+
+
+        All successful responses will return `subscribed`, `unsubscribed`, or `unknown` depending on status and user history with the subscription group.
+
+
+        ``` json
+
+        Content-Type: application/json
+
+        Authorization: Bearer YOUR-REST-API-KEY
+
+        {
+
+        "status": {
+
+        "1": "Unsubscribed",
+
+        "2": "Subscribed"
+
+        },
+
+        "message": "success"
+
+        }
+
+
+        ```'
       parameters:
       - name: Authorization
         in: header
@@ -92,12 +137,26 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getSubscriptionStatusGet
+      x-operation-id-source: derived
   /subscription/user/status:
     get:
       tags:
       - Subscription Groups > SMS and WhatsApp
       summary: List User's Subscription Group - SMS
-      description: "> Use this endpoint to list and get the subscription groups of a certain user. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.groups.get` permission.\n\nIf there are multiple users (multiple external IDs) who share the same email address, all users will be returned as a separate user (even if they have the same email address or subscription group).\n\n## Rate limit\n\nWe apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in [API rate limits](https://www.braze.com/docs/api/api_limits/)."
+      description: '> Use this endpoint to list and get the subscription groups of a certain user.
+
+
+        To use this endpoint, youll need to generate an API key with the `subscription.groups.get` permission.
+
+
+        If there are multiple users (multiple external IDs) who share the same email address, all users will be returned as a separate user (even if they have the same email address or subscription group).
+
+
+        ## Rate limit
+
+
+        We apply the default Braze rate limit of 250,000 requests per hour to this endpoint, as documented in API rate limits.'
       parameters:
       - name: Authorization
         in: header
@@ -156,12 +215,69 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getSubscriptionUserStatus
+      x-operation-id-source: derived
   /subscription/status/set:
     post:
       tags:
       - Subscription Groups > SMS and WhatsApp
       summary: Update User's Subscription Group Status - SMS
-      description: "> Use this endpoint to batch update the subscription state of up to 50 users on the Braze dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.status.set` permission.\n\nYou can access a subscription groups `subscription_group_id` by navigating to the **Subscription Group** page.\n\nTip: When creating new users via the [/users/track](https://www.braze.com/docs/api/endpoints/user_data/post_user_track/) endpoint, you can set subscription groups within the user attributes object, which allows you to create a user and set the subscription group state in one API call.\n\n\\*Only `external_id` or `phone` is accepted for SMS subscription groups.\n\n### Rate limit\n\nFor customers who onboarded with Braze on or after January 6, 2022, we apply a rate limit of 5,000 requests per minute shared across the `/subscription/status/set` and `/v2/subscription/status/set` endpoint as documented in [API rate limits](http://localhost:4000/docs/api/api_limits/).\n\n### Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `subscription_group_id` | Required | String | The `id` of your subscription group. |\n| `subscription_state` | Required | String | Available values are `unsubscribed` (not in subscription group) or `subscribed` (in subscription group). |\n| `external_id` | Required\\* | Array of strings | The `external_id` of the user or users, may include up to 50 `id`s. |\n| `phone` | Required\\* | String in [E.164](https://en.wikipedia.org/wiki/E.164) format | The phone number of the user, can be passed as an array of strings. Must include at least one phone number (with a max of 50). |\n\n### Example successful response\n\nThe status code `201` could return the following response body.\n\n``` json\n{\n    \"message\": \"success\"\n}\n\n```\n\nImportant: The endpoint only accepts the `email` or `phone` value, not both. If given both, you will receive this response: `{\"message\":\"Either an email address or a phone number should be provided, but not both.\"}`"
+      description: '> Use this endpoint to batch update the subscription state of up to 50 users on the Braze dashboard.
+
+
+        To use this endpoint, youll need to generate an API key with the `subscription.status.set` permission.
+
+
+        You can access a subscription groups `subscription_group_id` by navigating to the **Subscription Group** page.
+
+
+        Tip: When creating new users via the /users/track endpoint, you can set subscription groups within the user attributes object, which allows you to create a user and set the subscription group state in one API call.
+
+
+        \*Only `external_id` or `phone` is accepted for SMS subscription groups.
+
+
+        ### Rate limit
+
+
+        For customers who onboarded with Braze on or after January 6, 2022, we apply a rate limit of 5,000 requests per minute shared across the `/subscription/status/set` and `/v2/subscription/status/set` endpoint as documented in API rate limits.
+
+
+        ### Request parameters
+
+
+        | Parameter | Required | Data Type | Description |
+
+        | --- | --- | --- | --- |
+
+        | `subscription_group_id` | Required | String | The `id` of your subscription group. |
+
+        | `subscription_state` | Required | String | Available values are `unsubscribed` (not in subscription group) or `subscribed` (in subscription group). |
+
+        | `external_id` | Required\* | Array of strings | The `external_id` of the user or users, may include up to 50 `id`s. |
+
+        | `phone` | Required\* | String in E.164 format | The phone number of the user, can be passed as an array of strings. Must include at least one phone number (with a max of 50). |
+
+
+        ### Example successful response
+
+
+        The status code `201` could return the following response body.
+
+
+        ``` json
+
+        {
+
+        "message": "success"
+
+        }
+
+
+        ```
+
+
+        Important: The endpoint only accepts the `email` or `phone` value, not both. If given both, you will receive this response: `{"message":"Either an email address or a phone number should be provided, but not both."}`'
       requestBody:
         content:
           application/json:
@@ -221,12 +337,60 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: postSubscriptionStatusSet
+      x-operation-id-source: derived
   /v2/subscription/status/set:
     post:
       tags:
       - Subscription Groups > SMS and WhatsApp
       summary: Update User's Subscription Group Status V2
-      description: "> Use this endpoint to batch update the subscription state of up to 50 users on the Braze dashboard. \n  \n\nTo use this endpoint, youll need to generate an API key with the `subscription.status.set` permission.\n\nYou can access a subscription groups `subscription_group_id` by navigating to the **Subscriptions Group** page.\n\n## Rate limit\n\nFor customers who onboarded with Braze on or after January 6, 2022, we apply a rate limit of 5,000 requests per minute shared across the `/subscription/status/set` and `/v2/subscription/status/set` endpoint as documented in [API rate limits](http://localhost:4000/docs/api/api_limits/).\n\n## Request parameters\n\n| Parameter | Required | Data Type | Description |\n| --- | --- | --- | --- |\n| `subscription_group_id` | Required | String | The `id` of your subscription group. |\n| `subscription_state` | Required | String | Available values are `unsubscribed` (not in subscription group) or `subscribed` (in subscription group). |\n| `external_ids` | Required\\* | Array of strings | The `external_id` of the user or users, may include up to 50 `id`s. |\n| `phones` | Required\\* | String in [E.164](https://en.wikipedia.org/wiki/E.164) format | The phone numbers of the user, can be passed as an array of strings. Must include at least one phone number (with a max of 50). |\n\n### Example successful response\n\nResponse: (status 201)\n\n``` json\n{\n    \"message\": \"success\"\n}\n\n```"
+      description: '> Use this endpoint to batch update the subscription state of up to 50 users on the Braze dashboard.
+
+
+        To use this endpoint, youll need to generate an API key with the `subscription.status.set` permission.
+
+
+        You can access a subscription groups `subscription_group_id` by navigating to the **Subscriptions Group** page.
+
+
+        ## Rate limit
+
+
+        For customers who onboarded with Braze on or after January 6, 2022, we apply a rate limit of 5,000 requests per minute shared across the `/subscription/status/set` and `/v2/subscription/status/set` endpoint as documented in API rate limits.
+
+
+        ## Request parameters
+
+
+        | Parameter | Required | Data Type | Description |
+
+        | --- | --- | --- | --- |
+
+        | `subscription_group_id` | Required | String | The `id` of your subscription group. |
+
+        | `subscription_state` | Required | String | Available values are `unsubscribed` (not in subscription group) or `subscribed` (in subscription group). |
+
+        | `external_ids` | Required\* | Array of strings | The `external_id` of the user or users, may include up to 50 `id`s. |
+
+        | `phones` | Required\* | String in E.164 format | The phone numbers of the user, can be passed as an array of strings. Must include at least one phone number (with a max of 50). |
+
+
+        ### Example successful response
+
+
+        Response: (status 201)
+
+
+        ``` json
+
+        {
+
+        "message": "success"
+
+        }
+
+
+        ```'
       requestBody:
         content:
           application/json:
@@ -290,28 +454,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: postV2SubscriptionStatusSet
+      x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: 403 Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: 401 Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: 429 Rate Limited
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: 404 Not Found
       content:
         application/json:
           schema:
@@ -322,8 +470,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 404 Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: 403 Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalServerError:
       description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: 429 Rate Limited
       content:
         application/json:
           schema:

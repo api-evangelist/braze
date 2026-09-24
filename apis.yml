@@ -63,8 +63,6 @@ apis:
     url: overlays/braze-catalogs-catalog-items-asynchronous-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-catalogs-catalog-items-synchronous-api
   name: Braze Catalogs > Catalog Items > Synchronous API
   description: >-
@@ -81,8 +79,6 @@ apis:
     url: overlays/braze-catalogs-catalog-items-synchronous-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-catalogs-catalog-management-synchronous-api
   name: Braze Catalogs > Catalog Management > Synchronous API
   description: >-
@@ -99,8 +95,6 @@ apis:
     url: overlays/braze-catalogs-catalog-management-synchronous-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-email-lists-addresses-api
   name: Braze Email Lists & Addresses API
   description: >-
@@ -117,8 +111,6 @@ apis:
     url: overlays/braze-email-lists-addresses-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-export-campaign-api
   name: Braze Export > Campaign API
   description: The Export > Campaign API from Braze — 4 operation(s) for export > campaign.
@@ -133,8 +125,6 @@ apis:
     url: overlays/braze-export-campaign-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-export-canvas-api
   name: Braze Export > Canvas API
   description: The Export > Canvas API from Braze — 4 operation(s) for export > canvas.
@@ -149,8 +139,6 @@ apis:
     url: overlays/braze-export-canvas-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-export-custom-events-api
   name: Braze Export > Custom Events API
   description: The Export > Custom Events API from Braze — 2 operation(s) for export > custom events.
@@ -165,8 +153,6 @@ apis:
     url: overlays/braze-export-custom-events-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-export-kpi-api
   name: Braze Export > KPI API
   description: The Export > KPI API from Braze — 4 operation(s) for export > kpi.
@@ -181,8 +167,6 @@ apis:
     url: overlays/braze-export-kpi-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-export-news-feed-api
   name: Braze Export > News Feed API
   description: The Export > News Feed API from Braze — 3 operation(s) for export > news feed.
@@ -197,8 +181,6 @@ apis:
     url: overlays/braze-export-news-feed-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-export-purchases-api
   name: Braze Export > Purchases API
   description: The Export > Purchases API from Braze — 3 operation(s) for export > purchases.
@@ -213,8 +195,6 @@ apis:
     url: overlays/braze-export-purchases-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-export-segment-api
   name: Braze Export > Segment API
   description: The Export > Segment API from Braze — 3 operation(s) for export > segment.
@@ -229,8 +209,6 @@ apis:
     url: overlays/braze-export-segment-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-export-session-analytics-api
   name: Braze Export > Session Analytics API
   description: >-
@@ -246,8 +224,6 @@ apis:
     url: overlays/braze-export-session-analytics-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-export-users-api
   name: Braze Export > Users API
   description: The Export > Users API from Braze — 3 operation(s) for export > users.
@@ -262,8 +238,6 @@ apis:
     url: overlays/braze-export-users-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-messaging-live-activities-api
   name: Braze Messaging > Live Activities API
   description: >-
@@ -279,8 +253,6 @@ apis:
     url: overlays/braze-messaging-live-activities-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-messaging-schedule-mesages-api
   name: Braze Messaging > Schedule Mesages API
   description: >-
@@ -296,8 +268,6 @@ apis:
     url: overlays/braze-messaging-schedule-mesages-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-messaging-send-messages-api
   name: Braze Messaging > Send Messages API
   description: >-
@@ -313,8 +283,6 @@ apis:
     url: overlays/braze-messaging-send-messages-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-preference-center-api
   name: Braze Preference Center API
   description: The Preference Center API from Braze — 4 operation(s) for preference center.
@@ -329,8 +297,6 @@ apis:
     url: overlays/braze-preference-center-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-scim-api
   name: Braze SCIM API
   description: The SCIM API from Braze — 2 operation(s) for scim.
@@ -345,8 +311,6 @@ apis:
     url: overlays/braze-scim-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-sms-api
   name: Braze SMS API
   description: >-
@@ -362,8 +326,6 @@ apis:
     url: overlays/braze-sms-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-subscription-groups-sms-and-whatsapp-api
   name: Braze Subscription Groups > SMS and WhatsApp API
   description: >-
@@ -380,8 +342,6 @@ apis:
     url: overlays/braze-subscription-groups-sms-and-whatsapp-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-templates-content-blocks-api
   name: Braze Templates > Content Blocks API
   description: "Content Blocks are an Email Templating feature that allow you to: \n- Create a consistent\
@@ -400,8 +360,6 @@ apis:
     url: overlays/braze-templates-content-blocks-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-templates-email-templates-api
   name: Braze Templates > Email Templates API
   description: >-
@@ -417,8 +375,6 @@ apis:
     url: overlays/braze-templates-email-templates-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-user-data-api
   name: Braze User Data API
   description: >-
@@ -444,8 +400,6 @@ apis:
     url: overlays/braze-user-data-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 - aid: braze:braze-user-data-external-id-migration-api
   name: Braze User Data > External ID Migration API
   description: >-
@@ -465,8 +419,6 @@ apis:
     url: overlays/braze-user-data-external-id-migration-overlay.yaml
   - type: Documentation
     url: https://www.braze.com/docs/api/basics/
-  - type: GraphQL
-    url: graphql/braze-graphql.md
 common:
 - type: CapabilityMap
   url: capabilities/braze-capability-edges.yml

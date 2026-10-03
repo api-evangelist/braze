@@ -600,14 +600,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: 500 Internal Server Error
+    NotFound:
+      description: 404 Not Found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: 404 Not Found
+    BadRequest:
+      description: 400 Bad Request
       content:
         application/json:
           schema:
@@ -618,8 +618,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: 400 Bad Request
+    InternalServerError:
+      description: 500 Internal Server Error
       content:
         application/json:
           schema:

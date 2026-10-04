@@ -1294,14 +1294,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: 400 Bad Request
+    Unauthorized:
+      description: 401 Unauthorized
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: 401 Unauthorized
+    BadRequest:
+      description: 400 Bad Request
       content:
         application/json:
           schema:

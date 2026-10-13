@@ -3,6 +3,7 @@ method: searched
 source:
 - https://composio.dev/toolkits/braze
 checked:
+- https://aws.amazon.com/marketplace/
 - https://composio.dev/toolkits/braze
 - https://monid.ai/tools/braze
 - https://n8n.io/integrations/braze/
@@ -134,5 +135,36 @@ marketplace_apps:
   - key: BRAZE_UPDATE_PUSH_CREDENTIALS
   - key: BRAZE_UPDATE_USER_ALIASES
   - key: BRAZE_UPDATE_WEBHOOK_TEMPLATE_TRANSLATIONS
-edges: []
+edges:
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=174fb708-6acc-4f03-98b8-60d48475e392
+  listing_count: 2
+  apps:
+  - Braze, Inc.
+  - BrazeAI Decisioning Studio
+  seller_name: Braze
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=seller-q4ehmcckrbohq
+  listing_count: 1
+  apps:
+  - Braze K.K. (Japan)
+  seller_name: Braze K.K.
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
 templates: []

@@ -15,3 +15,51 @@
   relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
+- slug: braze-twilio-segment
+  label: Twilio Segment
+  partner: segment
+  partner_name: Twilio Segment
+  type: coverage
+  marketplace: coverage
+  channel: partner-built
+  evidence: https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-braze-cloud
+  source: edge
+  relationship: connector-coverage
+  status: not-a-workflow
+  arazzo: null
+- slug: braze-rudderstack
+  label: RudderStack
+  partner: rudderstack
+  partner_name: RudderStack
+  type: coverage
+  marketplace: coverage
+  channel: partner-built
+  evidence: https://github.com/rudderlabs/rudder-integrations-config/tree/main/src/configurations/destinations/braze
+  source: edge
+  relationship: connector-coverage
+  status: not-a-workflow
+  arazzo: null
+- slug: braze-hightouch
+  label: Hightouch
+  partner: hightouch
+  partner_name: Hightouch
+  type: coverage
+  marketplace: coverage
+  channel: partner-built
+  evidence: https://hightouch.com/docs/destinations/braze
+  source: edge
+  relationship: connector-coverage
+  status: not-a-workflow
+  arazzo: null
+- slug: braze-census
+  label: Census
+  partner: getcensus
+  partner_name: Census
+  type: coverage
+  marketplace: coverage
+  channel: partner-built
+  evidence: https://fivetran.com/docs/activations/destinations/available-destinations/braze
+  source: edge
+  relationship: connector-coverage
+  status: not-a-workflow
+  arazzo: null

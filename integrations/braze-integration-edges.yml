@@ -5,8 +5,12 @@ source:
 checked:
 - https://aws.amazon.com/marketplace/
 - https://composio.dev/toolkits/braze
+- https://fivetran.com/docs/activations/destinations/available-destinations/braze
+- https://github.com/rudderlabs/rudder-integrations-config/tree/main/src/configurations/destinations/braze
+- https://hightouch.com/docs/destinations/braze
 - https://monid.ai/tools/braze
 - https://n8n.io/integrations/braze/
+- https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-braze-cloud
 - https://zapier.com/apps/braze/integrations
 summary: null
 marketplace_apps:
@@ -167,4 +171,129 @@ edges:
   seller_name: Braze K.K.
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
+- partner_name: Twilio Segment
+  partner: segment
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-braze-cloud
+  coverage_role:
+  - destination
+  - source
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - actions-braze-cloud
+      - actions-braze-cohorts
+      - actions-braze-web
+      - braze
+      status: PUBLIC
+      partner_owned: false
+      connection_modes:
+      - cloud:mobile
+      - cloud:server
+      - cloud:web
+      - device:mobile
+      - device:web
+      accepted_methods:
+      - Alias
+      - Group
+      - Identify
+      - Page
+      - Track
+      component_owners:
+      - PARTNER
+      - SEGMENT
+    source:
+      catalog_entries:
+      - braze
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+- partner_name: RudderStack
+  partner: rudderstack
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://github.com/rudderlabs/rudder-integrations-config/tree/main/src/configurations/destinations/braze
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - braze
+      connection_modes:
+      - cloud
+      - device
+      - hybrid
+      cloud_event_types:
+      - alias
+      - group
+      - identify
+      - page
+      - screen
+      - track
+      device_mode: true
+      audience: true
+      source_types: 13
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+- partner_name: Hightouch
+  partner: hightouch
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://hightouch.com/docs/destinations/braze
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - braze
+      - braze-cohorts
+      status: released
+      sync_types:
+      - Campaign Trigger
+      - Canvas Trigger
+      - Catalog
+      - Event
+      - Object
+      - Subscription Status
+      - User Identify
+      sync_modes:
+      - insert
+      - update
+      - upsert
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+- partner_name: Census
+  partner: getcensus
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://fivetran.com/docs/activations/destinations/available-destinations/braze
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - braze
+      sync_behaviours:
+      - delete
+      - mirror
+      - update or create
+      - upsert
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
 templates: []

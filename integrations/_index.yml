@@ -76,3 +76,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: braze-olo-own
+  label: Olo (own)
+  partner: olo
+  partner_name: Olo (own)
+  category: Marketing
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.olo.com/partners/braze
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

@@ -281,3 +281,29 @@
     builder: 'community (Meltano Hub variant maintainers: airbyte)'
   status: not-a-workflow
   arazzo: null
+- slug: braze-databricks-marketplace
+  label: Databricks Marketplace
+  partner: databricks
+  partner_name: Databricks Marketplace
+  category: data product listing
+  type: marketplace
+  marketplace: databricks-marketplace
+  channel: distribution
+  evidence: https://marketplace.databricks.com/provider/99e21999-64ed-4384-960a-8776cc948018
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Databricks Marketplace (marketplace.databricks.com/api/2.0/public-marketplace-providers + public-marketplace-listings)
+    spec_file: null
+    role: data-marketplace-seller
+    registered_name: Braze
+    matched_domain: braze.com
+    matched_by: domain
+    listings: 1
+    sample_listings:
+    - Braze
+    signal_note: 'participation: the provider lists data products on this marketplace; counts are context'
+    detected_by: sweep-data-marketplaces.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null

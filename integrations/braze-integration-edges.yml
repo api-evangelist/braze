@@ -26,6 +26,7 @@ checked:
 - https://zapier.com/apps/braze/integrations
 - okta/integrations/okta-integration-edges.yml
 - olo/integrations/olo-integration-edges.yml
+- https://marketplace.databricks.com/
 summary: null
 marketplace_apps:
 - marketplace: composio
@@ -539,4 +540,29 @@ edges:
     builder: 'community (Meltano Hub variant maintainers: airbyte)'
   detected_by: sweep-data-integration.py
   first_seen: '2026-10-18'
+- partner_name: Databricks Marketplace
+  partner: databricks
+  partner_match: aggregator
+  type: marketplace
+  marketplace: databricks-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://marketplace.databricks.com/provider/99e21999-64ed-4384-960a-8776cc948018
+  category: data product listing
+  contract_reference:
+    register: Databricks Marketplace (marketplace.databricks.com/api/2.0/public-marketplace-providers + public-marketplace-listings)
+    spec_file: null
+    role: data-marketplace-seller
+    registered_name: Braze
+    matched_domain: braze.com
+    matched_by: domain
+    listings: 1
+    sample_listings:
+    - Braze
+    signal_note: 'participation: the provider lists data products on this marketplace; counts are context'
+    detected_by: sweep-data-marketplaces.py
+    detected: '2026-10-20'
+  detected_by: sweep-data-marketplaces.py
+  detected: '2026-10-20'
 templates: []

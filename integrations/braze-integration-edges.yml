@@ -185,6 +185,150 @@ edges:
   seller_name: Braze K.K.
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
+- partner_name: Okta (own)
+  partner: okta
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.okta.com/integrations/braze/
+  mirror_of: okta/integrations/okta-integration-edges.yml
+  apps:
+  - Braze
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Single Sign-On
+  badges:
+  - OKTA_VERIFIED
+  features:
+  - SAML
+  - SWA
+- partner_name: Olo (own)
+  partner: olo
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.olo.com/partners/braze
+  mirror_of: olo/integrations/olo-integration-edges.yml
+  apps:
+  - Braze
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Marketing
+- partner_name: Maven Central
+  partner: maven-central
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Java/JVM)
+  evidence: https://central.sonatype.com/artifact/com.braze/android-sdk-base
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: com.braze:android-sdk-base
+      version: 44.0.0
+      released: '2026-10-01'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.braze/android-sdk-base
+      repo_leg: domain:braze.com
+      publisher_leg: groupId:braze.com
+      matched_by: domain
+    - name: com.braze:android-sdk-jetpack-compose
+      version: 44.0.0
+      released: '2026-10-01'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.braze/android-sdk-jetpack-compose
+      repo_leg: domain:braze.com
+      publisher_leg: groupId:braze.com
+      matched_by: domain
+    - name: com.braze:android-sdk-location
+      version: 44.0.0
+      released: '2026-10-01'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.braze/android-sdk-location
+      repo_leg: domain:braze.com
+      publisher_leg: groupId:braze.com
+      matched_by: domain
+    - name: com.braze:android-sdk-ui
+      version: 44.0.0
+      released: '2026-10-01'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.braze/android-sdk-ui
+      repo_leg: domain:braze.com
+      publisher_leg: groupId:braze.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@braze/expo-plugin
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@braze/expo-plugin'
+      version: 5.2.0
+      released: '2026-07-15'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@braze/expo-plugin
+      repo_leg: github-org:braze-inc
+      publisher_leg: email:braze.com
+      matched_by: domain
+    - name: '@braze/react-native-sdk'
+      version: 23.1.0
+      released: '2026-09-22'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@braze/react-native-sdk
+      repo_leg: github-org:braze-inc
+      publisher_leg: email:braze.com
+      matched_by: domain
+    - name: '@braze/web-sdk'
+      version: 7.1.0
+      released: '2026-10-14'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@braze/web-sdk
+      repo_leg: github-org:braze-inc
+      publisher_leg: email:braze.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 - partner_name: Twilio Segment
   partner: segment
   partner_match: aggregator
@@ -310,45 +454,6 @@ edges:
       - upsert
   detected_by: sweep-cdp.py
   first_seen: '2026-10-14'
-- partner_name: Okta (own)
-  partner: okta
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.okta.com/integrations/braze/
-  mirror_of: okta/integrations/okta-integration-edges.yml
-  apps:
-  - Braze
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-  category: Single Sign-On
-  badges:
-  - OKTA_VERIFIED
-  features:
-  - SAML
-  - SWA
-- partner_name: Olo (own)
-  partner: olo
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.olo.com/partners/braze
-  mirror_of: olo/integrations/olo-integration-edges.yml
-  apps:
-  - Braze
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-  category: Marketing
 - partner_name: Airbyte
   partner: airbyte
   partner_match: aggregator
@@ -433,110 +538,5 @@ edges:
     - bronze
     builder: 'community (Meltano Hub variant maintainers: airbyte)'
   detected_by: sweep-data-integration.py
-  first_seen: '2026-10-18'
-- partner_name: Maven Central
-  partner: maven-central
-  partner_match: register
-  type: register
-  direction: provider-built
-  category: official SDK (Java/JVM)
-  evidence: https://central.sonatype.com/artifact/com.braze/android-sdk-base
-  channel: package-registry
-  relationship: distribution-channel
-  contract_reference:
-    register: Maven Central (public registry JSON)
-    spec_file: null
-    language: Java/JVM
-    packages:
-    - name: com.braze:android-sdk-base
-      version: 44.0.0
-      released: '2026-10-01'
-      released_field: lastUpdated
-      lapsed: false
-      page: https://central.sonatype.com/artifact/com.braze/android-sdk-base
-      repo_leg: domain:braze.com
-      publisher_leg: groupId:braze.com
-      matched_by: domain
-    - name: com.braze:android-sdk-jetpack-compose
-      version: 44.0.0
-      released: '2026-10-01'
-      released_field: lastUpdated
-      lapsed: false
-      page: https://central.sonatype.com/artifact/com.braze/android-sdk-jetpack-compose
-      repo_leg: domain:braze.com
-      publisher_leg: groupId:braze.com
-      matched_by: domain
-    - name: com.braze:android-sdk-location
-      version: 44.0.0
-      released: '2026-10-01'
-      released_field: lastUpdated
-      lapsed: false
-      page: https://central.sonatype.com/artifact/com.braze/android-sdk-location
-      repo_leg: domain:braze.com
-      publisher_leg: groupId:braze.com
-      matched_by: domain
-    - name: com.braze:android-sdk-ui
-      version: 44.0.0
-      released: '2026-10-01'
-      released_field: lastUpdated
-      lapsed: false
-      page: https://central.sonatype.com/artifact/com.braze/android-sdk-ui
-      repo_leg: domain:braze.com
-      publisher_leg: groupId:braze.com
-      matched_by: domain
-    current: true
-    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
-      24 months'
-    detected_by: sweep-official-sdks.py
-    detected: '2026-10-18'
-  detected_by: sweep-official-sdks.py
-  first_seen: '2026-10-18'
-- partner_name: npm registry
-  partner: npm
-  partner_match: register
-  type: register
-  direction: provider-built
-  category: official SDK (JavaScript/TypeScript)
-  evidence: https://www.npmjs.com/package/@braze/expo-plugin
-  channel: package-registry
-  relationship: distribution-channel
-  contract_reference:
-    register: npm registry (public registry JSON)
-    spec_file: null
-    language: JavaScript/TypeScript
-    packages:
-    - name: '@braze/expo-plugin'
-      version: 5.2.0
-      released: '2026-07-15'
-      released_field: modified
-      lapsed: false
-      page: https://www.npmjs.com/package/@braze/expo-plugin
-      repo_leg: github-org:braze-inc
-      publisher_leg: email:braze.com
-      matched_by: domain
-    - name: '@braze/react-native-sdk'
-      version: 23.1.0
-      released: '2026-09-22'
-      released_field: modified
-      lapsed: false
-      page: https://www.npmjs.com/package/@braze/react-native-sdk
-      repo_leg: github-org:braze-inc
-      publisher_leg: email:braze.com
-      matched_by: domain
-    - name: '@braze/web-sdk'
-      version: 7.1.0
-      released: '2026-10-14'
-      released_field: modified
-      lapsed: false
-      page: https://www.npmjs.com/package/@braze/web-sdk
-      repo_leg: github-org:braze-inc
-      publisher_leg: email:braze.com
-      matched_by: domain
-    current: true
-    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
-      24 months'
-    detected_by: sweep-official-sdks.py
-    detected: '2026-10-18'
-  detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
 templates: []

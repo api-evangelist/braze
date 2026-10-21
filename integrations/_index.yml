@@ -15,32 +15,6 @@
   relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
-- slug: braze-okta-own
-  label: Okta (own)
-  partner: okta
-  partner_name: Okta (own)
-  category: Single Sign-On
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.okta.com/integrations/braze/
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: braze-olo-own
-  label: Olo (own)
-  partner: olo
-  partner_name: Olo (own)
-  category: Marketing
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.olo.com/partners/braze
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: braze-maven-central
   label: Maven Central
   partner: maven-central
@@ -333,5 +307,114 @@
     detected_by: sweep-vc-portfolios.py
     detected: '2026-10-21'
     status: 'NASDAQ: BRZE'
+  status: not-a-workflow
+  arazzo: null
+- slug: braze-cocoapods-trunk
+  label: CocoaPods trunk
+  partner_name: CocoaPods trunk
+  category: iOS SDK (CocoaPods)
+  type: register
+  channel: package-registry
+  evidence: https://cocoapods.org/pods/BrazeKit
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: CocoaPods trunk (cdn.cocoapods.org Specs; github.com/CocoaPods/Specs)
+    spec_file: null
+    role: cocoapods-publisher
+    registered_name: Braze, Inc.
+    matched_domain: braze.com
+    matched_by: domain
+    pods:
+    - pod: BrazeKit
+      version: 19.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeKitCompat
+      version: 19.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeKitCompatDev
+      version: 7.3.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeKitDev
+      version: 15.1.0-build.39815
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeKitFix
+      version: 8.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeLocation
+      version: 19.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeLocationDev
+      version: 7.3.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeLocationFix
+      version: 8.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeNotificationService
+      version: 19.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeNotificationServiceDev
+      version: 7.3.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazePushStory
+      version: 19.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazePushStoryDev
+      version: 7.3.0
+      homepage: https://braze.com
+      deprecated: false
+    signal_note: latest podspec homepage (domain) + authors (name); pods, versions and counts are context
+    detected_by: sweep-mobile-sdk-index.py
+    detected: '2026-10-21'
+  status: not-a-workflow
+  arazzo: null
+- slug: braze-okta-own
+  label: Okta (own)
+  partner: okta
+  partner_name: Okta (own)
+  category: Single Sign-On
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.okta.com/integrations/braze/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: braze-olo-own
+  label: Olo (own)
+  partner: olo
+  partner_name: Olo (own)
+  category: Marketing
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.olo.com/partners/braze
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: braze-google-play-developer-google-play-sdk-index
+  label: Google Play Developer (Google Play SDK Index)
+  partner: google-play
+  partner_name: Google Play Developer (Google Play SDK Index)
+  category: mobile SDK (location, marketing-and-engagement)
+  type: marketplace
+  marketplace: Google Play SDK Index
+  channel: partner-built
+  evidence: https://play.google.com/sdks/details/com-appboy-android-sdk-ui
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null

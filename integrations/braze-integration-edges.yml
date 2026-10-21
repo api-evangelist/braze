@@ -33,6 +33,11 @@ checked:
 - https://www.indexventures.com/companies/
 - https://www.sequoiacap.com/our-companies/
 - https://www.sequoiacap.com/sitemap.xml
+- https://cdn.cocoapods.org/all_pods.txt
+- https://cert.appdefensealliance.org/certifications
+- https://play.google.com/sdks
+- https://search.maven.org/solrsearch/select
+- google-play/integrations/google-play-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: composio
@@ -192,45 +197,6 @@ edges:
   seller_name: Braze K.K.
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
-- partner_name: Okta (own)
-  partner: okta
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.okta.com/integrations/braze/
-  mirror_of: okta/integrations/okta-integration-edges.yml
-  apps:
-  - Braze
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-  category: Single Sign-On
-  badges:
-  - OKTA_VERIFIED
-  features:
-  - SAML
-  - SWA
-- partner_name: Olo (own)
-  partner: olo
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.olo.com/partners/braze
-  mirror_of: olo/integrations/olo-integration-edges.yml
-  apps:
-  - Braze
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-  category: Marketing
 - partner_name: Maven Central
   partner: maven-central
   partner_match: register
@@ -598,4 +564,133 @@ edges:
     status: 'NASDAQ: BRZE'
   detected_by: sweep-vc-portfolios.py
   first_seen: '2026-10-21'
+- partner_name: CocoaPods trunk
+  partner: null
+  partner_match: register
+  type: register
+  channel: package-registry
+  relationship: distribution-channel
+  direction: provider-built
+  evidence: https://cocoapods.org/pods/BrazeKit
+  category: iOS SDK (CocoaPods)
+  contract_reference:
+    register: CocoaPods trunk (cdn.cocoapods.org Specs; github.com/CocoaPods/Specs)
+    spec_file: null
+    role: cocoapods-publisher
+    registered_name: Braze, Inc.
+    matched_domain: braze.com
+    matched_by: domain
+    pods:
+    - pod: BrazeKit
+      version: 19.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeKitCompat
+      version: 19.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeKitCompatDev
+      version: 7.3.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeKitDev
+      version: 15.1.0-build.39815
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeKitFix
+      version: 8.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeLocation
+      version: 19.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeLocationDev
+      version: 7.3.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeLocationFix
+      version: 8.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeNotificationService
+      version: 19.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazeNotificationServiceDev
+      version: 7.3.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazePushStory
+      version: 19.1.0
+      homepage: https://braze.com
+      deprecated: false
+    - pod: BrazePushStoryDev
+      version: 7.3.0
+      homepage: https://braze.com
+      deprecated: false
+    signal_note: latest podspec homepage (domain) + authors (name); pods, versions and counts are context
+    detected_by: sweep-mobile-sdk-index.py
+    detected: '2026-10-21'
+  detected_by: sweep-mobile-sdk-index.py
+  first_seen: '2026-10-21'
+- partner_name: Okta (own)
+  partner: okta
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.okta.com/integrations/braze/
+  mirror_of: okta/integrations/okta-integration-edges.yml
+  apps:
+  - Braze
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Single Sign-On
+  badges:
+  - OKTA_VERIFIED
+  features:
+  - SAML
+  - SWA
+- partner_name: Olo (own)
+  partner: olo
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.olo.com/partners/braze
+  mirror_of: olo/integrations/olo-integration-edges.yml
+  apps:
+  - Braze
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Marketing
+- partner_name: Google Play Developer (Google Play SDK Index)
+  partner: google-play
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: Google Play SDK Index
+  evidence: https://play.google.com/sdks/details/com-appboy-android-sdk-ui
+  mirror_of: google-play/integrations/google-play-integration-edges.yml
+  apps:
+  - Braze Android SDK
+  - Braze SDK (android-sdk-location)
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: mobile SDK (location, marketing-and-engagement)
+  publisher_verified:
+  - Registered in Google Play SDK Console
 templates: []

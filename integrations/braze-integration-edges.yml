@@ -40,6 +40,9 @@ checked:
 - google-play/integrations/google-play-integration-edges.yml
 - https://api.apis.guru/v2/list.json
 - https://api.apis.guru/v2/providers.json
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 summary: null
 marketplace_apps:
 - marketplace: composio
@@ -735,5 +738,35 @@ edges:
     detected_by: sweep-openapi-directory-apis-guru.py
     detected: '2026-10-22'
   detected_by: sweep-openapi-directory-apis-guru.py
+  first_seen: '2026-10-22'
+- partner_name: pub.dev
+  partner: pub-dev
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Dart/Flutter)
+  evidence: https://pub.dev/packages/braze_plugin
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: pub.dev (public registry JSON)
+    spec_file: null
+    language: Dart/Flutter
+    packages:
+    - name: braze_plugin
+      version: 23.0.0
+      released: '2026-09-28'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/braze_plugin
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:braze.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
   first_seen: '2026-10-22'
 templates: []

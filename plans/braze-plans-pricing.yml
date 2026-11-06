@@ -86,7 +86,7 @@ programs:
     url: https://www.braze.com/braze-for-startups
     note: A separate startup program referenced in Braze's llms.txt; terms are not published.
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - negotiated

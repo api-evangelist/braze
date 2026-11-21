@@ -203,6 +203,9 @@ artifacts:
   heartbeat/2026-11-13.yml:
     method: unknown
     evidence: no authorship recorded
+  heartbeat/2026-11-20.yml:
+    method: unknown
+    evidence: no authorship recorded
   integrations/_index.yml:
     method: generated
     evidence: carries an API Evangelist house phrase
@@ -212,7 +215,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-06T143934.yml:
+  kin/checks-2026-11-13T214628.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -279,6 +282,9 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-13T214628.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/braze-lifecycle.yml:
@@ -372,72 +378,144 @@ artifacts:
   openapi/braze-user-data-external-id-migration-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
+  overlays/braze-catalogs-catalog-items-asynchronous-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-catalogs-catalog-items-asynchronous-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-catalogs-catalog-items-synchronous-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-catalogs-catalog-items-synchronous-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-catalogs-catalog-management-synchronous-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-catalogs-catalog-management-synchronous-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-email-lists-addresses-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-email-lists-addresses-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-export-campaign-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-export-campaign-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-export-canvas-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-export-canvas-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-export-custom-events-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-export-custom-events-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-export-kpi-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-export-kpi-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-export-news-feed-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-export-news-feed-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-export-purchases-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-export-purchases-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-export-segment-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-export-segment-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-export-session-analytics-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-export-session-analytics-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-export-users-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-export-users-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-messaging-live-activities-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-messaging-live-activities-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-messaging-schedule-mesages-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-messaging-schedule-mesages-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-messaging-send-messages-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-messaging-send-messages-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-preference-center-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-preference-center-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-scim-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-scim-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-sms-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-sms-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-subscription-groups-sms-and-whatsapp-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-subscription-groups-sms-and-whatsapp-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-templates-content-blocks-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-templates-content-blocks-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-templates-email-templates-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-templates-email-templates-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/braze-user-data-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/braze-user-data-external-id-migration-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/braze-user-data-external-id-migration-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
@@ -487,9 +565,6 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   skills/braze-track-user-and-trigger-campaign.md:
-    method: generated
-    evidence: declared in the artifact
-  sla/braze-sla.yml:
     method: generated
     evidence: declared in the artifact
   terms/braze-terms-of-service.yml:
